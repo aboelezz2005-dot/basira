@@ -82,14 +82,23 @@ a{color:inherit}
 .billing{display:inline-flex;background:var(--chip);border-radius:999px;padding:4px;gap:4px}
 .billing button{font:inherit;font-size:14px;border:0;background:transparent;color:var(--ink);padding:6px 14px;border-radius:999px;cursor:pointer}
 .billing button[aria-pressed="true"]{background:var(--navy);color:var(--navy-ink)}
-.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .plan{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px}
 .plan.feat{border:2px solid var(--amber)}
+.plan.elite{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.plan.elite .who,.plan.elite .amt small{color:#b9c3d8}.plan.elite .save{color:var(--amber)}
+.plan.gold{background:linear-gradient(160deg,#fff6dc,#f3d58a);color:#3a2a06;border:2px solid #d9a52e;position:relative}
+.plan.gold .who,.plan.gold .amt small{color:#6b5524}.plan.gold .save{color:#3a2a06}
+.plan .badge{position:absolute;top:12px;inset-inline-end:12px;background:var(--navy);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+.plan.gold .btn{background:var(--navy);color:#fff;border-color:var(--navy)}
+.plan.elite .btn.ghost{color:var(--navy-ink);border-color:#b9c3d8}
 .plan h3{font-size:22px}
 .plan .who{color:var(--mute);font-size:14px}
 .plan .amt{font-family:var(--display);font-size:40px;font-weight:700;line-height:1}
 .plan .amt small{font-size:15px;font-family:var(--body);font-weight:500;color:var(--mute)}
 .plan .save{font-size:14px;color:var(--ok);font-weight:700;min-height:1.7em}
+.plan .btn{margin-top:auto;justify-content:center}
 .plan ul{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:4px}
 .ptable{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
 table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:620px}
