@@ -101,7 +101,7 @@ document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();
   const n=document.getElementById('fName').value.trim(),ph=document.getElementById('fPhone').value.replace(/\s/g,''),sv=document.getElementById('fSvc').value.trim();
   let ok=true;
   document.getElementById('eName').textContent=n?'':'اكتب الاسم أو اسم المنشأة.';if(!n)ok=false;
-  const phOk=/^(\+?974)?[3-7]\d{7}$/.test(ph);document.getElementById('ePhone').textContent=phOk?'':'اكتب رقم جوال قطري من 8 أرقام يبدأ بـ 3 أو 5 أو 6 أو 7.';if(!phOk)ok=false;
+  const phOk=/^(\+?974)?[3567]\d{7}$/.test(ph);document.getElementById('ePhone').textContent=phOk?'':'اكتب رقم جوال قطري من 8 أرقام يبدأ بـ 3 أو 5 أو 6 أو 7.';if(!phOk)ok=false;
   document.getElementById('eSvc').textContent=sv?'':'اكتب الخدمة المطلوبة أو أضفها من الحاسبة.';if(!sv)ok=false;
   if(!ok)return;
   const plan=document.getElementById('fPlan').value;
