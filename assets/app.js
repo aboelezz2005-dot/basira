@@ -38,13 +38,13 @@ let yearly=false;
 function renderPlans(){
   const el=document.getElementById('plans');el.innerHTML='';const tb=document.getElementById('ptbody');tb.innerHTML='';
   DATA.PLANS.forEach(p=>{const v=p.n*AVG,ym=Math.round(p.y/12),md=Math.round(100*(1-p.m/v)),yd=Math.round(100*(1-ym/v));
-    const d=document.createElement('div');d.className='plan'+(p.key==='full'?' feat':'');
-    d.innerHTML=`<h3>باقة «${p.name}»</h3><span class="who">${p.staff}</span>
+    const d=document.createElement('div');d.className='plan '+p.key+(p.key==='full'?' feat':'');
+    d.innerHTML=`${p.badge?`<span class="badge">${p.badge}</span>`:''}<h3>${p.key==='gold'?'':'باقة '}«${p.name}»</h3><span class="who">${p.staff}</span>
     <div class="amt num">${fmt(yearly?p.y:p.m)} <small>ر.ق / ${yearly?'سنوياً':'شهرياً'}</small></div>
-    <div class="save">${yearly?`تعادل ${fmt(ym)} ر.ق شهرياً، بخصم ${yd}% عن السعر المنفرد`:`${p.n} خدمات قيمتها ${fmt(v)} ر.ق، بخصم ${md}%`}</div>
+    <div class="save">${yearly?`تعادل ${fmt(ym)} ر.ق شهرياً، بخصم ${yd}% عن السعر المنفرد`:`${p.n} ${p.n<=10?'خدمات':'خدمة'} قيمتها ${fmt(v)} ر.ق، بخصم ${md}%`}</div>
     <ul>${p.feat.map(f=>`<li>${f}</li>`).join('')}</ul>
-    <a class="btn ${p.key==='full'?'pri':'ghost'}" href="#request" data-plan="${p.name}">اشترك في «${p.name}»</a>`;
-    d.querySelector('a').onclick=()=>{document.getElementById('fPlan').value=p.name;document.getElementById('fType').value='منشأة'};
+    <a class="btn ${p.key==='basic'?'ghost':'pri'}" href="#request" data-plan="${p.name}">اشترك في «${p.name}»</a>`;
+    d.querySelector('a').onclick=()=>{document.getElementById('fPlan').value=p.name;document.getElementById('fType').value='منشأة';syncPlan()};
     el.appendChild(d);
     tb.insertAdjacentHTML('beforeend',`<tr><td><b>«${p.name}»</b></td><td class="num">${p.n}</td><td class="num">${fmt(v)}</td><td class="num"><b>${fmt(p.m)}</b></td><td class="num">${md}%</td><td class="num"><b>${fmt(p.y)}</b></td><td class="num">${yd}%</td><td class="num">${p.extra}%</td></tr>`)});
   document.getElementById('bm').setAttribute('aria-pressed',!yearly);document.getElementById('by').setAttribute('aria-pressed',yearly);
@@ -66,20 +66,27 @@ function renderCart(){
   updateTotals();
 }
 function updateTotals(){
-  let single=0,u=0,out=0;cart.forEach((q,code)=>{const s=byCode[code];single+=s.p*q;if(s.core)u+=units(s)*q;else out+=s.p*q});
+  // Setup packages (ST) are one-time fees, so they stay out of the monthly comparison
+  // uX/outX: units and out-of-plan cost for plans that cover every service (not just core ones)
+  let single=0,u=0,out=0,once=0,uX=0,outX=0;cart.forEach((q,code)=>{const s=byCode[code];if(s.ent==='ST'){once+=s.p*q;return}single+=s.p*q;if(s.core)u+=units(s)*q;else{out+=s.p*q;uX+=(s.p<=400?1:2)*q;outX+=s.p*q}});
   document.getElementById('tSingle').textContent=fmt(single)+' ر.ق';document.getElementById('tUnits').textContent=u;document.getElementById('tOut').textContent=fmt(out)+' ر.ق';
   const v=document.getElementById('verdict');
   if(!cart.size){v.textContent='أضف خدمات لنقارن لك بين الدفع لكل خدمة والباقات.';return}
+  const onceNote=once?`<br><b>رسوم تأسيس لمرة واحدة: ${fmt(once)} ر.ق</b> (لا تتكرر شهرياً)`:'';
+  if(!single){v.innerHTML=onceNote.slice(4);return}
   const opts=[{name:'الدفع لكل خدمة',cost:single}];
-  DATA.PLANS.forEach(p=>{const extraUnits=Math.max(0,u-p.n);const coreSingleAvg=u?(single-out)/u:AVG;
-    const cost=p.m+Math.round(extraUnits*coreSingleAvg*(1-p.extra/100))+Math.round(out*(1-p.extra/100));opts.push({name:`باقة «${p.name}»`,cost,p})});
+  DATA.PLANS.forEach(p=>{const pu=p.all?u+uX:u,pOut=p.all?0:out;const extraUnits=Math.max(0,pu-p.n);const avg=pu?(single-pOut)/pu:AVG;
+    const cost=p.m+Math.round(extraUnits*avg*(1-p.extra/100))+Math.round(pOut*(1-p.extra/100));opts.push({name:`باقة «${p.name}»`,cost,p})});
   opts.sort((a,b)=>a.cost-b.cost);const best=opts[0];
-  v.innerHTML=opts.map(o=>`${o===best?'<b>':''}${o.name}: ${fmt(o.cost)} ر.ق شهرياً${o===best?' (الأوفر)</b>':''}`).join('<br>')+(best.p?`<br>توفر ${fmt(single-best.cost)} ر.ق شهرياً مقارنة بالدفع لكل خدمة.`:'');
+  v.innerHTML=opts.map(o=>`${o===best?'<b>':''}${o.name}: ${fmt(o.cost)} ر.ق شهرياً${o===best?' (الأوفر)</b>':''}`).join('<br>')+(best.p?`<br>توفر ${fmt(single-best.cost)} ر.ق شهرياً مقارنة بالدفع لكل خدمة.`:'')+onceNote;
 }
 document.getElementById('clear').onclick=()=>{cart.clear();renderCart();render()};
 document.getElementById('sample').onclick=()=>{cart.clear();Object.entries(SAMPLE).forEach(([k,q])=>cart.set(k,q));renderCart();render()};
 document.getElementById('toReq').onclick=()=>{document.getElementById('fSvc').value=[...cart].map(([c,q])=>`${byCode[c].n} (${c}) × ${q}`).join('\n')};
-// form
+// form: company packages apply to establishments only
+const fType=document.getElementById('fType'),fPlan=document.getElementById('fPlan');
+function syncPlan(){const ind=fType.value==='فرد';if(ind)fPlan.value='';fPlan.disabled=ind}
+fType.addEventListener('change',syncPlan);fPlan.addEventListener('change',()=>{if(fPlan.value)fType.value='منشأة'});syncPlan();
 document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();
   const n=document.getElementById('fName').value.trim(),ph=document.getElementById('fPhone').value.replace(/\s/g,''),sv=document.getElementById('fSvc').value.trim();
   let ok=true;
