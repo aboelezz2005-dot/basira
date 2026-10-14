@@ -237,6 +237,7 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
 });
 function copy(text,el){(navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(()=>toast(T.copied)).catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast(T.copyHand)})}
 $('copyMsg').onclick=()=>copy($('out').textContent,$('out'));
+$('waFab')&&($('waFab').href='https://wa.me/'+WA);
 $('copyPh').onclick=()=>copy('+'+WA,$('ph'));
 Object.entries(SAMPLE).forEach(([k,q])=>cart.set(k,q));
 buildMenu();render();renderCon();renderPlans();renderCart();

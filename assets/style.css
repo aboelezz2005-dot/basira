@@ -205,3 +205,13 @@ dialog::backdrop{background:rgba(8,16,32,.55)}
 .dlg .contact{margin-top:14px}
 html[dir="ltr"] body{direction:ltr}
 html[dir="ltr"] th,html[dir="ltr"] td{text-align:left}
+
+/* floating WhatsApp button; sits above the phone's home bar */
+.wa-fab{position:fixed;z-index:8;bottom:calc(18px + env(safe-area-inset-bottom,0px));inset-inline-end:calc(18px + env(safe-area-inset-left,0px));width:56px;height:56px;border-radius:50%;background:#1f9d55;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(10,20,40,.3);text-decoration:none}
+.wa-fab:hover{background:#178a49}
+/* privacy page */
+.plainnav{display:flex;gap:8px;margin-inline-start:auto;flex-wrap:wrap}
+.plainnav a{text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14.5px}
+.plainnav .lang{border:1px solid rgba(255,255,255,.35)}
+.doc{max-width:760px}.doc h1{font-size:clamp(26px,4vw,34px)}.doc h2{font-size:20px;margin-top:10px}
+.doc ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}.doc p{margin:0}
