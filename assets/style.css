@@ -36,9 +36,41 @@ a{color:inherit}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--navy);color:var(--navy-ink)}
 .top .wrap{display:flex;align-items:center;gap:16px;padding-block:10px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:19px;text-decoration:none}
-.top nav{display:flex;gap:4px;flex-wrap:wrap;margin-inline-start:auto}
-.top nav a{text-decoration:none;padding:4px 10px;border-radius:8px;font-size:14.5px;opacity:.9}
-.top nav a:hover{background:rgba(255,255,255,.1);opacity:1}
+.top nav{margin-inline-start:auto}
+.menu,.drop,.flyout{list-style:none;margin:0;padding:0}
+.menu{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+.menu>li{position:relative}
+.menu>li>a,.topbtn{font:inherit;color:inherit;background:transparent;border:0;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14.5px;opacity:.92;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.menu>li>a:hover,.topbtn:hover,.topbtn[aria-expanded="true"]{background:rgba(255,255,255,.12);opacity:1}
+.topbtn::after,.subbtn::after{content:"";width:7px;height:7px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);opacity:.8;flex:none}
+.menu .lang{border:1px solid rgba(255,255,255,.35)}
+.drop{display:none;position:absolute;top:calc(100% + 6px);inset-inline-start:0;min-width:300px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(10,20,40,.22);padding:6px;z-index:20}
+.topbtn[aria-expanded="true"]+.drop{display:block}
+.sub{position:relative}
+.subbtn{font:inherit;width:100%;display:flex;align-items:center;gap:8px;background:transparent;border:0;color:inherit;padding:8px 10px;border-radius:8px;cursor:pointer;text-align:start;font-size:14.5px}
+.subbtn>span:first-child{flex:1}
+.subbtn:hover,.subbtn[aria-expanded="true"]{background:var(--chip)}
+.subbtn::after{transform:rotate(135deg)}
+.subbtn[aria-expanded="true"]::after{transform:rotate(45deg) translateY(-2px)}
+.cnt{font-size:12px;color:var(--mute);background:var(--chip);border-radius:999px;padding:0 7px}
+.flyout{display:none;position:absolute;top:-6px;inset-inline-start:calc(100% + 4px);width:min(380px,70vw);max-height:min(70vh,520px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(10,20,40,.22);padding:6px}
+.subbtn[aria-expanded="true"]+.flyout{display:block}
+.flyout a{display:flex;justify-content:space-between;gap:10px;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}
+.flyout a:hover{background:var(--chip)}
+.flyout a .num{color:var(--mute);white-space:nowrap}
+.flyout .allx a{font-weight:700;color:var(--ok)}
+.burger{display:none;margin-inline-start:auto;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:8px;cursor:pointer;flex-direction:column;gap:4px}
+.burger span{display:block;width:20px;height:2px;background:var(--navy-ink)}
+@media (max-width:980px){
+  .burger{display:flex}
+  .top nav{display:none;width:100%;margin:0}
+  body.menu-open .top nav{display:block;max-height:calc(100vh - 70px);overflow:auto;padding-bottom:10px}
+  .menu{flex-direction:column;align-items:stretch}
+  .menu>li>a,.topbtn{width:100%;justify-content:space-between;padding:10px}
+  .drop,.flyout{position:static;min-width:0;width:auto;box-shadow:none;max-height:none}
+  .drop{margin:4px 0}
+  .flyout{margin:2px 8px 6px;border:0;border-inline-start:2px solid var(--amber);border-radius:0;padding:2px 4px}
+}
 /* hero */
 .hero{background:var(--navy);color:var(--navy-ink);padding-block:36px 56px}
 .hero .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center}
@@ -146,5 +178,30 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .alt{background:var(--surface);border-block:1px solid var(--line)}
 @media (max-width:1000px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.hero .wrap,.est{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.plans,form{grid-template-columns:minmax(0,1fr)}.svc{grid-template-columns:1fr auto;}.svc .code{grid-column:1/-1;justify-self:start}.top nav{margin-inline-start:0}}
+@media (max-width:620px){.plans,form{grid-template-columns:minmax(0,1fr)}.svc{grid-template-columns:1fr auto;}.svc .code{grid-column:1/-1;justify-self:start}}
 .plan>.btn{margin-top:auto}
+
+.ent-wrap{display:flex;flex-direction:column;gap:22px}
+.lead.sm{font-size:14.5px}
+.dlink{text-decoration:none;border-bottom:1px dashed var(--mute)}
+.dlink:hover{color:var(--ok);border-color:var(--ok)}
+.hp{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip-path:inset(50%);pointer-events:none}
+.verdict.ok{background:var(--ok-soft);color:var(--ink)}
+.mute{color:var(--mute)}.sm{font-size:14px}
+footer a{color:inherit}
+/* service details dialog */
+dialog{border:0;padding:0;border-radius:18px;max-width:min(640px,calc(100vw - 32px));width:100%;background:var(--surface);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(8,16,32,.55)}
+.dlg{padding:22px;display:flex;flex-direction:column;gap:6px;max-height:85vh;overflow:auto;position:relative}
+.dlg h3{font-size:22px;padding-inline-end:30px}
+.dlg h4{margin:12px 0 2px;font-family:var(--display);font-size:15.5px;color:var(--mute)}
+.dlg p{margin:0}.dlg ol,.dlg ul{margin:0;padding-inline-start:22px}
+.dhead{display:flex;gap:8px;align-items:center;color:var(--mute);font-size:13.5px}
+.dprice{font-size:16px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.dprice .price{font-family:var(--display);font-weight:700;font-size:20px}
+.dprice .price small{font-size:12px;color:var(--mute);font-weight:400}
+.dnote{background:var(--amber-soft);border-radius:10px;padding:10px 12px;margin-top:10px!important;font-size:14.5px}
+.dx{position:absolute;top:14px;inset-inline-end:14px;font-size:26px}
+.dlg .contact{margin-top:14px}
+html[dir="ltr"] body{direction:ltr}
+html[dir="ltr"] th,html[dir="ltr"] td{text-align:left}

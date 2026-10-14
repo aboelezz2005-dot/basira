@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Basira for Transactions | Government services and consulting in Doha</title>
+<meta name="description" content="Basira for Transactions: a government transactions office in Doha for individuals and companies. 90 government services at fixed prices, four company packages, plus studies and business consulting.">
+<meta property="og:title" content="Basira for Transactions">
+<meta property="og:description" content="Clear from the very first step. Fixed-price government services and consulting in Doha.">
+<meta name="theme-color" content="#14284b">
+<link rel="alternate" hreflang="ar" href="../index.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%2314284b'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23e0a12b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#home"><svg width="34" height="34" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#e0a12b" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#e0a12b"/></svg>Basira for Transactions</a>
+  <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav id="nav" aria-label="Main menu"><ul class="menu">
+    <li class="dd"><button type="button" class="topbtn" aria-expanded="false">Government services</button><ul class="drop" id="mGov"></ul></li>
+    <li class="dd"><button type="button" class="topbtn" aria-expanded="false">Studies &amp; consulting</button><ul class="drop" id="mCon"></ul></li>
+    <li><a href="#packages">Company packages</a></li>
+    <li><a href="#estimate">Cost calculator</a></li>
+    <li><a href="#request">Request a service</a></li>
+    <li><a href="../index.html" lang="ar" class="lang">العربية</a></li>
+  </ul></nav>
+</div></header>
+
+<section class="hero" id="home"><div class="wrap">
+  <div>
+    <h1>Your transaction, <em>clear</em> from the first step</h1>
+    <p>A government transactions office in Doha for individuals, families and companies. We complete your transactions with the Ministries of Commerce, Interior, Labour, Municipality and other authorities at a fixed price you know before we start, and we offer studies and business consulting for business owners.</p>
+    <div class="cta"><a class="btn pri" href="#request">Request a service</a><a class="btn ghost" href="#services">Browse services and prices</a></div>
+    <div class="facts"><div><b class="num" id="fSvc2">90</b>fixed-price government services</div><div><b class="num" id="fEnt">11</b>government authorities</div><div><b class="num" id="fCon">60</b>studies and consulting services</div><div><b class="num">4</b>company packages</div></div>
+  </div>
+  <div class="promises">
+    <div class="promise"><b>Fixed price before we start</b><span>Our fee is published for every service. No surprises after submission.</span></div>
+    <div class="promise"><b>Updates at every stage</b><span>A message when we receive, submit and complete, without you asking.</span></div>
+    <div class="promise"><b>Full transparency on fees</b><span>You receive the official receipt for every government fee paid on your behalf.</span></div>
+  </div>
+</div></section>
+
+<section class="sec" id="services"><div class="wrap">
+  <h2>Government services and prices</h2>
+  <p class="lead">Prices are Basira's fees in Qatari riyals. Government fees are paid separately against the official receipt. Click any service name for details and required documents, and press "Add" to put it in the cost calculator.</p>
+  <div class="tools">
+    <input id="q" class="search" type="search" placeholder="Search a service, e.g. residence, CR, licence" aria-label="Search a service">
+    <label class="toggle" style="flex-direction:row"><input id="coreOnly" type="checkbox"> Only services covered by packages</label>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filter by authority"></div>
+  <div id="catalog" class="ent-wrap"></div>
+</div></section>
+
+<section class="sec alt" id="consult"><div class="wrap">
+  <h2>Studies and consulting</h2>
+  <p class="lead">Feasibility studies, business plans, and management, technical, financial, marketing and IT consulting for business owners. Prices start from the amount shown and are confirmed in a written quotation once the scope is clear. Specialised legal and accounting advice is delivered with licensed partner firms.</p>
+  <div class="tools"><input id="cq" class="search" type="search" placeholder="Search consulting, e.g. feasibility, structure, ISO" aria-label="Search consulting"></div>
+  <div class="chips" id="cchips" role="group" aria-label="Filter by consulting type"></div>
+  <div id="ccatalog" class="ent-wrap"></div>
+</div></section>
+
+<section class="sec" id="packages"><div class="wrap">
+  <h2>Company packages</h2>
+  <p class="lead">Subscribe monthly or yearly and get a fixed number of government services every month for less than single prices. Nukhba and Gold are for larger companies and cover all government services.</p>
+  <div class="billing" role="group" aria-label="Billing"><button id="bm" aria-pressed="true">Monthly</button><button id="by" aria-pressed="false">Yearly (2 months free)</button></div>
+  <div class="plans" id="plans"></div>
+  <div class="ptable"><table><thead><tr><th>Package</th><th>Services per month</th><th>Value at single prices</th><th>Monthly price</th><th>Discount</th><th>Yearly price</th><th>Discount</th><th>Discount on extras</th></tr></thead><tbody id="ptbody"></tbody></table></div>
+  <ul class="rules">
+    <li>A service priced up to 400 QAR counts as one service, 401 to 750 QAR counts as two, and above 750 QAR counts as three.</li>
+    <li>Asas and Shamel cover the core services marked "In packages". Nukhba and Gold cover all government services except setup bundles, and Gold includes one free setup bundle a year.</li>
+    <li>Discounts are calculated on the average core service price (300 QAR). The yearly subscription is paid in advance and equals 10 months.</li>
+    <li>Unused services roll over for one month only. The minimum monthly subscription is 3 months.</li>
+    <li>Setup bundles, studies and consulting are outside the monthly count in every package and receive the extras discount.</li>
+  </ul>
+</div></section>
+
+<section class="sec alt" id="estimate"><div class="wrap">
+  <h2>Calculate your cost</h2>
+  <p class="lead">Add the services you need each month and we compare paying per service with each package. The list starts with an example for a small company that you can change.</p>
+  <div class="est">
+    <div class="panel"><b>Selected services <span class="num" id="cartCount"></span></b><label class="pick">Add any service from the list<select id="pick" aria-label="Add a service to the calculator"><option value="">Choose a service…</option></select></label><div class="cart" id="cart"></div>
+      <div class="contact"><button class="btn sm ghost" id="clear" type="button">Clear list</button><button class="btn sm ghost" id="sample" type="button">Reset example</button></div></div>
+    <div class="panel" aria-live="polite">
+      <div class="sum"><span>Monthly total at single prices</span><b class="num" id="tSingle">0</b></div>
+      <div class="sum"><span>Services counted in a package</span><b class="num" id="tUnits">0</b></div>
+      <div class="sum"><span>Services outside the core packages</span><b class="num" id="tOut">0</b></div>
+      <div class="verdict" id="verdict"></div>
+      <a class="btn pri" href="#request" id="toReq">Request these services</a>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="how"><div class="wrap">
+  <h2>How we complete your transaction</h2>
+  <div class="steps">
+    <div class="step"><b>Intake</b><span>You send the transaction type and copies of documents, and receive a request number.</span></div>
+    <div class="step"><b>Review</b><span>We check the documents within two working hours.</span></div>
+    <div class="step"><b>Price and authorisation</b><span>Fixed fee and estimated government fees, then you sign the authorisation.</span></div>
+    <div class="step"><b>Payment</b><span>Our fee, plus government fees held in trust against receipts.</span></div>
+    <div class="step"><b>Submission and follow-up</b><span>A message whenever the status changes.</span></div>
+    <div class="step"><b>Delivery</b><span>The document, the receipts and your next renewal date.</span></div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="request"><div class="wrap">
+  <h2>Request a service</h2>
+  <p class="lead">Fill in the request and it reaches us directly. If you add your email you will receive a confirmation. You can also send it on WhatsApp.</p>
+  <form id="f" novalidate>
+    <label>Name or company name<input id="fName" required autocomplete="name"><span class="err" id="eName"></span></label>
+    <label>Mobile number<input id="fPhone" inputmode="tel" required placeholder="e.g. 5XXXXXXX"><span class="err" id="ePhone"></span></label>
+    <label>Email (optional, for your confirmation)<input id="fMail" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com"><span class="err" id="eMail"></span></label>
+    <label>Client type<select id="fType"><option value="ind">Individual</option><option value="org">Company</option></select></label>
+    <label>Package<select id="fPlan"><option value="">No package (pay per service)</option><option value="أساس">Asas</option><option value="شامل">Shamel</option><option value="نخبة">Nukhba</option><option value="الذهبية">Gold</option></select></label>
+    <label>Choose services<select id="fPick" aria-label="Choose a service to add to the request"><option value="">Choose a service to add…</option></select></label>
+    <label class="full">Requested services<textarea id="fSvc" placeholder="Choose from the list above or the calculator, or type"></textarea><span class="err" id="eSvc"></span></label>
+    <input id="fHp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="full contact"><button class="btn pri" type="submit">Send request</button></div>
+  </form>
+  <div id="outWrap" hidden class="panel"><div id="sendState" hidden class="verdict"></div><b id="outTitle">Your request message</b><div class="out" id="out"></div>
+    <div class="contact" id="outMsg"><a class="btn sm pri" id="sendWa" href="https://wa.me/97455482829" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn sm ghost" id="copyMsg" type="button">Copy message</button><span>or send it manually to</span><span class="phone">+974 55482829</span></div></div>
+  <div class="contact"><span>Direct contact:</span><span class="phone" id="ph">+974 55482829</span><button class="btn sm ghost" id="copyPh" type="button">Copy number</button><a class="btn sm ghost" href="https://wa.me/97455482829" target="_blank" rel="noopener">Open WhatsApp</a></div>
+</div></section>
+
+<section class="sec" id="faq"><div class="wrap">
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <details><summary>Does the price include government fees?</summary><p>No. The price is Basira's fee only. Government fees are paid exactly as on the official receipt, which we hand to you.</p></details>
+    <details><summary>Do you guarantee approval or timing?</summary><p>Nobody can guarantee a government authority's decision or timing. We guarantee that we check the documents before submission and keep you informed of every update.</p></details>
+    <details><summary>What if I do not use all package services in a month?</summary><p>Unused services roll over to the next month only.</p></details>
+    <details><summary>How are studies and consulting priced?</summary><p>The published price is the starting price. After a short discovery session we send a written quotation with scope, deliverables and timing. 50% is paid at the start and 50% on delivery.</p></details>
+    <details><summary>Do you offer legal or accounting advice?</summary><p>Yes, together with licensed law and accounting firms. We coordinate with them and follow up on your behalf. Statutory audits are performed by a licensed auditor.</p></details>
+    <details><summary>How do I pay?</summary><p>Single services are paid on agreement, setup bundles and studies 50% at the start and 50% on delivery, and subscriptions in advance.</p></details>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>Basira for Transactions LLC · Doha, Qatar</span><span><a href="../index.html" lang="ar">العربية</a> · <a href="../crm.html">Staff login</a></span><span>Prices valid from 2026 and subject to review</span></div></footer>
+
+<dialog id="dlg" aria-labelledby="dlgT"><div class="dlg">
+  <button class="x dx" id="dlgX" type="button" aria-label="Close">×</button>
+  <div id="dlgBody"></div>
+  <div class="contact"><button class="btn sm pri" id="dlgReq" type="button">Request this service</button><button class="btn sm ghost" id="dlgAdd" type="button">Add to calculator</button></div>
+</div></dialog>
+<div class="toast" id="toast" hidden></div>
+<script src="../assets/config.js"></script>
+<script src="../assets/data.js"></script>
+<script src="../assets/details.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
