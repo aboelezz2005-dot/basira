@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /basira/crm.html
+Disallow: /basira/portal.html
+Disallow: /basira/en/portal.html
+
+Sitemap: https://baseeratactions.github.io/basira/sitemap.xml

@@ -81,6 +81,8 @@ function doPost(e) {
     if (req.action === 'login') return json(login(req.username, req.password));
     if (req.action === 'signup') return json(clientSignup(req));
     if (req.action === 'clogin') return json(clientLogin(req));
+    if (req.action === 'cforgot') return json(clientForgot(req));
+    if (req.action === 'creset') return json(withLock(function () { return clientReset(req); }));
     if (['cme', 'cprofile', 'crequest', 'cpass', 'cfile', 'ccred', 'ccreddel', 'cmsg'].indexOf(req.action) >= 0) {
       var acc = checkClientToken(req.token);
       if (!acc) return json({ok: false, error: 'auth'});
@@ -496,6 +498,54 @@ function clientLogin(r) {
   return {ok: true, token: clientToken(acc)};
 }
 
+// ---------- forgotten password: a 6-digit code to the client's email, valid 15 minutes, 5 tries ----------
+function accountById(id) {   // username, or the mobile number on the client file
+  id = clean(id, 30).toLowerCase().replace(/\s/g, '');
+  var acc = id && findAccount(function (a) { return a.username === id; });
+  if (!acc && /^\+?\d{8,12}$/.test(id)) {
+    var c = rows('Clients').filter(function (x) { return String(x.phone).slice(-8) === id.slice(-8); })[0];
+    if (c) acc = findAccount(function (a) { return a.clientId === c.id; });
+  }
+  return acc || null;
+}
+function clientLang(clientId) {
+  var k = rows('Consents').filter(function (x) { return x.clientId === clientId; }).pop();
+  return k && k.lang === 'en' ? 'en' : 'ar';
+}
+function clientForgot(r) {
+  var id = clean(r.username, 30).toLowerCase();
+  if (!id) return {ok: false, error: 'invalid'};
+  if (!bump('fg_' + id, 5)) return {ok: false, error: 'rate_limited'};
+  Utilities.sleep(300);
+  var acc = accountById(id), c = acc && rows('Clients').filter(function (x) { return x.id === acc.clientId; })[0];
+  // Same answer whether or not the account exists, so nobody can probe for usernames or numbers.
+  if (!acc || acc.status !== ACC_ACTIVE || !c || !c.email) return {ok: true};
+  var code = String(100000 + parseInt(Utilities.getUuid().replace(/\D/g, '').slice(0, 9) || '0', 10) % 900000);
+  CacheService.getScriptCache().put('rs_' + acc.id, JSON.stringify({h: hashPw(acc.salt, 'reset:' + code), n: 0, exp: Date.now() + 15 * 60000}), 900);
+  var en = (r.lang || clientLang(c.id)) === 'en';
+  try {
+    MailApp.sendEmail({to: c.email, name: en ? 'Basira for Transactions' : 'بصيرة للمعاملات', replyTo: prop('OFFICE_EMAIL') || undefined,
+      subject: en ? 'Your password reset code: ' + code : 'رمز استعادة كلمة المرور: ' + code,
+      htmlBody: shell(en
+        ? '<p>Hello ' + escHtml(c.name) + ',</p><p>Your code to set a new password is:</p><p style="font-size:28px;letter-spacing:6px"><b>' + code + '</b></p><p>It works for 15 minutes. Username: <b>' + escHtml(acc.username) + '</b>.</p><p style="color:#5b6580">If you did not ask for this, ignore this email; your password has not changed.</p>'
+        : '<p>السلام عليكم ' + escHtml(c.name) + '،</p><p>رمز تعيين كلمة مرور جديدة لحسابك:</p><p style="font-size:28px;letter-spacing:6px"><b>' + code + '</b></p><p>صالح لمدة 15 دقيقة. اسم المستخدم: <b>' + escHtml(acc.username) + '</b>.</p><p style="color:#5b6580">إذا لم تطلب ذلك فتجاهل هذه الرسالة، ولم تتغير كلمة مرورك.</p>', en)});
+  } catch (err) { log(c.id, '', 'error', 'reset mail failed', String(err)); }
+  log(c.id, '', 'account', 'طلب العميل رمز استعادة كلمة المرور', '');
+  return {ok: true};
+}
+function clientReset(r) {
+  var acc = accountById(r.username), code = String(r.code || '').replace(/\D/g, ''), pw = String(r.password || '');
+  if (!validPw(pw)) return {ok: false, error: 'weak_password'};
+  var cache = CacheService.getScriptCache(), key = acc ? 'rs_' + acc.id : '', st = null;
+  try { st = acc && JSON.parse(cache.get(key) || 'null'); } catch (err) {}
+  if (!st || !st.h || st.exp < Date.now() || st.n >= 5) return {ok: false, error: 'bad_code'};
+  if (hashPw(acc.salt, 'reset:' + code) !== st.h) { st.n++; cache.put(key, JSON.stringify(st), 900); return {ok: false, error: 'bad_code'}; }
+  cache.put(key, 'null', 1);
+  acc.salt = Utilities.getUuid(); acc.hash = hashPw(acc.salt, pw); acc.lastLogin = now(); saveRow('Accounts', acc);
+  log(acc.clientId, '', 'account', 'العميل عيّن كلمة مرور جديدة برمز البريد', '');
+  return {ok: true, token: clientToken(acc)};
+}
+
 function clientMe(acc) {
   var c = rows('Clients').filter(function (x) { return x.id === acc.clientId; })[0];
   if (!c) return {ok: false, error: 'auth'};
@@ -601,7 +651,15 @@ function staffUpload(r) {
   var file = clientFolder(c.id).createFile(blob);   // stays private to the office's Google account
   var row = saveRow('Files', {clientId: c.id, txnId: clean(r.txnId, 20), title: clean(r.title, 150) || name, url: file.getUrl(), fileId: file.getId(), by: STAFF.username});
   saveRow('Log', {clientId: c.id, txnId: row.txnId, kind: 'file', subject: 'رفع ملف للعميل: ' + row.title, body: '', by: STAFF.username});
-  return {ok: true, row: row};
+  var mailed = false;   // clients with an account hear about new documents by email
+  if (r.notify !== false && c.email && findAccount(function (a) { return a.clientId === c.id && a.status === ACC_ACTIVE; })) {
+    var en = clientLang(c.id) === 'en';
+    try { MailApp.sendEmail({to: c.email, name: en ? 'Basira for Transactions' : 'بصيرة للمعاملات', replyTo: prop('OFFICE_EMAIL') || undefined,
+      subject: en ? 'A new document in your account: ' + row.title : 'مستند جديد في حسابك: ' + row.title,
+      htmlBody: shell(en ? '<p>Hello ' + escHtml(c.name) + ',</p><p>We added <b>' + escHtml(row.title) + '</b> to your account. Download it from the “My account” page, under Files.</p>'
+        : '<p>السلام عليكم ' + escHtml(c.name) + '،</p><p>أضفنا إلى حسابك: <b>' + escHtml(row.title) + '</b>. يمكنك تنزيله من صفحة «حسابي» على الموقع ← الملفات.</p>', en)}); mailed = true; } catch (err) {}
+  }
+  return {ok: true, row: row, mailed: mailed};
 }
 // ---------- consents and government-portal logins ----------
 function consent(clientId, name, phone, docs, lang, source) {

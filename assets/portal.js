@@ -12,8 +12,9 @@ const T=EN?{
     username_taken:'This username is taken. Please choose another.',phone_has_account:'This mobile number already has an account. Sign in, or message us on WhatsApp to reset the password.',
     must_accept:'Please accept the documents and type your name as a signature.',wrong_login:'The username or password is incorrect.',rate_limited:'Too many attempts. Please try again in an hour.',
     pending:'Your account is waiting for activation. We will call you to confirm your number.',disabled:'This account is suspended. Please contact us.',auth:'Your session has ended. Please sign in again.',
-    net:'Could not reach the server. Check your connection and try again.',not_found:'Not found.',too_many:'You have reached the maximum number of saved logins.'},
+    net:'Could not reach the server. Check your connection and try again.',bad_code:'The code is wrong or has expired. Ask for a new one.',not_found:'Not found.',too_many:'You have reached the maximum number of saved logins.'},
   name:'Please enter your full name.',phone:'Please enter a valid Qatari mobile number.',email:'Please enter a valid email or leave it empty.',mismatch:'The two passwords do not match.',
+  fgSent:'If the account has an email, we have sent a code to it. It works for 15 minutes.',fgSet:'Set the new password',fgDone:'Your new password is set.',
   pendingOk:'Your account has been created. Because this number already has a file with us, we will call you to confirm it and then activate the account.',
   welcome:n=>`Welcome, ${n}`,client:'Client no.',user:'Username',cur:'QAR',from:'from',
   k:['Open requests','Transactions in progress','Completed','Files'],none:'Nothing yet.',noSoon:'No documents expiring in the next 60 days.',
@@ -30,8 +31,9 @@ const T=EN?{
     username_taken:'اسم المستخدم مستخدم من قبل، اختر اسماً آخر.',phone_has_account:'لهذا الرقم حساب مسبقاً. ادخل إليه، أو راسلنا على واتساب لإعادة تعيين كلمة المرور.',
     must_accept:'وافق على المستندات واكتب اسمك كتوقيع.',wrong_login:'اسم المستخدم أو كلمة المرور غير صحيحة.',rate_limited:'محاولات كثيرة، حاول بعد ساعة.',
     pending:'حسابك بانتظار التفعيل، وسنتصل بك للتأكد من رقمك.',disabled:'هذا الحساب موقوف، تواصل معنا.',auth:'انتهت الجلسة، ادخل مرة أخرى.',
-    net:'تعذّر الاتصال بالخادم. تحقق من الاتصال وحاول مرة أخرى.',not_found:'غير موجود.',too_many:'وصلت إلى الحد الأقصى لبيانات البوابات المحفوظة.'},
+    net:'تعذّر الاتصال بالخادم. تحقق من الاتصال وحاول مرة أخرى.',bad_code:'الرمز غير صحيح أو انتهت صلاحيته. اطلب رمزاً جديداً.',not_found:'غير موجود.',too_many:'وصلت إلى الحد الأقصى لبيانات البوابات المحفوظة.'},
   name:'اكتب اسمك الكامل.',phone:'اكتب رقم جوال قطري صحيح.',email:'اكتب بريداً صحيحاً أو اتركه فارغاً.',mismatch:'كلمتا المرور غير متطابقتين.',
+  fgSent:'إذا كان في الحساب بريد فقد أرسلنا إليه رمزاً صالحاً لمدة 15 دقيقة.',fgSet:'عيّن كلمة المرور الجديدة',fgDone:'تم تعيين كلمة المرور الجديدة.',
   pendingOk:'تم إنشاء حسابك. لأن رقمك مسجل لدينا مسبقاً، سنتصل بك للتأكد منه ثم نفعّل الحساب.',
   welcome:n=>`أهلاً، ${n}`,client:'رقم العميل',user:'اسم المستخدم',cur:'ر.ق',from:'من',
   k:['طلبات مفتوحة','معاملات قيد التنفيذ','معاملات منجزة','ملفات'],none:'لا يوجد شيء بعد.',noSoon:'لا توجد مستندات تنتهي خلال 60 يوماً.',
@@ -63,7 +65,7 @@ async function submit(form,errEl,fn){const btn=form.querySelector('button[type=s
 
 // ---- sign in / sign up ----
 const REG=(()=>{try{return JSON.parse(localStorage.getItem('basira_reg')||'null')}catch(e){return null}})();
-function tab(sign){$('tLogin').setAttribute('aria-selected',!sign);$('tSign').setAttribute('aria-selected',sign);$('loginF').hidden=sign;$('signF').hidden=!sign}
+function tab(sign){$('forgotF').hidden=true;$('tLogin').parentElement.hidden=false;$('tLogin').setAttribute('aria-selected',!sign);$('tSign').setAttribute('aria-selected',sign);$('loginF').hidden=sign;$('signF').hidden=!sign}
 $('tLogin').onclick=()=>tab(false);$('tSign').onclick=()=>tab(true);
 // account type: client (this page) or management (the dashboard in crm.html)
 const CRM=(EN?'../':'')+'crm.html';
@@ -95,6 +97,18 @@ $('signF').addEventListener('submit',e=>{e.preventDefault();submit($('signF'),$(
   try{localStorage.setItem('basira_reg',JSON.stringify({name:v('sName'),phone:ph,email:em,company:v('sCo'),at:new Date().toISOString()}))}catch(err){}
   if(j.pending){tab(false);$('lUser').value=v('sUser').toLowerCase();$('lErr').textContent=T.pendingOk;return}
   setToken(j.token);await load()})});
+// forgotten password: a code to the account's email, then a new password (signs in)
+let fgSentTo='';
+function forgotView(on){$('loginF').hidden=on;$('forgotF').hidden=!on;$('tLogin').parentElement.hidden=on;
+  if(on){$('fgP').textContent=$('fgP').dataset.t||($('fgP').dataset.t=$('fgP').textContent);$('fUser').value=$('lUser').value.trim();$('fgStep2').hidden=true;$('fBtn').textContent=$('fBtn').dataset.send||($('fBtn').dataset.send=$('fBtn').textContent);$('fErr').textContent='';fgSentTo='';$('fUser').focus()}}
+$('forgot').onclick=()=>forgotView(true);$('fBack').onclick=()=>forgotView(false);
+$('forgotF').addEventListener('submit',e=>{e.preventDefault();submit($('forgotF'),$('fErr'),async()=>{
+  const u=$('fUser').value.trim();if(!u)throw new Error(T.err.invalid);
+  if(!fgSentTo||fgSentTo!==u){await api('cforgot',{username:u});fgSentTo=u;$('fgStep2').hidden=false;$('fBtn').textContent=T.fgSet;$('fgP').textContent=T.fgSent;$('fCode').focus();return}
+  if(!/^\d{6}$/.test($('fCode').value.trim()))throw new Error(T.err.bad_code);
+  if($('fPass').value.length<8)throw new Error(T.err.weak_password);if($('fPass').value!==$('fPass2').value)throw new Error(T.mismatch);
+  const j=await api('creset',{username:u,code:$('fCode').value.trim(),password:$('fPass').value});
+  $('fPass').value=$('fPass2').value=$('fCode').value='';forgotView(false);setToken(j.token);await load();toast(T.fgDone)})});
 function setToken(t){TOKEN=t;try{localStorage.setItem(TKEY,t)}catch(e){}}
 function signOut(){TOKEN=null;ME=null;try{localStorage.removeItem(TKEY)}catch(e){}$('dash').hidden=true;$('auth').hidden=false;$('logout').hidden=true}
 $('logout').onclick=$('dOut').onclick=()=>{signOut();toast(T.bye);window.scrollTo(0,0)};

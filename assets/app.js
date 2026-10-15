@@ -22,7 +22,7 @@ const T=EN?{
   copied:'Copied',copyHand:'Select the text and copy it manually',ind:'Individual',
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
   reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
-  prices:'Full price list',hi:n=>`Welcome, ${n}`,co:'Company',stampName:'BASIRA FOR TRANSACTIONS',stampCity:'DOHA · QATAR',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
+  prices:'Full price list',hi:n=>`Welcome, ${n}`,waAsk:(n,c)=>`Hello, I would like to ask about this service: ${n} (${c}).`,register:'Register',regForQuote:'Please register your details first, so we can prepare the quote in your name.',co:'Company',stampName:'BASIRA FOR TRANSACTIONS',stampCity:'DOHA · QATAR',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
   sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service or quote',faq:'Common questions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
@@ -39,7 +39,7 @@ const T=EN?{
   copied:'تم النسخ',copyHand:'حدد النص وانسخه يدوياً',ind:'فرد',
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
-  prices:'قائمة الأسعار الكاملة',hi:n=>`أهلاً ${n}`,co:'الشركة',stampName:'بصيرة للمعاملات ذ.م.م',stampCity:'الدوحة · قطر',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
+  prices:'قائمة الأسعار الكاملة',hi:n=>`أهلاً ${n}`,waAsk:(n,c)=>`السلام عليكم، أريد الاستفسار عن خدمة: ${n} (${c}).`,register:'تسجيل',regForQuote:'سجّل بياناتك أولاً لنجهّز عرض السعر باسمك.',co:'الشركة',stampName:'بصيرة للمعاملات ذ.م.م',stampCity:'الدوحة · قطر',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
   sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة أو عرض سعر',faq:'أسئلة شائعة'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
@@ -218,6 +218,7 @@ function openSvc(code){const s=byCode[code];if(!s||!dlg)return;const d=s.d||{};
    ${s.kind!=='consult'?`<p class="mute sm">${T.govFee}</p>`:''}`;
   const a=$('dlgAdd');a.textContent=cart.has(code)?T.inCalc:T.addCalc;a.onclick=()=>{if(!cart.has(code))toggleCart(code);a.textContent=T.inCalc};
   $('dlgReq').onclick=()=>{if(!cart.has(code))cart.set(code,1);renderCart();render();renderCon();$('fSvc').value=cartText();dlg.close();if(location.hash==='#request')route();else location.hash='request'};
+  $('dlgWa')&&($('dlgWa').href=`https://wa.me/${WA}?text=`+encodeURIComponent(T.waAsk(s.n,s.c)+(REG?'\n'+REG.name+' · '+REG.phone:'')));
   if(dlg.showModal){if(!dlg.open)dlg.showModal()}else dlg.setAttribute('open','')}
 if(dlg){$('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}
 
@@ -267,6 +268,7 @@ const fType=$('fType'),fPlan=$('fPlan');
 function syncPlan(){const ind=fType.value==='ind';if(ind)fPlan.value='';fPlan.disabled=ind}
 fType.addEventListener('change',syncPlan);fPlan.addEventListener('change',()=>{if(fPlan.value)fType.value='org'});syncPlan();
 $('f').addEventListener('submit',async e=>{e.preventDefault();
+  if(!REG&&$('reg')){quoteWaiting=true;$('regLead').textContent=T.regForQuote;openReg();return}
   const n=$('fName').value.trim(),ph=$('fPhone').value.replace(/\s/g,''),sv=$('fSvc').value.trim(),em=$('fMail').value.trim();
   let ok=true;
   $('eName').textContent=n?'':T.eName;if(!n)ok=false;
@@ -318,13 +320,16 @@ function stampSVG(){const c='#2f5d8a';
 // ---- visitor sign-up: name and mobile required, email and company optional; remembered in this browser ----
 const REG_KEY='basira_reg';let REG=null;
 try{REG=JSON.parse(localStorage.getItem(REG_KEY)||'null')}catch(e){}
-function applyReg(){if(!REG)return;const w=$('who');if(w){w.textContent=T.hi(REG.name.split(' ')[0]);$('whoLi').hidden=false}
+// visitors may browse without registering (the owner's choice); a quote still needs the registration first
+const GUEST_KEY='basira_guest';let GUEST=false;try{GUEST=sessionStorage.getItem(GUEST_KEY)==='1'}catch(e){}
+let quoteWaiting=false;
+function applyReg(){if(!REG){if(GUEST&&$('who')){$('who').textContent=T.register;$('whoLi').hidden=false}return}const w=$('who');if(w){w.textContent=T.hi(REG.name.split(' ')[0]);$('whoLi').hidden=false}
   if(!$('fName').value)$('fName').value=REG.name;if(!$('fPhone').value)$('fPhone').value=REG.phone;if(!$('fMail').value&&REG.email)$('fMail').value=REG.email;
   if(REG.company){fType.value='org';syncPlan()}}
 const reg=$('reg');
 function openReg(){if(!reg)return;if(REG){$('rName').value=REG.name;$('rPhone').value=REG.phone;$('rMail').value=REG.email||'';$('rCo').value=REG.company||'';$('rOk').checked=true}
   if(reg.showModal){if(!reg.open)reg.showModal()}else reg.setAttribute('open','')}
-if(reg){reg.addEventListener('cancel',e=>{if(!REG)e.preventDefault()});
+if(reg){reg.addEventListener('cancel',e=>{if(!REG&&!GUEST)e.preventDefault()});
   $('who').onclick=openReg;
   $('regF').addEventListener('submit',e=>{e.preventDefault();
     const n=$('rName').value.trim(),ph=$('rPhone').value.replace(/\s/g,''),em=$('rMail').value.trim(),co=$('rCo').value.trim();let ok=true;
@@ -336,12 +341,15 @@ if(reg){reg.addEventListener('cancel',e=>{if(!REG)e.preventDefault()});
     const changed=!REG||REG.phone!==ph;REG={name:n,phone:ph,email:em,company:co,legal:'1.0',at:new Date().toISOString()};
     try{localStorage.setItem(REG_KEY,JSON.stringify(REG))}catch(err){}
     if(CFG.API&&changed)fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',name:n,phone:ph,email:em,company:co,accept:true,lang:EN?'en':'ar',page:location.href,hp:$('rHp').value})}).catch(()=>{});
-    $('fName').value='';$('fPhone').value='';$('fMail').value='';applyReg();reg.close();toast(T.hi(n.split(' ')[0]))});
-  if(!REG)openReg()}
+    const keep=quoteWaiting&&{n:$('fName').value,p:$('fPhone').value,m:$('fMail').value};
+    $('fName').value='';$('fPhone').value='';$('fMail').value='';applyReg();reg.close();toast(T.hi(n.split(' ')[0]));
+    if(keep){quoteWaiting=false;if(keep.n)$('fName').value=keep.n;if(keep.p)$('fPhone').value=keep.p;if(keep.m)$('fMail').value=keep.m;$('f').requestSubmit?$('f').requestSubmit():$('f').dispatchEvent(new Event('submit',{cancelable:true}))}});
+  $('rGuest').onclick=()=>{GUEST=true;quoteWaiting=false;try{sessionStorage.setItem(GUEST_KEY,'1')}catch(err){}reg.close();applyReg()};
+  if(!REG&&!GUEST)openReg()}
 applyReg();
 $('printQ')&&($('printQ').onclick=()=>window.print());
 $('copyMsg').onclick=()=>copy($('out').textContent,$('out'));
-$('waFab')&&($('waFab').href='https://wa.me/'+WA);
+$('waFab')&&($('waFab').href='https://wa.me/'+WA);$('mbWa')&&($('mbWa').href='https://wa.me/'+WA);
 $('copyPh').onclick=()=>copy('+'+WA,$('ph'));
 Object.entries(SAMPLE).forEach(([k,q])=>cart.set(k,q));
 const areas=$('areas');

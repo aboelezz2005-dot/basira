@@ -8,9 +8,12 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#3f5566">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%233f5566'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23c9a36a'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261015l">
+<link rel="stylesheet" href="assets/style.css?v=20261015m">
 </head>
 <body class="portal-page">
 <header class="top"><div class="wrap">
@@ -27,7 +30,7 @@
     <label><input type="radio" name="acct" value="client" checked> عميل</label>
     <label><input type="radio" name="acct" value="admin"> الإدارة</label></div>
   <form id="adminF" class="panel" hidden novalidate>
-    <p class="full mute sm">دخول المدير والموظفين إلى لوحة الإدارة. أول دخول للمدير: اسم المستخدم 123 وكلمة المرور 123، ثم يطلب النظام تغييرهما.</p>
+    <p class="full mute sm">دخول المدير والموظفين إلى لوحة الإدارة.</p>
     <label class="full">اسم المستخدم<input id="aUser" autocomplete="username" dir="ltr" required></label>
     <label class="full">كلمة المرور<input id="aPass" type="password" autocomplete="current-password" dir="ltr" required></label>
     <span class="err full" id="aErr" role="alert"></span>
@@ -39,7 +42,19 @@
     <label class="full">اسم المستخدم أو رقم الجوال<input id="lUser" autocomplete="username" dir="ltr" required></label>
     <label class="full">كلمة المرور<input id="lPass" type="password" autocomplete="current-password" dir="ltr" required></label>
     <span class="err full" id="lErr" role="alert"></span>
-    <div class="contact full"><button class="btn pri" type="submit">دخول</button><a class="sm" id="forgot" href="https://wa.me/97472232609" target="_blank" rel="noopener">نسيت كلمة المرور؟ راسلنا على واتساب</a></div>
+    <div class="contact full"><button class="btn pri" type="submit">دخول</button><button class="linkbtn sm" type="button" id="forgot">نسيت كلمة المرور؟</button></div>
+  </form>
+  <form id="forgotF" class="panel" hidden novalidate>
+    <h3 class="full">استعادة كلمة المرور</h3>
+    <p class="full mute sm" id="fgP">اكتب اسم المستخدم أو رقم الجوال، وسنرسل رمزاً من 6 أرقام إلى البريد المسجل في حسابك.</p>
+    <label class="full">اسم المستخدم أو رقم الجوال<input id="fUser" autocomplete="username" dir="ltr" required></label>
+    <div class="full g2" id="fgStep2" hidden>
+      <label class="full">الرمز المرسل إلى بريدك<input id="fCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" dir="ltr"></label>
+      <label>كلمة المرور الجديدة<input id="fPass" type="password" autocomplete="new-password" dir="ltr" minlength="8"></label>
+      <label>تأكيد كلمة المرور<input id="fPass2" type="password" autocomplete="new-password" dir="ltr" minlength="8"></label>
+    </div>
+    <span class="err full" id="fErr" role="alert"></span>
+    <div class="contact full"><button class="btn pri" type="submit" id="fBtn">أرسل الرمز</button><button class="linkbtn sm" type="button" id="fBack">رجوع إلى الدخول</button><a class="sm" href="https://wa.me/97472232609" target="_blank" rel="noopener">لا يوجد بريد في حسابك؟ راسلنا على واتساب</a></div>
   </form>
   <form id="signF" class="panel" hidden novalidate>
     <h3 class="full">1. بيانات المسؤول</h3>
@@ -59,7 +74,7 @@
     <label>تأكيد كلمة المرور<input id="sPass2" type="password" autocomplete="new-password" dir="ltr" required></label>
     <h3 class="full">4. الاتفاقية والتفويض</h3>
     <div class="legalbox full"><p>بإنشاء الحساب توافق على المستندات التالية، وهي متاحة للقراءة والطباعة في أي وقت:</p><ul><li>اتفاقية الخدمة وشروط الاستخدام</li><li>حدود المسؤولية: لا نتحمل قرارات الجهات الحكومية أو تأخيرها، ولا نتائج البيانات غير الصحيحة</li><li>التفويض بإنجاز المعاملات التي تطلبها نيابة عنك أو عن منشأتك</li><li>البيانات والسرية: لا يطّلع على بياناتك إلا المختص، ولا نبيعها</li></ul><a href="legal.html" target="_blank" rel="noopener">اقرأ المستندات كاملة</a></div>
-    <label class="agree full"><input type="checkbox" id="sOk"> قرأت المستندات وأوافق عليها، وأفوّض بصيرة للمعاملات بإنجاز المعاملات التي أطلبها نيابة عني أو عن المنشأة التي أمثلها.</label>
+    <label class="agree full"><input type="checkbox" id="sOk"><span class="agt">قرأت المستندات وأوافق عليها، وأفوّض بصيرة للمعاملات بإنجاز المعاملات التي أطلبها نيابة عني أو عن المنشأة التي أمثلها.</span></label>
     <label class="full">اكتب اسمك الكامل كتوقيع<input id="sSign" autocomplete="name"></label>
     <input id="sHp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <span class="err full" id="sErr" role="alert"></span>
@@ -69,7 +84,7 @@
 </section>
 
 <section id="dash" hidden>
-  <div class="dhead"><div><h1 id="dName"></h1><p class="mute sm" id="dMeta"></p></div><div class="contact"><button type="button" class="btn sm pri" id="goNew">طلب خدمة جديدة</button><button type="button" class="btn sm ghost" id="dNewCli">تسجيل عميل جديد</button><button type="button" class="btn sm ghost" id="dOut"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg>خروج</button></div></div>
+  <div class="dhead"><div><h2 id="dName" class="h1"></h2><p class="mute sm" id="dMeta"></p></div><div class="contact"><button type="button" class="btn sm pri" id="goNew">طلب خدمة جديدة</button><button type="button" class="btn sm ghost" id="dNewCli">تسجيل عميل جديد</button><button type="button" class="btn sm ghost" id="dOut"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg>خروج</button></div></div>
   <nav class="ptabs scroll" id="dTabs" role="tablist">
     <button type="button" role="tab" data-p="home" aria-selected="true">نظرة عامة</button>
     <button type="button" role="tab" data-p="work" aria-selected="false">طلباتي ومعاملاتي</button>
@@ -125,7 +140,7 @@
       <label>اسم المستخدم على البوابة<input id="cUser" dir="ltr" autocomplete="off" required></label>
       <label>كلمة المرور على البوابة<input id="cPass" type="password" dir="ltr" autocomplete="new-password" required></label>
       <label class="full">ملاحظة (اختياري)<input id="cNote"></label>
-      <label class="agree full"><input type="checkbox" id="cOk"> أفوّض بصيرة للمعاملات باستخدام هذه البيانات لإنجاز الخدمات التي أطلبها فقط، وأوافق على بند «بيانات الدخول إلى البوابات الحكومية» في المستندات القانونية.</label>
+      <label class="agree full"><input type="checkbox" id="cOk"><span class="agt">أفوّض بصيرة للمعاملات باستخدام هذه البيانات لإنجاز الخدمات التي أطلبها فقط، وأوافق على بند «بيانات الدخول إلى البوابات الحكومية» في المستندات القانونية.</span></label>
       <span class="err full" id="cErr" role="alert"></span>
       <div class="contact full"><button class="btn pri" type="submit">حفظ مشفّراً</button></div>
     </form>
@@ -144,10 +159,10 @@
 </div></main>
 <footer><div class="wrap fc"><b>للتواصل</b><a href="tel:+97472232609" dir="ltr">☎ +974 72232609</a><a href="https://wa.me/97472232609" target="_blank" rel="noopener">واتساب</a><a href="mailto:baseeratactions@gmail.com" dir="ltr">✉ baseeratactions@gmail.com</a></div><div class="wrap"><span>بصيرة للمعاملات ذ.م.م · الدوحة، قطر</span><span><a href="legal.html">المستندات القانونية</a> · <a href="privacy.html">الخصوصية</a></span></div></footer>
 <div class="toast" id="toast" hidden></div>
-<script src="assets/config.js?v=20261015l"></script>
-<script src="assets/demo.js?v=20261015l"></script>
-<script src="assets/data.js?v=20261015l"></script>
-<script src="assets/details.js?v=20261015l"></script>
-<script src="assets/portal.js?v=20261015l"></script>
+<script src="assets/config.js?v=20261015m"></script>
+<script src="assets/demo.js?v=20261015m"></script>
+<script src="assets/data.js?v=20261015m"></script>
+<script src="assets/details.js?v=20261015m"></script>
+<script src="assets/portal.js?v=20261015m"></script>
 </body>
 </html>

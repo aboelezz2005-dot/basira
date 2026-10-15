@@ -39,7 +39,7 @@ function mkSheet(name){const data=DB.sheets[name]=DB.sheets[name]||[];return {
   getRange:(r,c,nr,nc)=>({setValues(v){const d=DB.sheets[name];for(let i=0;i<nr;i++){d[r-1+i]=d[r-1+i]||[];for(let j=0;j<nc;j++)d[r-1+i][c-1+j]=v[i][j]}return this},
     getValues(){const d=DB.sheets[name],o=[];for(let i=0;i<nr;i++){const row=[];for(let j=0;j<nc;j++)row.push(((d[r-1+i]||[])[c-1+j])??'');o.push(row)}return o},setFontWeight(){return this},setNumberFormat(){return this}}),
   setFrozenRows(){},deleteRow:i=>DB.sheets[name].splice(i-1,1)}}
-const cache={};
+const cache={};let outbox=[];
 const fmtDate=(d,tz,f)=>{const p=n=>String(n).padStart(2,'0'),s=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;return /HH/.test(f)?`${s} ${p(d.getHours())}:${p(d.getMinutes())}`:s};
 const blob=(bytes,mime,name)=>{if(typeof bytes==='string')bytes=signed(enc(bytes));return {getName:()=>name,getContentType:()=>mime,getBytes:()=>bytes,getDataAsString:()=>new TextDecoder().decode(toU8(bytes))}};
 function driveFile(id){const f=DB.drive[id];if(!f)throw new Error('no file');return {getId:()=>id,getUrl:()=>'#demo-file-'+id,getBlob:()=>blob(unb64(f.data),f.mime,f.name),setTrashed:t=>{f.trashed=t}}}
@@ -56,20 +56,22 @@ const GAS={
   ContentService:{MimeType:{JSON:'json'},createTextOutput:t=>({setMimeType(){return this},t})},
   LockService:{getScriptLock:()=>({waitLock(){},releaseLock(){}})},
   CacheService:{getScriptCache:()=>({get:k=>cache[k]??null,put:(k,v)=>{cache[k]=v}})},
-  MailApp:{sendEmail:o=>{DB.mails.push({to:o.to,subject:o.subject,at:fmtDate(new Date(),'','HH')});DB.mails=DB.mails.slice(-50)},getRemainingDailyQuota:()=>100},
+  MailApp:{sendEmail:o=>{outbox.push({to:o.to,subject:o.subject});DB.mails.push({to:o.to,subject:o.subject,at:fmtDate(new Date(),'','HH')});DB.mails=DB.mails.slice(-50)},getRemainingDailyQuota:()=>100},
   DriveApp:{createFolder:n=>{const k='root';DB.folders[k]={name:n,parent:''};return folder(k)},getFolderById:id=>{if(!DB.folders[id])throw new Error('no folder');return folder(id)},getFileById:driveFile},
   ScriptApp:{getProjectTriggers:()=>[],newTrigger:()=>({timeBased(){return this},everyDays(){return this},atHour(){return this},create(){}}),deleteTrigger(){}},
   Logger:{log(){}}
 };
 let SRV=null,ready=null;
 function server(){if(ready)return ready;ready=new Promise((res,rej)=>{const s=document.createElement('script');
-  s.src=document.currentScript?'':'';const base=(document.querySelector('script[src*="assets/demo.js"]')||{}).src||'assets/demo.js';s.src=base.replace(/demo\.js.*$/,'demo-server.js?v=20261015l');
+  s.src=document.currentScript?'':'';const base=(document.querySelector('script[src*="assets/demo.js"]')||{}).src||'assets/demo.js';s.src=base.replace(/demo\.js.*$/,'demo-server.js?v=20261015m');
   s.onload=()=>{SRV=window.BasiraDemoServer(GAS.SpreadsheetApp,GAS.PropertiesService,GAS.Utilities,GAS.Session,GAS.ContentService,GAS.LockService,GAS.CacheService,GAS.MailApp,GAS.DriveApp,GAS.ScriptApp,GAS.Logger);
     load();if(!DB||!DB.seeded){DB={sheets:{},props:{OFFICE_EMAIL:'demo@basira.local'},drive:{},folders:{},mails:[]};SRV.setup();seed();DB.seeded=1;persist()}res()};
   s.onerror=rej;document.head.appendChild(s)});return ready}
 const realFetch=window.fetch.bind(window);
 window.fetch=async(url,opt)=>{if(url!=='demo')return realFetch(url,opt);await server();load();
-  const out=SRV.doPost({postData:{contents:opt&&opt.body||'{}'}});persist();const txt=out.t;
+  outbox=[];const out=SRV.doPost({postData:{contents:opt&&opt.body||'{}'}});persist();const txt=out.t;
+  // no email leaves the demo: show what would have been sent (the reset code, for example)
+  const sent=outbox.filter(m=>!/demo@basira/.test(m.to));if(sent.length)note(sent.map(m=>(EN?'Email to ':'بريد إلى ')+m.to+': '+m.subject).join(' · '));
   return {ok:true,status:200,json:async()=>JSON.parse(txt),text:async()=>txt}};
 
 // ---- sample data (fictional companies, clearly marked) ----
@@ -123,6 +125,8 @@ function seed(){const S=SRV,day=n=>{const d=new Date();d.setDate(d.getDate()+n);
   act(sara,-2,'11:00','create','Transactions',t3.id,c1.id,'إضافة معاملة: تجديد إقامة موظف · بانتظار المستندات');
 }
 
+function note(t){let el=document.getElementById('demoNote');if(!el){el=document.createElement('div');el.id='demoNote';el.className='demonote';el.setAttribute('role','status');document.body.appendChild(el)}
+  el.innerHTML='<b>'+(EN?'Demo, not sent: ':'تجربة، لم يُرسل فعلاً: ')+'</b>';el.appendChild(document.createTextNode(t));el.hidden=false;clearTimeout(note.t);note.t=setTimeout(()=>el.hidden=true,12000)}
 // ---- banner ----
 function banner(){const b=document.createElement('div');b.className='demobar';b.setAttribute('role','note');
   b.innerHTML=EN?'<b>Demo version</b> <span>Sample data saved in this browser only. Nothing is sent to the office.</span> <button type="button" data-d="reset">Reset sample data</button> <button type="button" data-d="exit">Leave the demo</button>'
