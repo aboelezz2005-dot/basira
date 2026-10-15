@@ -22,7 +22,7 @@ const T=EN?{
   copied:'Copied',copyHand:'Select the text and copy it manually',ind:'Individual',
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
   reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
-  prices:'Full price list',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
+  prices:'Full price list',hi:n=>`Welcome, ${n}`,co:'Company',stampName:'BASIRA FOR TRANSACTIONS',stampCity:'DOHA · QATAR',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
   sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service or quote',faq:'Common questions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
@@ -39,7 +39,7 @@ const T=EN?{
   copied:'تم النسخ',copyHand:'حدد النص وانسخه يدوياً',ind:'فرد',
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
-  prices:'قائمة الأسعار الكاملة',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
+  prices:'قائمة الأسعار الكاملة',hi:n=>`أهلاً ${n}`,co:'الشركة',stampName:'بصيرة للمعاملات ذ.م.م',stampCity:'الدوحة · قطر',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
   sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة أو عرض سعر',faq:'أسئلة شائعة'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
@@ -276,8 +276,8 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
   const agree=!$('fOk')||$('fOk').checked;$('eOk')&&($('eOk').textContent=agree?'':T.eOk);if(!agree)ok=false;
   if(!ok)return;
   const via=$('fVia')?$('fVia').value:'';const plan=fPlan.value?fPlan.options[fPlan.selectedIndex].text:'',typeTxt=fType.options[fType.selectedIndex].text;
-  const msg=`${T.msgHead}\n${T.lName}: ${n}\n${T.lPhone}: ${ph}\n${em?T.lMail+': '+em+'\n':''}${T.lType}: ${typeTxt}\n${via?T.lVia+': '+via+'\n':''}${plan?T.lPlan+': '+plan+'\n':''}${T.lSvc}:\n${sv}`;
-  const Q=buildQuote({n,ph,em,typeTxt,plan,via,sv});const full=msg+'\n\n'+Q.text;
+  const msg=`${T.msgHead}\n${T.lName}: ${n}\n${REG&&REG.company?T.co+': '+REG.company+'\n':''}${T.lPhone}: ${ph}\n${em?T.lMail+': '+em+'\n':''}${T.lType}: ${typeTxt}\n${via?T.lVia+': '+via+'\n':''}${plan?T.lPlan+': '+plan+'\n':''}${T.lSvc}:\n${sv}`;
+  const Q=buildQuote({n,ph,em,typeTxt,plan,via,sv,co:(REG&&REG.company)||''});const full=msg+'\n\n'+Q.text;
   $('qdoc').innerHTML=Q.html;$('out').textContent=full;$('sendWa').href=`https://wa.me/${WA}?text=`+encodeURIComponent(full);
   $('sendMail').href=`mailto:${CFG.EMAIL||'baseeratactions@gmail.com'}?${em?'cc='+encodeURIComponent(em)+'&':''}subject=${encodeURIComponent(T.q.subj+' '+Q.no+' - '+n)}&body=${encodeURIComponent(full)}`;
   const st=$('sendState');$('outWrap').hidden=false;
@@ -297,13 +297,48 @@ function buildQuote(c){const d=new Date(),pad=x=>String(x).padStart(2,'0');
   c.sv.split('\n').map(x=>x.trim()).filter(Boolean).forEach(line=>{const m=line.match(/\(([A-Z]{2}-\d{2})\)(?:\s*×\s*(\d+))?/);const s=m&&byCode[m[1]];
     if(!s){custom.push(line);return}const q=Math.max(1,parseInt(m[2])||1);sum+=s.p*q;if(s.from)from=true;rows.push({s,q})});
   const cur=T.cur;
-  const html=`<div class="qhead"><div><b>${T.q.title}</b><span>${EN?'Basira for Transactions LLC':'بصيرة للمعاملات ذ.م.م'} · <span dir="ltr">${esc(CFG.PHONE||'+974 72232609')}</span> · ${esc(CFG.EMAIL||'baseeratactions@gmail.com')}</span></div><div class="num">${T.q.no}: ${no}<br>${T.q.date}: ${date}</div></div>
-   <p><b>${T.q.client}:</b> ${esc(c.n)} · <span dir="ltr">${esc(c.ph)}</span>${c.em?' · '+esc(c.em):''} · ${esc(c.typeTxt)}${c.plan?' · '+esc(c.plan):''}${c.via?' · '+T.lVia+': '+esc(c.via):''}</p>
+  const html=`<div class="qhead"><div class="qbrand">${LOGO}<div><b>${T.q.title}</b><span>${EN?'Basira for Transactions LLC':'بصيرة للمعاملات ذ.م.م'} · <span dir="ltr">${esc(CFG.PHONE||'+974 72232609')}</span> · ${esc(CFG.EMAIL||'baseeratactions@gmail.com')}</span></div></div><div class="num">${T.q.no}: ${no}<br>${T.q.date}: ${date}</div></div>
+   <p><b>${T.q.client}:</b> ${esc(c.n)}${c.co?' · '+T.co+': '+esc(c.co):''} · <span dir="ltr">${esc(c.ph)}</span>${c.em?' · '+esc(c.em):''} · ${esc(c.typeTxt)}${c.plan?' · '+esc(c.plan):''}${c.via?' · '+T.lVia+': '+esc(c.via):''}</p>
    ${rows.length?`<div class="ptable"><table><thead><tr><th>${T.q.svc}</th><th>${T.q.qty}</th><th>${T.q.fee}</th><th>${T.q.total}</th></tr></thead><tbody>${rows.map(({s,q})=>`<tr><td>${esc(s.n)} <span class="code">${s.c}</span></td><td class="num">${q}</td><td class="num">${s.from?T.from+' ':''}${fmt(s.p)}</td><td class="num">${fmt(s.p*q)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3"><b>${T.q.sum}</b></td><td class="num"><b>${from?T.from+' ':''}${fmt(sum)} ${cur}</b></td></tr></tfoot></table></div>`:''}
    ${custom.length?`<p><b>${T.q.custom}:</b><br>${custom.map(esc).join('<br>')}</p>`:''}
-   <ul class="qnotes"><li>${T.q.gov}</li>${from?`<li>${T.q.startNote}</li>`:''}<li>${T.q.prelim}</li><li>${T.q.valid}</li></ul>`;
+   <ul class="qnotes"><li>${T.q.gov}</li>${from?`<li>${T.q.startNote}</li>`:''}<li>${T.q.prelim}</li><li>${T.q.valid}</li></ul><div class="qsign">${stampSVG()}</div>`;
   const text=[`${T.q.title} ${no} (${date})`,...rows.map(({s,q})=>`- ${s.n} (${s.c}) × ${q}: ${s.from?T.from+' ':''}${fmt(s.p*q)} ${cur}`),...(custom.length?[T.q.custom+':',...custom.map(x=>'- '+x)]:[]),...(rows.length?[`${T.q.sum}: ${from?T.from+' ':''}${fmt(sum)} ${cur}`]:[]),T.q.gov,T.q.valid].join('\n');
   return {no,html,text}}
+// brand mark and a round company stamp, drawn in SVG so they print sharply on the quote
+const LOGO='<svg width="44" height="44" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#c9a36a" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="#3f5566" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#c9a36a"/></svg>';
+function stampSVG(){const c='#2f5d8a';
+  return `<svg class="stamp" viewBox="0 0 200 200" width="150" height="150" role="img" aria-label="${T.stampName}"><defs><path id="stTop" d="M32 100 A68 68 0 0 1 168 100"/><path id="stBot" d="M20 100 A80 80 0 0 0 180 100"/></defs>
+   <g fill="none" stroke="${c}"><circle cx="100" cy="100" r="94" stroke-width="4"/><circle cx="100" cy="100" r="86" stroke-width="1.5"/><circle cx="100" cy="100" r="52" stroke-width="1.5"/></g>
+   <text fill="${c}" font-family="Readex Pro,Tajawal,sans-serif" font-weight="700" font-size="${EN?11.5:15}" letter-spacing="${EN?1:0}"><textPath href="#stTop" startOffset="50%" text-anchor="middle">${T.stampName}</textPath></text>
+   <text fill="${c}" font-family="Readex Pro,Tajawal,sans-serif" font-weight="700" font-size="${EN?12:15}" letter-spacing="${EN?2:0}"><textPath href="#stBot" startOffset="50%" text-anchor="middle">${T.stampCity}</textPath></text>
+   <circle cx="34" cy="100" r="3" fill="${c}"/><circle cx="166" cy="100" r="3" fill="${c}"/>
+   <path d="M70 94 Q100 70 130 94 Q100 118 70 94Z" fill="none" stroke="${c}" stroke-width="4"/><circle cx="100" cy="94" r="8" fill="${c}"/>
+   <text x="100" y="132" fill="${c}" text-anchor="middle" font-family="Readex Pro,Tajawal,sans-serif" font-weight="700" font-size="11">${EN?'EST. 2026':'تأسست 2026'}</text></svg>`}
+
+// ---- visitor sign-up: name and mobile required, email and company optional; remembered in this browser ----
+const REG_KEY='basira_reg';let REG=null;
+try{REG=JSON.parse(localStorage.getItem(REG_KEY)||'null')}catch(e){}
+function applyReg(){if(!REG)return;const w=$('who');if(w){w.textContent=T.hi(REG.name.split(' ')[0]);$('whoLi').hidden=false}
+  if(!$('fName').value)$('fName').value=REG.name;if(!$('fPhone').value)$('fPhone').value=REG.phone;if(!$('fMail').value&&REG.email)$('fMail').value=REG.email;
+  if(REG.company){fType.value='org';syncPlan()}}
+const reg=$('reg');
+function openReg(){if(!reg)return;if(REG){$('rName').value=REG.name;$('rPhone').value=REG.phone;$('rMail').value=REG.email||'';$('rCo').value=REG.company||'';$('rOk').checked=true}
+  if(reg.showModal){if(!reg.open)reg.showModal()}else reg.setAttribute('open','')}
+if(reg){reg.addEventListener('cancel',e=>{if(!REG)e.preventDefault()});
+  $('who').onclick=openReg;
+  $('regF').addEventListener('submit',e=>{e.preventDefault();
+    const n=$('rName').value.trim(),ph=$('rPhone').value.replace(/\s/g,''),em=$('rMail').value.trim(),co=$('rCo').value.trim();let ok=true;
+    $('erName').textContent=n?'':T.eName;if(!n)ok=false;
+    const phOk=/^(\+?974)?[3567]\d{7}$/.test(ph);$('erPhone').textContent=phOk?'':T.ePhone;if(!phOk)ok=false;
+    const emOk=!em||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);$('erMail').textContent=emOk?'':T.eMail;if(!emOk)ok=false;
+    $('erOk').textContent=$('rOk').checked?'':T.eOk;if(!$('rOk').checked)ok=false;
+    if(!ok)return;
+    const changed=!REG||REG.phone!==ph;REG={name:n,phone:ph,email:em,company:co,at:new Date().toISOString()};
+    try{localStorage.setItem(REG_KEY,JSON.stringify(REG))}catch(err){}
+    if(CFG.API&&changed)fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',name:n,phone:ph,email:em,company:co,lang:EN?'en':'ar',page:location.href,hp:$('rHp').value})}).catch(()=>{});
+    $('fName').value='';$('fPhone').value='';$('fMail').value='';applyReg();reg.close();toast(T.hi(n.split(' ')[0]))});
+  if(!REG)openReg()}
+applyReg();
 $('printQ')&&($('printQ').onclick=()=>window.print());
 $('copyMsg').onclick=()=>copy($('out').textContent,$('out'));
 $('waFab')&&($('waFab').href='https://wa.me/'+WA);

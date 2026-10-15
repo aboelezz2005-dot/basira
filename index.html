@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%2314284b'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23e0a12b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261015g">
+<link rel="stylesheet" href="assets/style.css?v=20261015h">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -26,6 +26,7 @@
     <li><a href="#how">كيف نعمل</a></li>
     <li><a href="#faq">الأسئلة الشائعة</a></li>
     <li><a href="#request" class="navcta">اطلب خدمة</a></li>
+    <li hidden id="whoLi"><button type="button" class="topbtn who" id="who" title="تعديل بياناتي"></button></li>
     <li><a href="en/index.html" lang="en" class="lang">English</a></li>
   </ul></nav>
 </div></header>
@@ -214,6 +215,16 @@
 
 <footer><div class="wrap fc"><b>للتواصل</b><a href="tel:+97472232609" dir="ltr">☎ +974 72232609</a><a href="https://wa.me/97472232609" target="_blank" rel="noopener">واتساب</a><a href="mailto:baseeratactions@gmail.com" dir="ltr">✉ baseeratactions@gmail.com</a></div><div class="wrap"><span>بصيرة للمعاملات ذ.م.م · الدوحة، قطر</span><span><a href="en/index.html" lang="en">English</a> · <a href="privacy.html">سياسة الخصوصية</a> · <a href="crm.html">دخول الموظفين</a></span><span><a href="#prices">الخدمات والأسعار</a> · <a href="#packages">باقات الشركات</a> · <a href="#about">تعرّف إلى بصيرة</a></span><span>الأسعار سارية من 2026 وقابلة للمراجعة. القرار النهائي ومدة المعاملة من اختصاص الجهة الحكومية.</span></div></footer>
 
+<dialog id="reg" aria-labelledby="regT"><form class="dlg regf" id="regF" novalidate>
+  <div class="reghead"><svg width="40" height="40" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#c9a36a" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#c9a36a"/></svg><div><h3 id="regT">أهلاً بك في بصيرة للمعاملات</h3><p class="mute sm">سجّل بياناتك مرة واحدة لتتصفح الخدمات والأسعار، ويُجهَّز عرض السعر باسمك تلقائياً.</p></div></div>
+  <label>الاسم<input id="rName" required autocomplete="name"><span class="err" id="erName"></span></label>
+  <label>رقم الجوال<input id="rPhone" inputmode="tel" required placeholder="مثال: 5XXXXXXX" dir="ltr"><span class="err" id="erPhone"></span></label>
+  <label>البريد الإلكتروني (اختياري)<input id="rMail" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" dir="ltr"><span class="err" id="erMail"></span></label>
+  <label>اسم الشركة (اختياري)<input id="rCo" autocomplete="organization"></label>
+  <input id="rHp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <label class="agree"><input type="checkbox" id="rOk"> أوافق على <a href="privacy.html" target="_blank">سياسة الخصوصية</a> واستخدام بياناتي للتواصل معي.<span class="err" id="erOk"></span></label>
+  <div class="contact"><button class="btn pri" type="submit">ادخل لتصفح الخدمات</button><a href="en/index.html" lang="en" class="mute sm">English</a></div>
+</form></dialog>
 <dialog id="dlg" aria-labelledby="dlgT"><div class="dlg">
   <button class="x dx" id="dlgX" type="button" aria-label="إغلاق">×</button>
   <div id="dlgBody"></div>
@@ -221,9 +232,9 @@
 </div></dialog>
 <a class="wa-fab" id="waFab" href="https://wa.me/97472232609" target="_blank" rel="noopener" aria-label="تواصل معنا على واتساب" title="تواصل معنا على واتساب"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg></a>
 <div class="toast" id="toast" hidden></div>
-<script src="assets/config.js?v=20261015g"></script>
-<script src="assets/data.js?v=20261015g"></script>
-<script src="assets/details.js?v=20261015g"></script>
-<script src="assets/app.js?v=20261015g"></script>
+<script src="assets/config.js?v=20261015h"></script>
+<script src="assets/data.js?v=20261015h"></script>
+<script src="assets/details.js?v=20261015h"></script>
+<script src="assets/app.js?v=20261015h"></script>
 </body>
 </html>

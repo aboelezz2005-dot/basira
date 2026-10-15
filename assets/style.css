@@ -368,3 +368,14 @@ ul.promises span{color:var(--mute);font-size:14.5px}
   #outWrap{border:0;padding:0;box-shadow:none}
   #qdoc{border:0;box-shadow:none}
 }
+/* visitor sign-up and quote letterhead */
+#reg{border:0;border-radius:18px;padding:0;max-width:min(460px,calc(100vw - 24px));width:100%;background:var(--surface);color:var(--ink)}
+#reg::backdrop{background:rgba(20,30,45,.55);backdrop-filter:blur(3px)}
+.regf{display:flex;flex-direction:column;gap:10px;padding:22px}
+.reghead{display:flex;gap:12px;align-items:flex-start;color:var(--navy)}
+.reghead h3{font-size:19px;color:var(--ink)}.reghead p{margin:4px 0 0}
+.topbtn.who{border:1px solid rgba(255,255,255,.35)}
+.topbtn.who::after{display:none}
+.qbrand{display:flex;gap:12px;align-items:center}
+.qsign{display:flex;justify-content:flex-end}
+.stamp{transform:rotate(-8deg);opacity:.88}
