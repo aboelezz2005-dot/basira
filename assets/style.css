@@ -2,21 +2,24 @@ html,body{margin:0}
 
 /* Layout: navy header band with a watchful "eye" mark, then a working catalog: filter chips + searchable service list, packages with monthly/annual switch, cost estimator, request form */
 :root{
-  --bg:#f6f7fb;--surface:#ffffff;--ink:#14213a;--mute:#5b6580;--line:#dde2ec;
-  --navy:#14284b;--navy-ink:#ffffff;--amber:#e0a12b;--amber-soft:#fff3d9;--amber-ink:#14284b;
-  --ok:#1f7a5a;--ok-soft:#e5f5ec;--chip:#eef2f9;
-  --gold-1:#fff3d1;--gold-2:#f3d27a;--gold-line:#c9961a;--gold-ink:#3b2a05;
+  --bg:#f7f8f6;--surface:#ffffff;--ink:#22303f;--mute:#667385;--line:#e3e7ea;
+  --navy:#2c4a63;--navy-ink:#ffffff;--amber:#d8a656;--amber-soft:#fbf3e4;--amber-ink:#2a2416;
+  --ok:#3a7d6a;--ok-soft:#e8f3ef;--chip:#eef2f4;
+  --hero-bg:linear-gradient(180deg,#eaf1f4 0%,#f7f8f6 100%);--hero-ink:#22303f;--hero-em:#b07a26;--hero-card:#ffffff;
+  --gold-1:#fdf7ea;--gold-2:#f2e0b8;--gold-line:#d0a65a;--gold-ink:#3b2a05;
   --display:'Readex Pro','Tajawal','Segoe UI',Tahoma,sans-serif;
   --body:'Tajawal','Segoe UI',Tahoma,sans-serif;
   --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0d1526;--surface:#141f36;--ink:#e8ecf5;--mute:#9aa5bf;--line:#26334f;
-  --navy:#0a1222;--navy-ink:#f2f4f9;--amber:#f0b445;--amber-soft:#2d2512;--amber-ink:#0d1526;
+  --navy:#1b2a3e;--navy-ink:#f2f4f9;--amber:#dcb06a;--amber-soft:#2d2716;--amber-ink:#1a1a14;
+  --hero-bg:linear-gradient(180deg,#16233a 0%,#0d1526 100%);--hero-ink:#e8ecf5;--hero-em:#dcb06a;--hero-card:#141f36;
   --ok:#5fcf9e;--ok-soft:#12302a;--chip:#1c2a47;--gold-1:#5a4413;--gold-2:#8a6a1e;--gold-line:#f0b445;--gold-ink:#fff6dd;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0d1526;--surface:#141f36;--ink:#e8ecf5;--mute:#9aa5bf;--line:#26334f;
-  --navy:#0a1222;--navy-ink:#f2f4f9;--amber:#f0b445;--amber-soft:#2d2512;--amber-ink:#0d1526;
+  --navy:#1b2a3e;--navy-ink:#f2f4f9;--amber:#dcb06a;--amber-soft:#2d2716;--amber-ink:#1a1a14;
+  --hero-bg:linear-gradient(180deg,#16233a 0%,#0d1526 100%);--hero-ink:#e8ecf5;--hero-em:#dcb06a;--hero-card:#141f36;
   --ok:#5fcf9e;--ok-soft:#12302a;--chip:#1c2a47;--gold-1:#5a4413;--gold-2:#8a6a1e;--gold-line:#f0b445;--gold-ink:#fff6dd;color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -290,3 +293,15 @@ footer .fc{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding-
 footer .fc b{font-family:var(--display);color:var(--amber)}
 footer .fc a{text-decoration:none;font-weight:700;background:rgba(255,255,255,.08);border-radius:999px;padding:4px 12px}
 footer .fc a:hover{background:rgba(255,255,255,.16)}
+/* calm palette: light hero, soft cards, gentle shadows */
+.hero{background:var(--hero-bg);color:var(--hero-ink)}
+.hero h1 em{color:var(--hero-em)}
+.hero p{opacity:1;color:var(--mute)}
+.hero .trust{opacity:1;color:var(--mute)}
+.promise{background:var(--hero-card);border:1px solid var(--line);box-shadow:0 4px 14px rgba(30,50,70,.05)}
+.promise b{color:var(--navy)}
+.tile,.gtile,.list,.panel,details,.costbox,.facts2>div,.step{box-shadow:0 2px 10px rgba(30,50,70,.04)}
+.tile:hover,.gtile:hover{box-shadow:0 10px 24px rgba(30,50,70,.09)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .promise b{color:var(--amber)}}
+:root[data-theme="dark"] .promise b{color:var(--amber)}
+footer .wrap.fc{justify-content:flex-start;opacity:1}
