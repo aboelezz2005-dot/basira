@@ -18,11 +18,12 @@ const T=EN?{
   onceNote:o=>`<b>One-time fees (setup and consultancy): ${fmt(o)} QAR</b> (not monthly)`,addHint:'Add services to compare paying per service with the packages.',
   pickAdded:'Added: ',eName:'Enter your name or company name.',ePhone:'Enter an 8-digit Qatar mobile starting with 3, 5, 6 or 7.',eSvc:'Write the service you need or add it from the calculator.',eMail:'Enter a valid email or leave it empty.',
   msgHead:'Hello, I would like to request a service from Basira.',lName:'Name',lPhone:'Mobile',lMail:'Email',lType:'Client type',lPlan:'Package',lSvc:'Services',
-  sending:'Sending your request…',sentOk:(id,m)=>`Your request reached us. Request number <b>${esc(id)}</b>.${m?' We have emailed you a confirmation.':''} We will contact you with the document list and price.`,sentFail:'We could not send the request online. Please send it on WhatsApp below.',
+  sending:'Sending your request…',sentOk:(id,m)=>`Your request reached us. Request number <b>${esc(id)}</b>.${m?' We have emailed you a confirmation.':''} We will contact you during working hours to confirm the details and the next step. Please do not send documents until we ask for them through our official channel.`,sentFail:'We could not send the request online. Please send it on WhatsApp below.',
   copied:'Copied',copyHand:'Select the text and copy it manually',ind:'Individual',
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
   reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
-  sec:{services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service',faq:'Common questions'}
+  prices:'Full price list',eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
+  sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service',faq:'Common questions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
   toastAdd:'أضيفت إلى الحاسبة',toastRm:'أزيلت من الحاسبة',empty:'لا توجد خدمة بهذا الاسم. جرّب كلمة أخرى، أو اطلب الخدمة من نموذج الطلب وسنسعّرها لك.',
@@ -34,11 +35,12 @@ const T=EN?{
   onceNote:o=>`<b>رسوم لمرة واحدة (تأسيس واستشارات): ${fmt(o)} ر.ق</b> (لا تتكرر شهرياً)`,addHint:'أضف خدمات لنقارن لك بين الدفع لكل خدمة والباقات.',
   pickAdded:'أضيفت: ',eName:'اكتب الاسم أو اسم المنشأة.',ePhone:'اكتب رقم جوال قطري من 8 أرقام يبدأ بـ 3 أو 5 أو 6 أو 7.',eSvc:'اكتب الخدمة المطلوبة أو أضفها من الحاسبة.',eMail:'اكتب بريداً صحيحاً أو اتركه فارغاً.',
   msgHead:'السلام عليكم، أرغب في طلب خدمة من بصيرة للمعاملات.',lName:'الاسم',lPhone:'الجوال',lMail:'البريد',lType:'نوع العميل',lPlan:'الباقة',lSvc:'الخدمات',
-  sending:'جارٍ إرسال طلبك…',sentOk:(id,m)=>`وصلنا طلبك، ورقمه <b>${esc(id)}</b>.${m?' أرسلنا لك تأكيداً على بريدك.':''} سنتواصل معك بقائمة المستندات والسعر.`,sentFail:'تعذر إرسال الطلب عبر الموقع. أرسله على واتساب من الزر أدناه.',
+  sending:'جارٍ إرسال طلبك…',sentOk:(id,m)=>`وصلنا طلبك، ورقمه <b>${esc(id)}</b>.${m?' أرسلنا لك تأكيداً على بريدك.':''} سنتواصل معك خلال ساعات العمل لتأكيد التفاصيل والخطوة التالية. لا ترسل مستندات قبل أن نطلبها عبر قناة التواصل المعتمدة.`,sentFail:'تعذر إرسال الطلب عبر الموقع. أرسله على واتساب من الزر أدناه.',
   copied:'تم النسخ',copyHand:'حدد النص وانسخه يدوياً',ind:'فرد',
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
-  sec:{services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة',faq:'أسئلة شائعة'}
+  prices:'قائمة الأسعار الكاملة',eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
+  sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة',faq:'أسئلة شائعة'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
 
@@ -59,7 +61,7 @@ $('fSvc2')&&($('fSvc2').textContent=all.filter(s=>s.kind==='gov').length);
 $('fCon')&&($('fCon').textContent=all.filter(s=>s.kind==='consult').length);
 const NUMS={gov:all.filter(s=>s.kind==='gov').length,ent:DATA.G.length,con:all.filter(s=>s.kind==='consult').length,cat:cats.length,pmin:fmt(Math.min(...DATA.PLANS.map(p=>p.m)))};
 document.querySelectorAll('[data-n]').forEach(el=>el.textContent=NUMS[el.dataset.n]);
-let ent='all';const cart=new Map();
+let ent='all',full=false;const cart=new Map();
 function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
 const priceHTML=s=>`<span class="price num">${s.from?`<small>${T.from}</small> `:''}${fmt(s.p)} <small>${T.cur}${s.unit?' '+esc(s.unit):''}</small></span>`;
 
@@ -102,11 +104,11 @@ function match(s,q){return !q||(s.n+' '+s.inc+' '+s.c+' '+s.entName).toLowerCase
 function render(){
   const q=$('q').value.trim();const co=$('coreOnly').checked;
   const cat=$('catalog');cat.innerHTML='';let shown=0;
-  const grid=ent==='all'&&!q;$('entTiles').hidden=!grid;cat.hidden=grid;
+  const grid=ent==='all'&&!q&&!full;$('entTiles').hidden=!grid;cat.hidden=grid;
   if(grid){$('entTiles').innerHTML=ents.map(([k,n])=>groupTile('ent',k,n,all.filter(s=>s.ent===k&&(!co||s.core)))).join('');return}
   if(ent!=='all')cat.insertAdjacentHTML('beforeend',`<a class="btn sm ghost upto" href="#services">${T.allEnts}</a>`);
-  else cat.insertAdjacentHTML('beforeend',`<p class="lead">${esc(T.results(q))}</p>`);
-  (ent==='all'?[...ents,...cats]:ents).forEach(([k,n])=>{
+  else if(q)cat.insertAdjacentHTML('beforeend',`<p class="lead">${esc(T.results(q))}</p>`);
+  (ent==='all'&&q?[...ents,...cats]:ents).forEach(([k,n])=>{
     if(ent!=='all'&&ent!==k)return;
     const items=all.filter(s=>s.ent===k&&(!co||s.core)&&match(s,q));
     if(!items.length)return;shown+=items.length;
@@ -220,7 +222,7 @@ function openSvc(code){const s=byCode[code];if(!s||!dlg)return;const d=s.d||{};
 if(dlg){$('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}
 
 // ---- one view at a time: home shows the main cards, each card opens its own page; hash keeps the back button working ----
-const VIEWS=['services','consult','packages','estimate','how','request','faq'];
+const VIEWS=['services','consult','packages','estimate','how','request','about','faq'];
 const secs=Object.fromEntries(VIEWS.map(v=>[v,$(v)]));
 let view=null;
 function crumbs(trail){const c=$('crumbs');c.hidden=!trail.length;if(!trail.length)return;
@@ -249,6 +251,8 @@ function route(h){h=h||location.hash||'#home';let m;
     show('services',[[T.sec.services,'#services'],[ents.find(x=>x[0]===m[1])[1],h]]);return}
   if((m=h.match(/^#cat=([A-Z]{2})$/))&&cats.some(x=>x[0]===m[1])){$('cq').value='';setCat(m[1]);
     show('consult',[[T.sec.consult,'#consult'],[cats.find(x=>x[0]===m[1])[1],h]]);return}
+  if(h==='#prices'){$('q').value='';full=true;setEnt('all');show('services',[[T.sec.services,'#services'],[T.prices,h]]);return}
+  full=false;
   const v=h.slice(1);
   if(v==='services'){if(!$('q').value.trim())setEnt('all')}
   if(v==='consult'){if(!$('cq').value.trim())setCat('all')}
@@ -269,13 +273,14 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
   const phOk=/^(\+?974)?[3567]\d{7}$/.test(ph);$('ePhone').textContent=phOk?'':T.ePhone;if(!phOk)ok=false;
   const emOk=!em||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);$('eMail').textContent=emOk?'':T.eMail;if(!emOk)ok=false;
   $('eSvc').textContent=sv?'':T.eSvc;if(!sv)ok=false;
+  const agree=!$('fOk')||$('fOk').checked;$('eOk')&&($('eOk').textContent=agree?'':T.eOk);if(!agree)ok=false;
   if(!ok)return;
-  const plan=fPlan.value?fPlan.options[fPlan.selectedIndex].text:'',typeTxt=fType.options[fType.selectedIndex].text;
-  const msg=`${T.msgHead}\n${T.lName}: ${n}\n${T.lPhone}: ${ph}\n${em?T.lMail+': '+em+'\n':''}${T.lType}: ${typeTxt}\n${plan?T.lPlan+': '+plan+'\n':''}${T.lSvc}:\n${sv}`;
+  const via=$('fVia')?$('fVia').value:'';const plan=fPlan.value?fPlan.options[fPlan.selectedIndex].text:'',typeTxt=fType.options[fType.selectedIndex].text;
+  const msg=`${T.msgHead}\n${T.lName}: ${n}\n${T.lPhone}: ${ph}\n${em?T.lMail+': '+em+'\n':''}${T.lType}: ${typeTxt}\n${via?T.lVia+': '+via+'\n':''}${plan?T.lPlan+': '+plan+'\n':''}${T.lSvc}:\n${sv}`;
   $('out').textContent=msg;$('sendWa').href=`https://wa.me/${WA}?text=`+encodeURIComponent(msg);
   const st=$('sendState');$('outWrap').hidden=false;
   if(CFG.API){st.hidden=false;st.className='verdict';st.textContent=T.sending;
-    try{const r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'request',name:n,phone:ph,email:em,type:typeTxt,plan,services:sv,codes:[...new Set([...sv.matchAll(/\(([A-Z]{2}-\d{2})\)/g)].map(m=>m[1]))],lang:EN?'en':'ar',page:location.href,hp:$('fHp').value})});
+    try{const r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'request',name:n,phone:ph,email:em,type:typeTxt,plan,contact:via,services:sv,codes:[...new Set([...sv.matchAll(/\(([A-Z]{2}-\d{2})\)/g)].map(m=>m[1]))],lang:EN?'en':'ar',page:location.href,hp:$('fHp').value})});
       const j=await r.json();if(!j.ok)throw new Error(j.error);st.className='verdict ok';st.innerHTML=T.sentOk(j.id,j.mailed);$('outTitle').hidden=true;$('outMsg').hidden=true}
     catch(err){st.className='verdict';st.textContent=T.sentFail}}
   else{st.hidden=true}

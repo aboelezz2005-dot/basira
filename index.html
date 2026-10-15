@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%2314284b'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23e0a12b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261015b">
+<link rel="stylesheet" href="assets/style.css?v=20261015c">
 </head>
 <body>
 <div class="cbar"><div class="wrap"><span>للتواصل:</span><a href="tel:+97472232609" dir="ltr" class="num">+974 72232609</a><a href="https://wa.me/97472232609" target="_blank" rel="noopener">واتساب</a><a href="mailto:baseeratactions@gmail.com" dir="ltr">baseeratactions@gmail.com</a></div></div>
@@ -24,8 +24,9 @@
     <li class="dd"><button type="button" class="topbtn" aria-expanded="false">الخدمات الحكومية</button><ul class="drop" id="mGov"></ul></li>
     <li class="dd"><button type="button" class="topbtn" aria-expanded="false">الدراسات والاستشارات</button><ul class="drop" id="mCon"></ul></li>
     <li><a href="#packages">باقات الشركات</a></li>
-    <li><a href="#estimate">احسب التكلفة</a></li>
-    <li><a href="#request">اطلب خدمة</a></li>
+    <li><a href="#how">كيف نعمل</a></li>
+    <li><a href="#faq">الأسئلة الشائعة</a></li>
+    <li><a href="#request" class="navcta">اطلب خدمة</a></li>
     <li><a href="en/index.html" lang="en" class="lang">English</a></li>
   </ul></nav>
 </div></header>
@@ -33,15 +34,16 @@
 
 <section class="hero" id="home"><div class="wrap">
   <div>
-    <h1>معاملتك <em>واضحة</em> من أول خطوة</h1>
-    <p>مكتب تعقيب معاملات في الدوحة للأفراد والعائلات والشركات. ننجز معاملاتك لدى وزارة التجارة والداخلية والعمل والبلدية وباقي الجهات، بسعر ثابت تعرفه قبل أن نبدأ، ونقدم الدراسات والاستشارات الإدارية والفنية لأصحاب الأعمال.</p>
-    <div class="cta"><a class="btn pri" href="#request">اطلب خدمة الآن</a><a class="btn ghost" href="#services">تصفح الخدمات والأسعار</a></div>
-    <div class="facts"><div><b class="num" id="fSvc2">90</b>خدمة حكومية بسعر ثابت</div><div><b class="num" id="fEnt">11</b>جهة حكومية</div><div><b class="num" id="fCon">60</b>دراسة واستشارة</div><div><b class="num">4</b>باقات للشركات</div></div>
+    <h1>أنجز معاملاتك في الدوحة <em>بوضوح</em> ومن دون متابعة مرهقة</h1>
+    <p>نساعد الأفراد والعائلات والشركات في تجهيز المعاملات الحكومية ومتابعتها، بأتعاب معلنة قبل البدء وتحديثات في كل مرحلة. ونقدم الدراسات والاستشارات الإدارية والفنية لأصحاب الأعمال.</p>
+    <div class="cta"><a class="btn pri" href="#services">استعرض الخدمات والأسعار</a><a class="btn ghost" href="https://wa.me/97472232609" target="_blank" rel="noopener">اطلب عبر واتساب</a></div>
+    <p class="trust">أتعاب واضحة قبل البدء · إيصالات رسمية للرسوم الحكومية · تحديثات خلال مراحل المعاملة</p>
   </div>
-  <div class="promises">
-    <div class="promise"><b>سعر ثابت قبل البدء</b><span>أتعابنا معلنة لكل خدمة. لا مفاجآت بعد التقديم.</span></div>
-    <div class="promise"><b>تحديث في كل مرحلة</b><span>رسالة عند الاستلام والتقديم والإنجاز، دون أن تسأل.</span></div>
-    <div class="promise"><b>شفافية كاملة في الرسوم</b><span>نسلّمك الإيصال الرسمي لكل رسم حكومي يُدفع عنك.</span></div>
+  <div class="promises" aria-label="لماذا تختار بصيرة؟">
+    <div class="promise"><b>سعر معروف قبل البدء</b><span>عرض مكتوب يوضح أتعابنا قبل أن نبدأ.</span></div>
+    <div class="promise"><b>وضوح الرسوم</b><span>أتعاب المكتب منفصلة عن الرسوم الحكومية.</span></div>
+    <div class="promise"><b>متابعة منظمة</b><span>تحديث عند استلام المعاملة وتقديمها وإنجازها.</span></div>
+    <div class="promise"><b>إثبات الدفع</b><span>إيصال رسمي لكل رسم حكومي ندفعه عنك.</span></div>
   </div>
 </div></section>
 
@@ -56,13 +58,17 @@
     <a class="tile hot" href="#request"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 3h13l6 6v20H7zM20 3v6h6M11 15h10M11 20h10M11 25h6"/></svg><b>اطلب خدمة</b><span>نموذج قصير ونتواصل معك</span></a>
     <a class="tile" href="#how"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="7" cy="16" r="3"/><circle cx="25" cy="7" r="3"/><circle cx="25" cy="25" r="3"/><path d="M10 15l12-7M10 17l12 7"/></svg><b>كيف ننجز معاملتك</b><span>ست خطوات واضحة من الاستلام إلى التسليم</span></a>
     <a class="tile" href="#faq"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="M12 12a4 4 0 1 1 5.5 3.7c-1 .5-1.5 1.2-1.5 2.3v1M16 23v.5"/></svg><b>أسئلة شائعة</b><span>الرسوم والمدة وطريقة الدفع</span></a>
+    <a class="tile" href="#about"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="M16 14v9M16 9.5v.5"/></svg><b>تعرّف إلى بصيرة</b><span>بيانات المنشأة والتواصل</span></a>
     <a class="tile wa" href="https://wa.me/97472232609" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3z"/><path d="M11 10c0 6 5 11 11 11l1.5-2.5-3-1.5-1.5 1.5c-2-1-3.5-2.5-4.5-4.5L16 12.5 14.5 9.5z"/></svg><b>تواصل على واتساب</b><span><span dir="ltr">+974 72232609</span></span></a>
   </div>
 </div></section>
 
 <section class="sec" id="services"><div class="wrap">
-  <h2>الخدمات الحكومية والأسعار</h2>
-  <p class="lead">الأسعار أتعاب بصيرة بالريال القطري. الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي. اضغط اسم أي خدمة لترى تفاصيلها والمستندات المطلوبة، وأضف ما تحتاجه إلى حاسبة التكلفة بزر «أضف».</p>
+  <h2>ما الخدمة التي تحتاجها؟</h2>
+  <p class="lead">اضغط اسم أي خدمة لترى وصفها والمستندات المطلوبة والمدة التقديرية، وأضف ما تحتاجه إلى حاسبة التكلفة بزر «أضف».</p>
+  <div class="costbox"><b>تعرّف على التكلفة قبل أن نبدأ</b>
+    <div class="cost3"><div><b>أتعاب بصيرة</b><span>السعر المعلن بجانب كل خدمة، بالريال القطري.</span></div><div><b>الرسوم الحكومية</b><span>منفصلة، وتُدفع كما تحددها الجهة المختصة.</span></div><div><b>إيصال الرسوم</b><span>نسلّمك الإيصال الرسمي لكل رسم ندفعه نيابةً عنك.</span></div></div>
+    <a class="btn sm ghost" href="#prices">قائمة الأسعار الكاملة</a></div>
   <div class="tools">
     <input id="q" class="search" type="search" placeholder="ابحث عن خدمة، مثل: إقامة، سجل، رخصة" aria-label="ابحث عن خدمة">
     <label class="toggle" style="flex-direction:row"><input id="coreOnly" type="checkbox"> الخدمات المشمولة في الباقات فقط</label>
@@ -74,7 +80,7 @@
 
 <section class="sec alt" id="consult"><div class="wrap">
   <h2>الدراسات والاستشارات</h2>
-  <p class="lead">دراسات جدوى وخطط عمل واستشارات إدارية وفنية ومالية وتسويقية وتقنية لأصحاب المنشآت. الأسعار تبدأ من المبلغ المعلن وتُحدد نهائياً بعرض سعر مكتوب بعد فهم نطاق العمل. الاستشارات القانونية والمحاسبية المتخصصة تُقدَّم بالتعاون مع مكاتب مرخصة.</p>
+  <p class="lead">دراسات جدوى وخطط عمل واستشارات إدارية وفنية ومالية وتسويقية وتقنية لأصحاب المنشآت. الأسعار المعروضة تبدأ من المبلغ المذكور، وبعد فهم احتياجك نرسل عرض سعر مكتوباً يوضح نطاق العمل والمخرجات والمدة قبل البدء. الاستشارات القانونية والمحاسبية المتخصصة تُقدَّم بالتعاون مع مكاتب مرخصة.</p>
   <div class="tools"><input id="cq" class="search" type="search" placeholder="ابحث عن استشارة، مثل: جدوى، هيكل، آيزو" aria-label="ابحث عن استشارة"></div>
   <div class="chips" id="cchips" role="group" aria-label="تصفية حسب نوع الاستشارة"></div>
   <div id="catTiles" class="gtiles"></div>
@@ -86,19 +92,21 @@
   <p class="lead">اشترك شهرياً أو سنوياً واحصل على عدد ثابت من الخدمات الحكومية كل شهر بسعر أقل من السعر المنفرد. باقتا «نخبة» و«الذهبية» للشركات الأكبر وتغطيان كل الخدمات الحكومية.</p>
   <div class="billing" role="group" aria-label="طريقة الدفع"><button id="bm" aria-pressed="true">دفع شهري</button><button id="by" aria-pressed="false">دفع سنوي (شهران مجاناً)</button></div>
   <div class="plans" id="plans"></div>
-  <div class="ptable"><table><thead><tr><th>الباقة</th><th>عدد الخدمات شهرياً</th><th>قيمتها بالسعر المنفرد</th><th>السعر الشهري</th><th>الخصم</th><th>السعر السنوي</th><th>الخصم</th><th>خصم الخدمات الإضافية</th></tr></thead><tbody id="ptbody"></tbody></table></div>
-  <ul class="rules">
+  <b class="rhead">شروط مهمة قبل الاشتراك</b>
+  <ul class="rules" id="rules">
     <li>الخدمة التي سعرها حتى 400 ر.ق تُحسب خدمة واحدة، ومن 401 إلى 750 ر.ق تُحسب خدمتين، وفوق 750 ر.ق تُحسب ثلاث خدمات.</li>
     <li>«أساس» و«شامل» تغطيان الخدمات الرئيسية المعلَّمة «ضمن الباقات». «نخبة» و«الذهبية» تغطيان كل الخدمات الحكومية عدا باقات التأسيس، والذهبية تشمل باقة تأسيس مجانية كل سنة.</li>
     <li>الخصم محسوب على متوسط سعر الخدمة الرئيسية (300 ر.ق). الاشتراك السنوي يُدفع مقدماً ويعادل 10 أشهر.</li>
     <li>الخدمات غير المستخدمة تُرحَّل شهراً واحداً فقط. الحد الأدنى للاشتراك الشهري 3 أشهر.</li>
     <li>باقات التأسيس والدراسات والاستشارات خارج العدد في كل الباقات، وتحصل على خصم الخدمات الإضافية.</li>
   </ul>
+  <div class="ptable"><table><thead><tr><th>الباقة</th><th>عدد الخدمات شهرياً</th><th>قيمتها بالسعر المنفرد</th><th>السعر الشهري</th><th>الخصم</th><th>السعر السنوي</th><th>الخصم</th><th>خصم الخدمات الإضافية</th></tr></thead><tbody id="ptbody"></tbody></table></div>
+  <div class="contact"><a class="btn pri" href="https://wa.me/97472232609" target="_blank" rel="noopener">ناقش احتياجات شركتك على واتساب</a><a class="btn ghost" href="#estimate">قارن الباقات بخدماتك في الحاسبة</a></div>
 </div></section>
 
 <section class="sec alt" id="estimate"><div class="wrap">
-  <h2>احسب تكلفة خدماتك</h2>
-  <p class="lead">أضف الخدمات التي تحتاجها شهرياً، وسنقارن لك بين الدفع لكل خدمة والاشتراك في باقة. القائمة تبدأ بمثال لمنشأة صغيرة، ويمكنك تعديله.</p>
+  <h2>قارن بين الدفع لكل خدمة والاشتراك</h2>
+  <p class="lead">اختر الخدمات التي تحتاجها، وحدد عدد مراتها شهرياً، وسنريك تكلفة الدفع لكل خدمة وعدد الخدمات المحتسبة في الباقة والباقة الأنسب. القائمة تبدأ بمثال لمنشأة صغيرة يمكنك تعديله.</p>
   <div class="est">
     <div class="panel"><b>الخدمات المختارة <span class="num" id="cartCount"></span></b><label class="pick">أضف أي خدمة من القائمة<select id="pick" aria-label="أضف خدمة إلى الحاسبة"><option value="">اختر خدمة…</option></select></label><div class="cart" id="cart"></div>
       <div class="contact"><button class="btn sm ghost" id="clear" type="button">إفراغ القائمة</button><button class="btn sm ghost" id="sample" type="button">إعادة المثال</button></div></div>
@@ -107,40 +115,57 @@
       <div class="sum"><span>عدد الخدمات المحتسبة في الباقة</span><b class="num" id="tUnits">0</b></div>
       <div class="sum"><span>خدمات خارج الباقات الأساسية</span><b class="num" id="tOut">0</b></div>
       <div class="verdict" id="verdict"></div>
+      <a class="mute sm" href="#packages">قواعد احتساب الخدمات في الباقات</a>
       <a class="btn pri" href="#request" id="toReq">اطلب هذه الخدمات</a>
     </div>
   </div>
 </div></section>
 
 <section class="sec" id="how"><div class="wrap">
-  <h2>كيف ننجز معاملتك</h2>
+  <h2>ست خطوات واضحة من الطلب إلى التسليم</h2>
   <div class="steps">
-    <div class="step"><b>الاستلام</b><span>ترسل نوع المعاملة وصور المستندات، ويصلك تأكيد برقم الطلب.</span></div>
-    <div class="step"><b>الفحص</b><span>نراجع المستندات خلال ساعتين عمل.</span></div>
-    <div class="step"><b>السعر والتفويض</b><span>السعر الثابت وتقدير الرسوم، ثم توقيع التفويض.</span></div>
-    <div class="step"><b>الدفع</b><span>الأتعاب والرسوم الحكومية كعهدة بإيصال.</span></div>
-    <div class="step"><b>التقديم والمتابعة</b><span>رسالة عند كل تغيير في حالة المعاملة.</span></div>
-    <div class="step"><b>التسليم</b><span>المستند والإيصالات وموعد التجديد القادم.</span></div>
+    <div class="step"><b>أرسل طلبك</b><span>اختر الخدمة وأرسل المعلومات الأولية.</span></div>
+    <div class="step"><b>نفحص المستندات</b><span>نراجعها ونخبرك إن كان هناك نقص.</span></div>
+    <div class="step"><b>نؤكد السعر</b><span>عرض واضح لأتعابنا والرسوم المتوقعة.</span></div>
+    <div class="step"><b>نفوّض ونبدأ</b><span>بعد موافقتك واستكمال التفويض والدفع.</span></div>
+    <div class="step"><b>نتابع المعاملة</b><span>نرسل لك تحديثاً عند تغيّر حالة الطلب.</span></div>
+    <div class="step"><b>نسلّمك النتيجة</b><span>المستندات والإيصالات، مع التنبيه إلى موعد التجديد إذا لزم.</span></div>
   </div>
+  <p class="dnote">قرار الجهة الحكومية ومدة إنجاز المعاملة خارج نطاق ضماننا. نلتزم بفحص المستندات ومتابعة الطلب وإبلاغك بالتحديثات.</p>
 </div></section>
 
 <section class="sec alt" id="request"><div class="wrap">
-  <h2>اطلب خدمة</h2>
-  <p class="lead">املأ الطلب وسيصلنا مباشرة، ويصلك تأكيد على بريدك إن كتبته. يمكنك أيضاً إرساله على واتساب.</p>
+  <h2>أخبرنا بما تحتاج إليه وسنتواصل معك</h2>
+  <p class="lead">نموذج قصير يصلنا مباشرة. لا ترسل أي مستندات الآن، وسنطلب ما يلزم عبر قناة التواصل المعتمدة بعد مراجعة طلبك. يمكنك أيضاً إرسال الطلب على واتساب.</p>
   <form id="f" novalidate>
     <label>الاسم أو اسم المنشأة<input id="fName" required autocomplete="name"><span class="err" id="eName"></span></label>
     <label>رقم الجوال<input id="fPhone" inputmode="tel" required placeholder="مثال: 5XXXXXXX"><span class="err" id="ePhone"></span></label>
     <label>البريد الإلكتروني (اختياري، لنرسل لك التأكيد)<input id="fMail" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" dir="ltr"><span class="err" id="eMail"></span></label>
+    <label>وسيلة التواصل المفضلة<select id="fVia"><option>واتساب</option><option>اتصال هاتفي</option><option>البريد الإلكتروني</option></select></label>
     <label>نوع العميل<select id="fType"><option value="ind">فرد</option><option value="org">منشأة</option></select></label>
     <label>الباقة<select id="fPlan"><option value="">بدون باقة (دفع لكل خدمة)</option><option value="أساس">أساس</option><option value="شامل">شامل</option><option value="نخبة">نخبة</option><option value="الذهبية">الذهبية</option></select></label>
     <label>اختر الخدمات المطلوبة<select id="fPick" aria-label="اختر خدمة لإضافتها إلى الطلب"><option value="">اختر خدمة لإضافتها…</option></select></label>
-    <label class="full">الخدمات المطلوبة<textarea id="fSvc" placeholder="اختر من القائمة أعلاه أو من حاسبة التكلفة، ويمكنك الكتابة"></textarea><span class="err" id="eSvc"></span></label>
+    <label class="full">الخدمة المطلوبة ووصف مختصر لاحتياجك<textarea id="fSvc" placeholder="اختر من القائمة أعلاه أو من حاسبة التكلفة، ويمكنك الكتابة"></textarea><span class="err" id="eSvc"></span></label>
     <input id="fHp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="full contact"><button class="btn pri" type="submit">أرسل الطلب</button><small class="mute">بإرسال الطلب توافق على <a href="privacy.html">سياسة الخصوصية</a>.</small></div>
+    <label class="full agree"><input type="checkbox" id="fOk"> أوافق على <a href="privacy.html">سياسة الخصوصية</a> واستخدام بياناتي للتواصل معي بشأن هذا الطلب.<span class="err" id="eOk"></span></label>
+    <div class="full contact"><button class="btn pri" type="submit">أرسل الطلب</button><a class="btn ghost" href="https://wa.me/97472232609" target="_blank" rel="noopener">أو اطلب مباشرة عبر واتساب</a></div>
   </form>
   <div id="outWrap" hidden class="panel"><div id="sendState" hidden class="verdict"></div><b id="outTitle">رسالة طلبك</b><div class="out" id="out"></div>
     <div class="contact" id="outMsg"><a class="btn sm pri" id="sendWa" href="https://wa.me/97472232609" target="_blank" rel="noopener">إرسال على واتساب</a><button class="btn sm ghost" id="copyMsg" type="button">نسخ الرسالة</button><span>أو أرسلها يدوياً إلى</span><span class="phone">+974 72232609</span></div></div>
   <div class="contact"><span>للتواصل المباشر:</span><span class="phone" id="ph">+974 72232609</span><button class="btn sm ghost" id="copyPh" type="button">نسخ الرقم</button><a class="btn sm ghost" href="https://wa.me/97472232609" target="_blank" rel="noopener">فتح واتساب</a><span>أو البريد</span><a href="mailto:baseeratactions@gmail.com" dir="ltr">baseeratactions@gmail.com</a></div>
+</div></section>
+
+<section class="sec alt" id="about"><div class="wrap">
+  <h2>تعرّف إلى بصيرة</h2>
+  <p class="lead">بصيرة للمعاملات مكتب تعقيب معاملات في الدوحة، يجهّز المعاملات الحكومية للأفراد والعائلات والشركات ويتابعها حتى التسليم، ويقدم الدراسات والاستشارات لأصحاب الأعمال.</p>
+  <div class="facts2">
+    <div><b>الاسم القانوني</b><span>بصيرة للمعاملات ذ.م.م (شركة الشخص الواحد)</span></div>
+    <div><b>المقر</b><span>الدوحة، قطر</span></div>
+    <div><b>النشاط</b><span>تعقيب المعاملات</span></div>
+    <div><b>الهاتف وواتساب</b><span><a href="tel:+97472232609" dir="ltr">+974 72232609</a></span></div>
+    <div><b>البريد الإلكتروني</b><span><a href="mailto:baseeratactions@gmail.com" dir="ltr">baseeratactions@gmail.com</a></span></div>
+    <div><b>الخصوصية</b><span><a href="privacy.html">سياسة الخصوصية</a></span></div>
+  </div>
 </div></section>
 
 <section class="sec" id="faq"><div class="wrap">
@@ -151,11 +176,15 @@
     <details><summary>ماذا لو لم أستخدم كل خدمات الباقة في الشهر؟</summary><p>تُرحَّل الخدمات غير المستخدمة إلى الشهر التالي فقط.</p></details>
     <details><summary>كيف تُسعَّر الدراسات والاستشارات؟</summary><p>السعر المعلن هو الحد الأدنى. بعد جلسة تعريفية قصيرة نرسل عرض سعر مكتوباً بالنطاق والمخرجات والمدة، ويُدفع 50% عند البدء و50% عند التسليم.</p></details>
     <details><summary>هل تقدمون استشارات قانونية أو محاسبية؟</summary><p>نقدمها بالتعاون مع مكاتب محاماة ومحاسبة مرخصة، وننسق معها ونتابع التنفيذ نيابة عنك. التدقيق المالي النظامي يقوم به مدقق حسابات مرخص.</p></details>
+    <details><summary>ما المستندات التي أحتاج إليها؟</summary><p>المستندات المطلوبة مكتوبة في تفاصيل كل خدمة، اضغط اسم الخدمة لتراها. بعد مراجعة طلبك نؤكد لك القائمة النهائية قبل البدء.</p></details>
+    <details><summary>ماذا لو احتاجت المعاملة إلى مستندات إضافية؟</summary><p>نخبرك بما تطلبه الجهة تحديداً ونكمل التقديم بعد استكماله. إن ترتب على ذلك أي تغيير في التكلفة نبلغك به قبل المتابعة.</p></details>
+    <details><summary>كيف تعمل الباقات؟ وما الذي لا تشمله؟</summary><p>تحصل على عدد ثابت من الخدمات الحكومية كل شهر. «أساس» و«شامل» تغطيان الخدمات الرئيسية فقط، و«نخبة» و«الذهبية» تغطيان كل الخدمات الحكومية. باقات التأسيس والدراسات والاستشارات خارج العدد في كل الباقات. التفاصيل في <a href="#packages">شروط الباقات</a>.</p></details>
+    <details><summary>كيف تتعاملون مع مستنداتي وبياناتي الشخصية؟</summary><p>نستخدمها فقط لإنجاز معاملتك، ولا نطلب المستندات إلا عبر قناة التواصل المعتمدة بعد مراجعة طلبك. التفاصيل في <a href="privacy.html">سياسة الخصوصية</a>.</p></details>
     <details><summary>كيف أدفع؟</summary><p>الخدمات المنفردة تُدفع عند الاتفاق، وباقات التأسيس والدراسات 50% عند البدء و50% عند التسليم، والاشتراكات مقدماً.</p></details>
   </div>
 </div></section>
 
-<footer><div class="wrap"><span>بصيرة للمعاملات ذ.م.م · الدوحة، قطر · <span dir="ltr">+974 72232609</span> · <span dir="ltr">baseeratactions@gmail.com</span></span><span><a href="en/index.html" lang="en">English</a> · <a href="privacy.html">سياسة الخصوصية</a> · <a href="crm.html">دخول الموظفين</a></span><span>الأسعار سارية من 2026 وقابلة للمراجعة</span></div></footer>
+<footer><div class="wrap"><span>بصيرة للمعاملات ذ.م.م · الدوحة، قطر · <span dir="ltr">+974 72232609</span> · <span dir="ltr">baseeratactions@gmail.com</span></span><span><a href="en/index.html" lang="en">English</a> · <a href="privacy.html">سياسة الخصوصية</a> · <a href="crm.html">دخول الموظفين</a></span><span><a href="#prices">الخدمات والأسعار</a> · <a href="#packages">باقات الشركات</a> · <a href="#about">تعرّف إلى بصيرة</a></span><span>الأسعار سارية من 2026 وقابلة للمراجعة. القرار النهائي ومدة المعاملة من اختصاص الجهة الحكومية.</span></div></footer>
 
 <dialog id="dlg" aria-labelledby="dlgT"><div class="dlg">
   <button class="x dx" id="dlgX" type="button" aria-label="إغلاق">×</button>
@@ -164,9 +193,9 @@
 </div></dialog>
 <a class="wa-fab" id="waFab" href="https://wa.me/97472232609" target="_blank" rel="noopener" aria-label="تواصل معنا على واتساب" title="تواصل معنا على واتساب"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg></a>
 <div class="toast" id="toast" hidden></div>
-<script src="assets/config.js?v=20261015b"></script>
-<script src="assets/data.js?v=20261015b"></script>
-<script src="assets/details.js?v=20261015b"></script>
-<script src="assets/app.js?v=20261015b"></script>
+<script src="assets/config.js?v=20261015c"></script>
+<script src="assets/data.js?v=20261015c"></script>
+<script src="assets/details.js?v=20261015c"></script>
+<script src="assets/app.js?v=20261015c"></script>
 </body>
 </html>
