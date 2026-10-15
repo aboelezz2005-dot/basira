@@ -10,7 +10,7 @@ const CLOSED=['منجزة','ملغاة'];
 const REQ_ST=['جديد','تم التواصل','تحوّل إلى معاملة','مغلق'];
 const SHEETS=['Clients','Transactions','Requests','Log','Accounts','Files','Consents','Credentials','Messages'];
 const PREFIX={Clients:'C',Transactions:'T',Requests:'R',Log:'L',Accounts:'A',Files:'F',Consents:'K',Credentials:'P',Messages:'M'};
-const ERR={wrong_password:'اسم المستخدم أو كلمة المرور غير صحيحة.',rate_limited:'محاولات كثيرة، حاول بعد ساعة.',weak_password:'كلمة المرور 8 أحرف على الأقل.',bad_username:'اسم المستخدم غير صالح (3 أحرف على الأقل وبدون مسافات).',
+const ERR={no_permission:'ليست لديك صلاحية لهذا الإجراء. راجع المدير.',wrong_password:'اسم المستخدم أو كلمة المرور غير صحيحة.',rate_limited:'محاولات كثيرة، حاول بعد ساعة.',weak_password:'كلمة المرور 8 أحرف على الأقل.',bad_username:'اسم المستخدم غير صالح (3 أحرف على الأقل وبدون مسافات).',
   username_taken:'اسم المستخدم مستخدم من قبل.',must_change_both:'غيّر اسم المستخدم (ليس 123) وكلمة المرور معاً.',admin_only:'هذا الإجراء للمدير فقط.',last_admin:'لا يمكن إيقاف آخر مدير أو تحويله إلى موظف.',
   too_large:'الملف أكبر من 10 ميجابايت.',not_found:'غير موجود.',invalid:'بيانات غير مكتملة.',read_only:'لا يمكن تعديل هذا السجل مباشرة.',must_change:'غيّر بيانات الدخول أولاً.'};
 const errText=e=>ERR[e]||e;
@@ -94,7 +94,8 @@ $('chgF').onsubmit=async e=>{e.preventDefault();$('chgErr').textContent='';
   if($('cPw').value!==$('cPw2').value){$('chgErr').textContent='كلمتا المرور غير متطابقتين.';return}
   try{ME=await S.changeOwn({old:lastPw,username:$('cUn').value.trim(),password:$('cPw').value});lastPw='';$('chgF').reset();toast('تم حفظ بيانات الدخول الجديدة');await start()}catch(err){$('chgErr').textContent=errText(err.message)}};
 function logout(){sessionStorage.removeItem(TKEY);ME=null;showLogin()}
-$('logout').onclick=logout;
+// signing out records the end of the working session for attendance
+$('logout').onclick=async()=>{if(CFG.API&&S.tok())await S.api('staffLogout',{}).catch(()=>{});logout()};
 async function start(){hideAll();$('tabs').hidden=false;await reload();go('dash')}
 async function reload(){try{DB=await S.list();SHEETS.forEach(s=>DB[s]=DB[s]||[])}catch(e){toast(e.message)}if(!ME)try{ME=await S.me()}catch(e){}renderAll()}
 
@@ -103,6 +104,7 @@ let tab='dash',curClient=null;
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)go(b.dataset.tab)});
 function go(t,id){tab=t;document.querySelectorAll('.view').forEach(v=>v.hidden=true);
   if(t==='client'){curClient=id;$('v-client').hidden=false;renderClient()}else $('v-'+t).hidden=false;
+  if(t==='emp')renderEmp();
   document.querySelectorAll('#tabs [data-tab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===(t==='client'?'cli':t)));window.scrollTo(0,0)}
 function renderAll(){renderDash();renderReq();renderCli();renderTx();renderLog();renderMsg();renderSet();if(tab==='client')renderClient()}
 const table=(head,rows)=>rows.length?`<table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`:'<div class="empty">لا توجد بيانات.</div>';
@@ -124,7 +126,7 @@ function renderDash(){
   $('nReq').textContent=nreq.length||'';
   const waiting=unreadBy();$('nMsg').textContent=waiting.length||'';
   const pend=DB.Accounts.filter(a=>a.status==='بانتظار التفعيل');
-  $('kpis').innerHTML=[['العملاء',DB.Clients.length],['طلبات جديدة',nreq.length],['معاملات مفتوحة',open.length],['رسائل تنتظر الرد',waiting.length],['متأخرة',late.length],['منجزة هذا الشهر',done.length],['أتعاب منجزة هذا الشهر',fmt(done.reduce((a,t)=>a+(+t.fee||0),0))+' ر.ق'],['مستحق على العملاء',fmt(due)+' ر.ق']]
+  $('kpis').innerHTML=[['العملاء',DB.Clients.length],['طلبات جديدة',nreq.length],['معاملات مفتوحة',open.length],['رسائل تنتظر الرد',waiting.length],['متأخرة',late.length],['منجزة هذا الشهر',done.length],...(can('finance')?[['أتعاب منجزة هذا الشهر',fmt(done.reduce((a,t)=>a+(+t.fee||0),0))+' ر.ق'],['مستحق على العملاء',fmt(due)+' ر.ق']]:[])]
     .map(([k,v])=>`<div class="kpi"><b class="num">${v}</b><span>${k}</span></div>`).join('');
   const li=(arr,f)=>arr.length?`<ul class="plain">${arr.slice(0,12).map(x=>`<li>${f(x)}</li>`).join('')}</ul>`:'<p class="mute">لا يوجد.</p>';
   $('dReq').innerHTML=li(nreq,r=>`${link(r.clientId,r.name)} · <span class="num">${esc(r.phone)}</span> · <small class="mute">${esc(r.created)}</small>`);
@@ -232,21 +234,71 @@ function renderMsg(){const by={};DB.Messages.forEach(m=>{(by[m.clientId]=by[m.cl
   const rows=Object.entries(by).map(([id,l])=>{l.sort((a,b)=>a.created>b.created?1:-1);const last=l[l.length-1],un=l.filter(m=>m.from==='client'&&!m.read).length;return [last.created,`<tr><td><button type="button" class="btn xs pri openf" data-client="${esc(id)}">فتح</button></td><td>${link(id,cli(id).name)}${un?` <span class="pill num">${un}</span>`:''}</td><td class="pre">${esc(String(last.body).slice(0,160))}</td><td>${last.from==='office'?'المكتب':'العميل'}</td><td class="num">${esc(last.created)}</td></tr>`]}).sort((a,b)=>a[0]<b[0]?1:-1).map(x=>x[1]);
   $('msgT').innerHTML=REMOTE?table(['','العميل','آخر رسالة','من','التاريخ'],rows):'<div class="empty">المراسلات مع العملاء تعمل بعد تشغيل الخادم.</div>'}
 
-// ---- settings: my login and staff ----
-function renderSet(){if(!ME)return;$('meLine').textContent=`${ME.name||''} · ${ME.role==='admin'?'مدير':'موظف'}`;if(!$('meUn').value)$('meUn').value=ME.username;
-  const admin=ME.role==='admin';$('staffP').hidden=!admin;if(admin&&REMOTE)loadStaff();else if(admin)$('staffL').innerHTML=NEEDS_SERVER,$('staffF').hidden=true;}
+// ---- permissions (the server enforces them; the page only hides what an employee cannot use) ----
+const PERM_L={requests:'الطلبات الواردة',clients_view:'عرض العملاء وملفاتهم',clients_edit:'إضافة العملاء وتعديلهم',transactions:'المعاملات وحالاتها',finance:'الأتعاب والمدفوعات',messages:'المراسلات والرد على العملاء',
+  files:'رفع الملفات والتراخيص',accounts:'حسابات العملاء (تفعيل وكلمات مرور)',credentials:'إظهار كلمات مرور البوابات',email:'إرسال البريد للعملاء',delete:'الحذف',log:'السجل الكامل'};
+const PERMS=Object.keys(PERM_L);
+const isAdmin=()=>!ME||ME.role==='admin';
+const can=p=>isAdmin()||((ME.perms||[]).includes(p));
+function applyPerms(){const show=(sel,on)=>document.querySelectorAll(sel).forEach(el=>el.hidden=!on);
+  show('#tabs [data-tab=req]',can('requests'));show('#tabs [data-tab=msg]',can('messages'));show('#tabEmp',isAdmin());
+  show('#newCli,#cEdit',can('clients_edit'));show('#cTxn,#newTx',can('transactions'));show('#cMail',can('email'));show('#cMsgP',can('messages'));
+  show('#fileF',can('files'));show('#delT,#delC',can('delete'));show('#delC',isAdmin());
+  $('myPerms').textContent=isAdmin()?'مدير: كل الصلاحيات، وإدارة الموظفين وتقاريرهم.':(ME.perms||[]).map(p=>PERM_L[p]).join('، ')||'لا توجد صلاحيات بعد. راجع المدير.'}
+
+// ---- my login ----
+function renderSet(){if(!ME)return;$('meLine').textContent=`${ME.name||''}${ME.jobTitle?' · '+ME.jobTitle:''} · ${ME.role==='admin'?'مدير':'موظف'}`;if(!$('meUn').value)$('meUn').value=ME.username;applyPerms();if(tab==='emp')renderEmp()}
 $('meF').onsubmit=async e=>{e.preventDefault();$('meErr').textContent='';const pw=$('mePw').value;
   if(pw&&pw!==$('mePw2').value){$('meErr').textContent='كلمتا المرور غير متطابقتين.';return}
   try{const o={old:$('meOld').value,username:$('meUn').value.trim()};if(pw)o.password=pw;ME=await S.changeOwn(o);$('meF').reset();$('meUn').value=ME.username;toast('تم الحفظ')}catch(err){$('meErr').textContent=errText(err.message)}};
-let STAFFL=[];
+
+// ---- employees: accounts, permissions, attendance and work reports (admin) ----
+let STAFFL=[],REP=null,repSel=null;
+$('permL').innerHTML=PERMS.map(p=>`<label class="chk"><input type="checkbox" value="${p}"> ${PERM_L[p]}</label>`).join('');
+const permBoxes=()=>[...$('permL').querySelectorAll('input')];
+$('permAll').onclick=()=>permBoxes().forEach(b=>b.checked=true);$('permNone').onclick=()=>permBoxes().forEach(b=>b.checked=false);
+$('fS').elements.role.onchange=()=>{$('permBox').hidden=$('fS').elements.role.value==='admin'};
+$('sGen').onclick=()=>{$('fS').elements.password.value=genPw()};
+let editS=null;
+function openStaff(x){editS=x||{};const f=$('fS');f.reset();$('sErr').textContent='';
+  ['name','jobTitle','username','phone','email','qid','hireDate','shiftStart','shiftEnd','workDays','notes'].forEach(k=>f.elements[k].value=editS[k]||'');
+  f.elements.role.value=editS.role||'staff';f.elements.status.value=editS.status||'مفعّل';
+  const ps=editS.id?(editS.perms||[]):['requests','clients_view','transactions','messages','files'];permBoxes().forEach(b=>b.checked=ps.includes(b.value));
+  $('permBox').hidden=f.elements.role.value==='admin';$('dlgST').textContent=editS.id?`تعديل الموظف ${editS.username}`:'إضافة موظف';
+  if(!editS.id)f.elements.password.value=genPw();$('sPwHint').textContent=editS.id?'اتركها فارغة للإبقاء على كلمة مروره.':'أرسلها للموظف، وسيغيّرها عند أول دخول.';$('dlgS').showModal()}
+$('addEmp').onclick=()=>openStaff(null);
+$('fS').addEventListener('submit',async e=>{if(e.submitter&&e.submitter.value!=='save')return;e.preventDefault();const f=$('fS').elements,body={};
+  ['name','jobTitle','username','phone','email','qid','hireDate','shiftStart','shiftEnd','workDays','notes','role','status'].forEach(k=>body[k]=f[k].value.trim());
+  if(f.password.value)body.password=f.password.value;body.perms=permBoxes().filter(b=>b.checked).map(b=>b.value);if(editS.id)body.id=editS.id;
+  try{await S.api('staffSave',body);$('dlgS').close();toast(body.password?`تم الحفظ. أرسل للموظف: ${body.username} / ${body.password}`:'تم الحفظ');loadStaff()}catch(err){$('sErr').textContent=errText(err.message)}});
 async function loadStaff(){try{STAFFL=(await S.api('staffUsers',{})).rows}catch(e){return}
-  $('staffL').innerHTML=table(['الاسم','اسم المستخدم','الصلاحية','الحالة','آخر دخول',''],STAFFL.map(x=>`<tr><td>${esc(x.name)}</td><td dir="ltr">${esc(x.username)}</td><td>${x.role==='admin'?'مدير':'موظف'}</td><td>${esc(x.status)}${x.mustChange?' · <small class="mute">لم يغيّر كلمة المرور المؤقتة</small>':''}</td><td class="num">${esc(x.lastLogin||'')}</td>
-    <td>${x.username===ME.username?'<small class="mute">أنت</small>':`<div class="acts"><button class="btn xs ghost" type="button" data-st="pw" data-id="${x.id}">كلمة مرور مؤقتة</button><button class="btn xs ghost" type="button" data-st="role" data-id="${x.id}">${x.role==='admin'?'اجعله موظفاً':'اجعله مديراً'}</button><button class="btn xs ghost" type="button" data-st="status" data-id="${x.id}">${x.status==='مفعّل'?'إيقاف':'تفعيل'}</button></div>`}</td></tr>`))}
-$('staffL').onclick=async e=>{const b=e.target.closest('[data-st]');if(!b)return;const x=STAFFL.find(y=>y.id===b.dataset.id),body={id:x.id};
-  if(b.dataset.st==='pw')body.password=genPw();if(b.dataset.st==='role')body.role=x.role==='admin'?'staff':'admin';if(b.dataset.st==='status')body.status=x.status==='مفعّل'?'موقوف':'مفعّل';
-  try{await S.api('staffSave',body);toast(body.password?`كلمة المرور المؤقتة لـ ${x.username}: ${body.password}`:'تم التحديث');loadStaff()}catch(err){toast(errText(err.message))}};
-$('staffF').onsubmit=async e=>{e.preventDefault();$('sfErr').textContent='';
-  try{await S.api('staffSave',{name:$('sfName').value.trim(),username:$('sfUn').value.trim(),password:$('sfPw').value,role:$('sfRole').value});toast('أُضيف الموظف، وسيغيّر كلمة المرور عند أول دخول');$('staffF').reset();loadStaff()}catch(err){$('sfErr').textContent=errText(err.message)}};
+  $('staffL').innerHTML=table(['الاسم','المسمى','اسم المستخدم','الدوام','الصلاحيات','الحالة','آخر دخول',''],STAFFL.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.jobTitle||'')}</td><td dir="ltr">${esc(x.username)}</td><td class="num">${esc(x.shiftStart||'')}${x.shiftEnd?' – '+esc(x.shiftEnd):''}</td>
+    <td><small>${x.role==='admin'?'مدير: كاملة':(x.perms.length===PERMS.length?'كاملة':`جزئية (${x.perms.length} من ${PERMS.length})`)}</small></td><td>${esc(x.status)}${x.mustChange?' · <small class="mute">لم يغيّر كلمة المرور المؤقتة</small>':''}</td><td class="num">${esc(x.lastLogin||'')}</td>
+    <td><button class="btn xs ghost" type="button" data-se="${x.id}">تعديل</button></td></tr>`))}
+$('staffL').onclick=e=>{const b=e.target.closest('[data-se]');if(b)openStaff(STAFFL.find(y=>y.id===b.dataset.se))};
+const dstr=d=>{const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`};
+function period(){const v=$('repP').value,t=new Date();let f=new Date(t),to=new Date(t);
+  if(v==='yesterday'){f.setDate(t.getDate()-1);to=new Date(f)}else if(v==='week')f.setDate(t.getDate()-6);else if(v==='month')f=new Date(t.getFullYear(),t.getMonth(),1);
+  else if(v==='custom')return [$('repF').value||dstr(t),$('repT').value||$('repF').value||dstr(t)];return [dstr(f),dstr(to)]}
+$('repP').onchange=()=>{const c=$('repP').value==='custom';$('repFL').hidden=$('repTL').hidden=!c;if(!c)loadRep()};
+const hm=m=>`${Math.floor((+m||0)/60)}:${String((+m||0)%60).padStart(2,'0')}`;
+async function loadRep(){const [from,to]=period();try{REP=await S.api('report',{from,to})}catch(e){toast(errText(e.message));return}
+  $('repT1').innerHTML=table(['الموظف','أيام الحضور','ساعات العمل','تأخير','كل الإجراءات','معاملات أضافها','معاملات أنجزها','تغيير حالات','ردود على العملاء','ملفات رفعها','عملاء أضافهم',''],REP.staff.map(x=>`<tr><td><b>${esc(x.name||x.username)}</b><br><small class="mute">${esc(x.jobTitle||'')} · <span dir="ltr">${esc(x.username)}</span></small></td>
+    <td class="num">${x.days.length}</td><td class="num">${hm(x.minutes)}</td><td class="num ${x.late?'bad':''}">${x.late}</td><td class="num">${x.actions}</td><td class="num">${x.txCreated}</td><td class="num">${x.txDone}</td><td class="num">${x.statusChanges}</td><td class="num">${x.replies}</td><td class="num">${x.files}</td><td class="num">${x.clientsAdded}</td>
+    <td><button class="btn xs ghost" type="button" data-rep="${x.id}">التفاصيل</button></td></tr>`));
+  if(repSel)showRep(repSel);else $('repD').hidden=true}
+function showRep(id){const x=REP.staff.find(y=>y.id===id);if(!x)return;repSel=id;$('repD').hidden=false;$('repDT').textContent=`${x.name||x.username}: ${REP.from}${REP.to!==REP.from?' إلى '+REP.to:''}${x.shiftStart?` · الدوام ${x.shiftStart}–${x.shiftEnd||''}`:''}`;
+  $('repDays').innerHTML=table(['التاريخ','أول دخول','آخر خروج','مدة العمل','ملاحظات'],x.days.map(d=>`<tr><td class="num">${esc(d.date)}</td><td class="num ${d.late?'bad':''}">${esc(d.first)}</td><td class="num">${d.open?'<small class="mute">ما زال داخلاً</small>':esc(d.last)}</td><td class="num">${hm(d.minutes)}</td><td><small>${[d.late?'تأخر':'',d.early?'خرج مبكراً':'',d.sessions>1?d.sessions+' جلسات':''].filter(Boolean).join(' · ')}</small></td></tr>`));
+  $('repLog').innerHTML=x.log.length?`<ul class="plain">${x.log.slice(0,80).map(l=>`<li><small class="mute num">${esc(l.created)}</small> ${esc(l.summary)}${l.clientId?' · '+link(l.clientId,cli(l.clientId).name||l.clientId):''}</li>`).join('')}</ul>`:'<p class="mute">لا توجد أعمال مسجلة في هذه الفترة.</p>';
+  $('repD').scrollIntoView({behavior:'smooth',block:'start'})}
+$('repT1').onclick=e=>{const b=e.target.closest('[data-rep]');if(b)showRep(b.dataset.rep)};
+$('repGo').onclick=loadRep;
+$('repCsv').onclick=()=>{if(!REP)return;const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows=[['الموظف','اسم المستخدم','التاريخ','أول دخول','آخر خروج','مدة العمل','تأخر','الإجراءات (الفترة)','معاملات أضافها','معاملات أنجزها','ردود','ملفات'].map(q).join(',')];
+  REP.staff.forEach(x=>{(x.days.length?x.days:[{}]).forEach((d,i)=>rows.push([x.name,x.username,d.date||'',d.first||'',d.open?'':d.last||'',d.date?hm(d.minutes):'',d.late?'نعم':'',i?'':x.actions,i?'':x.txCreated,i?'':x.txDone,i?'':x.replies,i?'':x.files].map(q).join(',')))});
+  download(`staff-report-${REP.from}-${REP.to}.csv`,'﻿'+rows.join('\r\n'),'text/csv;charset=utf-8')};
+$('repMail').onclick=async()=>{const [from,to]=period();try{const j=await S.api('reportEmail',{from,to});toast('أُرسل التقرير إلى '+j.to)}catch(e){toast(errText(e.message))}};
+function renderEmp(){if(!REMOTE){$('repT1').innerHTML=NEEDS_SERVER;$('staffL').innerHTML='';$('addEmp').hidden=true;return}loadStaff();loadRep()}
 
 // ---- transactions ----
 STATUSES.forEach(s=>$('txF').insertAdjacentHTML('beforeend',`<option>${s}</option>`));

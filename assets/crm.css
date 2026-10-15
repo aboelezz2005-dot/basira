@@ -58,3 +58,7 @@
 .bub.me{align-self:flex-end;background:var(--ok-soft)}
 .pwv{font-family:ui-monospace,monospace}
 .chk.sm{font-size:13.5px}
+.perms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px}
+#dlgS{max-width:min(760px,calc(100vw - 24px))}
+.inl{flex-direction:row;align-items:center;gap:6px}
+@media (max-width:760px){.perms{grid-template-columns:minmax(0,1fr)}}

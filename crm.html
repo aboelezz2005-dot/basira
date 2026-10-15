@@ -9,12 +9,12 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%2314284b'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23e0a12b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261015i">
-<link rel="stylesheet" href="assets/crm.css?v=20261015i">
+<link rel="stylesheet" href="assets/style.css?v=20261015j">
+<link rel="stylesheet" href="assets/crm.css?v=20261015j">
 </head>
 <body class="crm">
 <header class="top"><div class="wrap">
-  <a class="brand" href="./"><svg width="30" height="30" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#e0a12b" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#e0a12b"/></svg>نظام العملاء والمتابعة</a>
+  <a class="brand" href="./"><svg width="30" height="30" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#e0a12b" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#e0a12b"/></svg>لوحة الإدارة</a>
   <nav class="tabs" id="tabs" hidden aria-label="أقسام لوحة الإدارة">
     <button type="button" data-tab="dash" aria-pressed="true">لوحة المتابعة</button>
     <button type="button" data-tab="req">الطلبات <span class="pill num" id="nReq"></span></button>
@@ -22,7 +22,8 @@
     <button type="button" data-tab="txn">المعاملات</button>
     <button type="button" data-tab="msg">المراسلات <span class="pill num" id="nMsg"></span></button>
     <button type="button" data-tab="log">السجل</button>
-    <button type="button" data-tab="set">الإعدادات</button>
+    <button type="button" data-tab="emp" id="tabEmp" hidden>الموظفون</button>
+    <button type="button" data-tab="set">حسابي</button>
     <button type="button" id="logout" class="ghostbtn">خروج</button>
   </nav>
 </div></header>
@@ -105,6 +106,19 @@
     <div class="panel"><h3>سجل التواصل</h3><div id="cLog"></div></div>
   </section>
 
+  <section id="v-emp" class="view" hidden>
+    <div class="bar"><h2>الموظفون: الحضور والإنجاز</h2><span class="sp"></span><button class="btn sm pri" type="button" id="addEmp">إضافة موظف</button></div>
+    <div class="panel"><div class="bar">
+      <select id="repP"><option value="today">اليوم</option><option value="yesterday">أمس</option><option value="week">آخر 7 أيام</option><option value="month">هذا الشهر</option><option value="custom">فترة محددة</option></select>
+      <label class="inl" id="repFL" hidden>من<input type="date" id="repF"></label><label class="inl" id="repTL" hidden>إلى<input type="date" id="repT"></label>
+      <button class="btn sm pri" type="button" id="repGo">عرض التقرير</button><span class="sp"></span>
+      <button class="btn sm ghost" type="button" id="repCsv">تصدير Excel</button><button class="btn sm ghost" type="button" id="repMail">إرسال بالبريد للمكتب</button></div>
+      <div class="tbl" id="repT1"></div>
+    </div>
+    <div class="panel" id="repD" hidden><h3 id="repDT"></h3><div class="grid2"><div><h3>الحضور اليومي</h3><div class="tbl" id="repDays"></div></div><div><h3>آخر أعماله</h3><div id="repLog"></div></div></div></div>
+    <div class="panel"><h3>حسابات الموظفين</h3><div id="staffL" class="tbl"></div></div>
+  </section>
+
   <section id="v-msg" class="view" hidden>
     <div class="bar"><h2>المراسلات مع العملاء</h2></div>
     <div class="tbl" id="msgT"></div>
@@ -121,17 +135,7 @@
           <span class="err" id="meErr"></span>
           <button class="btn sm pri" type="submit">حفظ</button>
         </form></div>
-      <div class="panel" id="staffP"><h3>الموظفون والصلاحيات</h3><p class="mute sm">المدير يدير الموظفين ويحذف العملاء. الموظف يتابع الطلبات والمعاملات والمراسلات والملفات. كل موظف يغيّر كلمة المرور المؤقتة عند أول دخول.</p>
-        <div id="staffL" class="tbl"></div>
-        <form id="staffF" class="stack">
-          <h3>إضافة موظف</h3>
-          <label>الاسم<input id="sfName" required></label>
-          <label>اسم المستخدم<input id="sfUn" dir="ltr" required></label>
-          <label>كلمة مرور مؤقتة (8 أحرف على الأقل)<input id="sfPw" dir="ltr" required></label>
-          <label>الصلاحية<select id="sfRole"><option value="staff">موظف</option><option value="admin">مدير</option></select></label>
-          <span class="err" id="sfErr"></span>
-          <button class="btn sm pri" type="submit">إضافة</button>
-        </form></div>
+      <div class="panel"><h3>صلاحياتي</h3><p class="sm" id="myPerms"></p></div>
     </div>
   </section>
 
@@ -211,10 +215,35 @@
   <p class="mute sm">أرسل للعميل اسم المستخدم وكلمة المرور على واتساب، واطلب منه تغييرها من «حسابي».</p>
   <div class="contact"><button class="btn pri" value="save">حفظ</button><button class="btn ghost" value="cancel" formnovalidate>إلغاء</button><button class="btn ghost" type="button" id="aGen">كلمة مرور عشوائية</button></div>
 </form></dialog>
+<dialog id="dlgS" aria-labelledby="dlgST"><form class="dlg crmform" id="fS" method="dialog">
+  <h3 id="dlgST">بيانات الموظف</h3>
+  <div class="g2">
+    <label>الاسم الكامل<input name="name" required></label>
+    <label>المسمى الوظيفي<input name="jobTitle" list="jobs"></label>
+    <label>اسم المستخدم<input name="username" dir="ltr" required></label>
+    <label>كلمة مرور مؤقتة<input name="password" dir="ltr" autocomplete="off"><span class="mute sm" id="sPwHint"></span></label>
+    <label>الجوال<input name="phone" inputmode="tel" dir="ltr"></label>
+    <label>البريد<input name="email" type="email" dir="ltr"></label>
+    <label>الرقم الشخصي<input name="qid" inputmode="numeric" dir="ltr"></label>
+    <label>تاريخ التعيين<input name="hireDate" type="date"></label>
+    <label>بداية الدوام<input name="shiftStart" type="time"></label>
+    <label>نهاية الدوام<input name="shiftEnd" type="time"></label>
+    <label class="full">أيام العمل<input name="workDays" placeholder="مثال: الأحد إلى الخميس"></label>
+    <label>نوع الحساب<select name="role"><option value="staff">موظف</option><option value="admin">مدير (كل الصلاحيات)</option></select></label>
+    <label>الحالة<select name="status"><option>مفعّل</option><option>موقوف</option></select></label>
+    <fieldset class="full docs" id="permBox"><legend>الصلاحيات</legend>
+      <div class="contact"><button class="btn xs ghost" type="button" id="permAll">صلاحيات كاملة</button><button class="btn xs ghost" type="button" id="permNone">إلغاء الكل</button></div>
+      <div class="perms" id="permL"></div></fieldset>
+    <label class="full">ملاحظات<textarea name="notes" rows="2"></textarea></label>
+  </div>
+  <span class="err" id="sErr"></span>
+  <div class="contact"><button class="btn pri" value="save">حفظ</button><button class="btn ghost" value="cancel" formnovalidate>إلغاء</button><button class="btn ghost" type="button" id="sGen">كلمة مرور عشوائية</button></div>
+  <datalist id="jobs"><option>مدير العلاقات الحكومية</option><option>مندوب</option><option>منسق خدمة العملاء</option><option>محاسب</option><option>مستشار</option></datalist>
+</form></dialog>
 <div class="toast" id="toast" hidden></div>
-<script src="assets/config.js?v=20261015i"></script>
-<script src="assets/data.js?v=20261015i"></script>
-<script src="assets/details.js?v=20261015i"></script>
-<script src="assets/crm.js?v=20261015i"></script>
+<script src="assets/config.js?v=20261015j"></script>
+<script src="assets/data.js?v=20261015j"></script>
+<script src="assets/details.js?v=20261015j"></script>
+<script src="assets/crm.js?v=20261015j"></script>
 </body>
 </html>

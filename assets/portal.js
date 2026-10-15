@@ -20,7 +20,7 @@ const T=EN?{
   th:{no:'No.',date:'Date',svc:'Service',st:'Status',start:'Started',due:'Expected',exp:'Expires',paid:'Paid',fee:'Fee',ref:'Gov. ref.',services:'Services'},
   inDays:d=>d===0?'today':`in ${d} days`,expired:'expired',qty:'Qty',remove:'Remove',pickFirst:'Please add at least one service.',
   sent:id=>`Request ${id} sent. We will contact you soon.`,saved:'Saved.',pwChanged:'Password changed.',dl:'Download',open:'Open',txn:'Transaction',
-  office:'Basira team',you:'You',noMsg:'No messages yet. Write to us below.',msgSent:'Message sent.',
+  bye:'You have signed out.',office:'Basira team',you:'You',noMsg:'No messages yet. Write to us below.',msgSent:'Message sent.',
   credSaved:'Saved encrypted.',credDel:'Delete',credAsk:'Delete this login from your account?',hidden:'hidden',
   consent:c=>c?`You accepted version ${c.version} on ${c.created}, signed as “${c.name}”.`:'No acceptance recorded yet.',
   newer:v=>` A newer version (${v}) is available on the legal documents page.`,
@@ -38,7 +38,7 @@ const T=EN?{
   th:{no:'الرقم',date:'التاريخ',svc:'الخدمة',st:'الحالة',start:'البدء',due:'الموعد المتوقع',exp:'تاريخ الانتهاء',paid:'المدفوع',fee:'الأتعاب',ref:'المرجع الحكومي',services:'الخدمات'},
   inDays:d=>d===0?'اليوم':`بعد ${d} يوماً`,expired:'منتهٍ',qty:'العدد',remove:'إزالة',pickFirst:'أضف خدمة واحدة على الأقل.',
   sent:id=>`أُرسل الطلب ${id}، وسنتواصل معك قريباً.`,saved:'تم الحفظ.',pwChanged:'تم تغيير كلمة المرور.',dl:'تنزيل',open:'فتح',txn:'المعاملة',
-  office:'فريق بصيرة',you:'أنت',noMsg:'لا توجد رسائل بعد. اكتب لنا من الأسفل.',msgSent:'أُرسلت الرسالة.',
+  bye:'تم تسجيل الخروج.',office:'فريق بصيرة',you:'أنت',noMsg:'لا توجد رسائل بعد. اكتب لنا من الأسفل.',msgSent:'أُرسلت الرسالة.',
   credSaved:'تم الحفظ مشفّراً.',credDel:'حذف',credAsk:'حذف بيانات الدخول هذه من حسابك؟',hidden:'مخفية',
   consent:c=>c?`وافقت على الإصدار ${c.version} بتاريخ ${c.created}، ووقّعت باسم «${c.name}».`:'لا توجد موافقة مسجلة بعد.',
   newer:v=>` يوجد إصدار أحدث (${v}) في صفحة المستندات القانونية.`,ST:{}
@@ -97,7 +97,9 @@ $('signF').addEventListener('submit',e=>{e.preventDefault();submit($('signF'),$(
   setToken(j.token);await load()})});
 function setToken(t){TOKEN=t;try{localStorage.setItem(TKEY,t)}catch(e){}}
 function signOut(){TOKEN=null;ME=null;try{localStorage.removeItem(TKEY)}catch(e){}$('dash').hidden=true;$('auth').hidden=false;$('logout').hidden=true}
-$('logout').onclick=signOut;
+$('logout').onclick=$('dOut').onclick=()=>{signOut();toast(T.bye);window.scrollTo(0,0)};
+// a new client (another company, or someone else at this computer) starts from an empty sign-up form
+$('dNewCli').onclick=()=>{signOut();$('signF').reset();tab(true);document.querySelector('input[name=acct][value=client]').checked=true;acct();$('sName').focus();window.scrollTo(0,0)};
 
 // ---- dashboard ----
 let ME=null;
