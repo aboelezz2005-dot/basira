@@ -442,3 +442,11 @@ ul.promises span{color:var(--mute);font-size:14.5px}
 .acctbar b{color:var(--ink);font-size:16px}
 .acctbar i{font-style:normal;font-weight:700;background:var(--navy);color:var(--navy-ink);border-radius:10px;padding:7px 14px;white-space:nowrap}
 .menu>li>a.acct{border:1.5px solid currentColor;opacity:1}
+/* small, very light basmala seal at the top right of every page (Arabic only, on both language versions) */
+.basmala{position:absolute;top:calc(var(--hh,64px) + 10px);right:10px;z-index:1;pointer-events:none;color:#3f5566;opacity:.16;font-family:'Tajawal',serif;line-height:0}
+.basmala svg{display:block}
+.basmala text{fill:currentColor;font-weight:700}
+@media (max-width:640px){.basmala svg{width:60px;height:60px}.basmala{top:calc(var(--hh,58px) + 4px);right:4px;opacity:.13}}
+@media print{.basmala{display:none}}
+:root[data-theme="dark"] .basmala{color:#e8ecf5;opacity:.13}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .basmala{color:#e8ecf5;opacity:.13}}
