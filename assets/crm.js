@@ -78,6 +78,7 @@ const parseDocs=v=>{if(Array.isArray(v))return v;try{return JSON.parse(v||'[]')}
 
 // ---- login / mode ----
 function showMode(){const m=$('modeBar');m.hidden=false;
+  if(window.BASIRA_DEMO&&CFG.API==='demo'){m.innerHTML='<b>نسخة تجريبية:</b> المدير 123 / 123، والموظفة sara / sara1234 (صلاحيات جزئية)، والموظف omar / omar1234. البيانات وهمية ومحفوظة في هذا المتصفح فقط.';m.className='modebar';return}
   m.innerHTML=CFG.API?'متصل بخادم المكتب. البيانات محفوظة في Google Sheets ويصل الرد بالبريد للعملاء تلقائياً.'
   :'<b>وضع محلي:</b> البيانات تُحفظ في هذا المتصفح على هذا الجهاز فقط، والبريد يُفتح في برنامج البريد لديك. لتشغيل الحفظ المركزي والرد التلقائي اتبع ملف «اقرأني - تشغيل نظام العملاء». خذ نسخة احتياطية من قسم السجل بانتظام.';
   m.className='modebar'+(CFG.API?' ok':'')}
@@ -280,6 +281,7 @@ const dstr=d=>{const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-$
 function period(){const v=$('repP').value,t=new Date();let f=new Date(t),to=new Date(t);
   if(v==='yesterday'){f.setDate(t.getDate()-1);to=new Date(f)}else if(v==='week')f.setDate(t.getDate()-6);else if(v==='month')f=new Date(t.getFullYear(),t.getMonth(),1);
   else if(v==='custom')return [$('repF').value||dstr(t),$('repT').value||$('repF').value||dstr(t)];return [dstr(f),dstr(to)]}
+if(window.BASIRA_DEMO&&CFG.API==='demo')$('repP').value='week';   // sample attendance spans the last days
 $('repP').onchange=()=>{const c=$('repP').value==='custom';$('repFL').hidden=$('repTL').hidden=!c;if(!c)loadRep()};
 const hm=m=>`${Math.floor((+m||0)/60)}:${String((+m||0)%60).padStart(2,'0')}`;
 async function loadRep(){const [from,to]=period();try{REP=await S.api('report',{from,to})}catch(e){toast(errText(e.message));return}

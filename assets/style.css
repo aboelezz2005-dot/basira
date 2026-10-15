@@ -450,3 +450,9 @@ ul.promises span{color:var(--mute);font-size:14.5px}
 @media print{.basmala{display:none}}
 :root[data-theme="dark"] .basmala{color:#e8ecf5;opacity:.13}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .basmala{color:#e8ecf5;opacity:.13}}
+.pbtns{display:flex;flex-wrap:wrap;gap:8px}
+.demobar{position:relative;z-index:60;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;padding:8px 14px;background:#fff6dd;border-bottom:1px solid #e6d29a;color:#5b4a1a;font-size:13.5px;line-height:1.5;text-align:center}
+.demobar b{color:#7a5a00}
+.demobar button{font:inherit;font-size:12.5px;padding:3px 10px;border-radius:8px;border:1px solid #d9c27f;background:#fff;color:#5b4a1a;cursor:pointer}
+.demobar button:hover{background:#fbefc8}
+@media print{.demobar{display:none}}
