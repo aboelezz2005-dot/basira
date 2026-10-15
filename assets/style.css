@@ -215,3 +215,9 @@ html[dir="ltr"] th,html[dir="ltr"] td{text-align:left}
 .plainnav .lang{border:1px solid rgba(255,255,255,.35)}
 .doc{max-width:760px}.doc h1{font-size:clamp(26px,4vw,34px)}.doc h2{font-size:20px;margin-top:10px}
 .doc ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}.doc p{margin:0}
+
+/* contact strip above the header */
+.cbar{background:var(--amber);color:var(--amber-ink);font-size:14px}
+.cbar .wrap{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding-block:5px}
+.cbar a{font-weight:700;text-decoration:none;overflow-wrap:anywhere}
+.cbar a:hover{text-decoration:underline}

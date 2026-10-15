@@ -5,5 +5,5 @@ window.BASIRA_CONFIG = {
   API: "",
   WHATSAPP: "97472232609",
   PHONE: "+974 72232609",
-  EMAIL: ""
+  EMAIL: "baseeratactions@gmail.com"
 };
