@@ -5,5 +5,7 @@ window.BASIRA_CONFIG = {
   API: "",
   WHATSAPP: "97472232609",
   PHONE: "+974 72232609",
-  EMAIL: "baseeratactions@gmail.com"
+  EMAIL: "baseeratactions@gmail.com",
+  // رابط موقع الشركة الشقيقة منجز. يظهر زر «زيارة موقع منجز» في صفحة «تعرّف إلى بصيرة» عند وضعه.
+  MUNJIZ_URL: ""
 };

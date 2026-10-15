@@ -22,8 +22,8 @@ const T=EN?{
   copied:'Copied',copyHand:'Select the text and copy it manually',ind:'Individual',
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
   reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
-  prices:'Full price list',eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
-  sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service',faq:'Common questions'}
+  prices:'Full price list',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
+  sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service or quote',faq:'Common questions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
   toastAdd:'أضيفت إلى الحاسبة',toastRm:'أزيلت من الحاسبة',empty:'لا توجد خدمة بهذا الاسم. جرّب كلمة أخرى، أو اطلب الخدمة من نموذج الطلب وسنسعّرها لك.',
@@ -39,8 +39,8 @@ const T=EN?{
   copied:'تم النسخ',copyHand:'حدد النص وانسخه يدوياً',ind:'فرد',
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
-  prices:'قائمة الأسعار الكاملة',eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
-  sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة',faq:'أسئلة شائعة'}
+  prices:'قائمة الأسعار الكاملة',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'وافق على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
+  sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة أو عرض سعر',faq:'أسئلة شائعة'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
 
@@ -59,7 +59,7 @@ const isOnce=s=>s.kind!=='gov';
 $('fEnt')&&($('fEnt').textContent=DATA.G.length);
 $('fSvc2')&&($('fSvc2').textContent=all.filter(s=>s.kind==='gov').length);
 $('fCon')&&($('fCon').textContent=all.filter(s=>s.kind==='consult').length);
-const NUMS={gov:all.filter(s=>s.kind==='gov').length,ent:DATA.G.length,con:all.filter(s=>s.kind==='consult').length,cat:cats.length,pmin:fmt(Math.min(...DATA.PLANS.map(p=>p.m)))};
+const NUMS={gov:all.filter(s=>s.kind==='gov').length,ent:DATA.G.length,con:all.filter(s=>s.kind==='consult').length,core:all.filter(s=>s.kind==='gov'&&s.core).length,cat:cats.length,pmin:fmt(Math.min(...DATA.PLANS.map(p=>p.m)))};
 document.querySelectorAll('[data-n]').forEach(el=>el.textContent=NUMS[el.dataset.n]);
 let ent='all',full=false;const cart=new Map();
 function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
@@ -277,7 +277,9 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
   if(!ok)return;
   const via=$('fVia')?$('fVia').value:'';const plan=fPlan.value?fPlan.options[fPlan.selectedIndex].text:'',typeTxt=fType.options[fType.selectedIndex].text;
   const msg=`${T.msgHead}\n${T.lName}: ${n}\n${T.lPhone}: ${ph}\n${em?T.lMail+': '+em+'\n':''}${T.lType}: ${typeTxt}\n${via?T.lVia+': '+via+'\n':''}${plan?T.lPlan+': '+plan+'\n':''}${T.lSvc}:\n${sv}`;
-  $('out').textContent=msg;$('sendWa').href=`https://wa.me/${WA}?text=`+encodeURIComponent(msg);
+  const Q=buildQuote({n,ph,em,typeTxt,plan,via,sv});const full=msg+'\n\n'+Q.text;
+  $('qdoc').innerHTML=Q.html;$('out').textContent=full;$('sendWa').href=`https://wa.me/${WA}?text=`+encodeURIComponent(full);
+  $('sendMail').href=`mailto:${CFG.EMAIL||'baseeratactions@gmail.com'}?${em?'cc='+encodeURIComponent(em)+'&':''}subject=${encodeURIComponent(T.q.subj+' '+Q.no+' - '+n)}&body=${encodeURIComponent(full)}`;
   const st=$('sendState');$('outWrap').hidden=false;
   if(CFG.API){st.hidden=false;st.className='verdict';st.textContent=T.sending;
     try{const r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'request',name:n,phone:ph,email:em,type:typeTxt,plan,contact:via,services:sv,codes:[...new Set([...sv.matchAll(/\(([A-Z]{2}-\d{2})\)/g)].map(m=>m[1]))],lang:EN?'en':'ar',page:location.href,hp:$('fHp').value})});
@@ -287,10 +289,29 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
   $('outWrap').scrollIntoView({block:'nearest'});
 });
 function copy(text,el){(navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(()=>toast(T.copied)).catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast(T.copyHand)})}
+// a preliminary quote from the services in the request: codes with quantities, free text priced later
+function buildQuote(c){const d=new Date(),pad=x=>String(x).padStart(2,'0');
+  const no=`Q-${String(d.getFullYear()).slice(2)}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`;
+  const date=`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+  const rows=[],custom=[];let sum=0,from=false;
+  c.sv.split('\n').map(x=>x.trim()).filter(Boolean).forEach(line=>{const m=line.match(/\(([A-Z]{2}-\d{2})\)(?:\s*×\s*(\d+))?/);const s=m&&byCode[m[1]];
+    if(!s){custom.push(line);return}const q=Math.max(1,parseInt(m[2])||1);sum+=s.p*q;if(s.from)from=true;rows.push({s,q})});
+  const cur=T.cur;
+  const html=`<div class="qhead"><div><b>${T.q.title}</b><span>${EN?'Basira for Transactions LLC':'بصيرة للمعاملات ذ.م.م'} · <span dir="ltr">${esc(CFG.PHONE||'+974 72232609')}</span> · ${esc(CFG.EMAIL||'baseeratactions@gmail.com')}</span></div><div class="num">${T.q.no}: ${no}<br>${T.q.date}: ${date}</div></div>
+   <p><b>${T.q.client}:</b> ${esc(c.n)} · <span dir="ltr">${esc(c.ph)}</span>${c.em?' · '+esc(c.em):''} · ${esc(c.typeTxt)}${c.plan?' · '+esc(c.plan):''}${c.via?' · '+T.lVia+': '+esc(c.via):''}</p>
+   ${rows.length?`<div class="ptable"><table><thead><tr><th>${T.q.svc}</th><th>${T.q.qty}</th><th>${T.q.fee}</th><th>${T.q.total}</th></tr></thead><tbody>${rows.map(({s,q})=>`<tr><td>${esc(s.n)} <span class="code">${s.c}</span></td><td class="num">${q}</td><td class="num">${s.from?T.from+' ':''}${fmt(s.p)}</td><td class="num">${fmt(s.p*q)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3"><b>${T.q.sum}</b></td><td class="num"><b>${from?T.from+' ':''}${fmt(sum)} ${cur}</b></td></tr></tfoot></table></div>`:''}
+   ${custom.length?`<p><b>${T.q.custom}:</b><br>${custom.map(esc).join('<br>')}</p>`:''}
+   <ul class="qnotes"><li>${T.q.gov}</li>${from?`<li>${T.q.startNote}</li>`:''}<li>${T.q.prelim}</li><li>${T.q.valid}</li></ul>`;
+  const text=[`${T.q.title} ${no} (${date})`,...rows.map(({s,q})=>`- ${s.n} (${s.c}) × ${q}: ${s.from?T.from+' ':''}${fmt(s.p*q)} ${cur}`),...(custom.length?[T.q.custom+':',...custom.map(x=>'- '+x)]:[]),...(rows.length?[`${T.q.sum}: ${from?T.from+' ':''}${fmt(sum)} ${cur}`]:[]),T.q.gov,T.q.valid].join('\n');
+  return {no,html,text}}
+$('printQ')&&($('printQ').onclick=()=>window.print());
 $('copyMsg').onclick=()=>copy($('out').textContent,$('out'));
 $('waFab')&&($('waFab').href='https://wa.me/'+WA);
 $('copyPh').onclick=()=>copy('+'+WA,$('ph'));
 Object.entries(SAMPLE).forEach(([k,q])=>cart.set(k,q));
+const areas=$('areas');
+if(areas)areas.innerHTML=ents.filter(([k])=>k!=='ST').map(([k,n])=>{const it=all.filter(s=>s.ent===k);return `<a class="gtile" href="#ent=${k}"><span class="code">${k}</span><b>${esc(n)}</b><span class="mute">${it.slice(0,3).map(s=>esc(s.n)).join(' · ')}${it.length>3?' …':''}</span><span class="mute">${T.svcN(it.length)}</span></a>`}).join('')+`<a class="gtile" href="#consult"><span class="code">C</span><b>${T.sec.consult}</b><span class="mute">${cats.slice(0,3).map(c=>esc(c[1])).join(' · ')} …</span><span class="mute">${T.svcN(all.filter(s=>s.kind==='consult').length)}</span></a>`;
+if(CFG.MUNJIZ_URL&&$('munjizLink')){$('munjizLink').href=CFG.MUNJIZ_URL;$('munjizLink').hidden=false}
 buildMenu();render();renderCon();renderPlans();renderCart();
 route();
 // keep the breadcrumb bar just under the sticky header
