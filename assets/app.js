@@ -333,9 +333,9 @@ if(reg){reg.addEventListener('cancel',e=>{if(!REG)e.preventDefault()});
     const emOk=!em||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);$('erMail').textContent=emOk?'':T.eMail;if(!emOk)ok=false;
     $('erOk').textContent=$('rOk').checked?'':T.eOk;if(!$('rOk').checked)ok=false;
     if(!ok)return;
-    const changed=!REG||REG.phone!==ph;REG={name:n,phone:ph,email:em,company:co,at:new Date().toISOString()};
+    const changed=!REG||REG.phone!==ph;REG={name:n,phone:ph,email:em,company:co,legal:'1.0',at:new Date().toISOString()};
     try{localStorage.setItem(REG_KEY,JSON.stringify(REG))}catch(err){}
-    if(CFG.API&&changed)fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',name:n,phone:ph,email:em,company:co,lang:EN?'en':'ar',page:location.href,hp:$('rHp').value})}).catch(()=>{});
+    if(CFG.API&&changed)fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'register',name:n,phone:ph,email:em,company:co,accept:true,lang:EN?'en':'ar',page:location.href,hp:$('rHp').value})}).catch(()=>{});
     $('fName').value='';$('fPhone').value='';$('fMail').value='';applyReg();reg.close();toast(T.hi(n.split(' ')[0]))});
   if(!REG)openReg()}
 applyReg();

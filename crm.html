@@ -3,24 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>نظام العملاء | بصيرة للمعاملات</title>
+<title>لوحة الإدارة | بصيرة للمعاملات</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#14284b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='36' fill='%2314284b'/%3E%3Cpath d='M14 40 Q40 16 66 40 Q40 64 14 40Z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='40' cy='40' r='10' fill='%23e0a12b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261015h">
-<link rel="stylesheet" href="assets/crm.css?v=20261015h">
+<link rel="stylesheet" href="assets/style.css?v=20261015i">
+<link rel="stylesheet" href="assets/crm.css?v=20261015i">
 </head>
 <body class="crm">
 <header class="top"><div class="wrap">
   <a class="brand" href="./"><svg width="30" height="30" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#e0a12b" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#e0a12b"/></svg>نظام العملاء والمتابعة</a>
-  <nav class="tabs" id="tabs" hidden aria-label="أقسام النظام">
+  <nav class="tabs" id="tabs" hidden aria-label="أقسام لوحة الإدارة">
     <button type="button" data-tab="dash" aria-pressed="true">لوحة المتابعة</button>
     <button type="button" data-tab="req">الطلبات <span class="pill num" id="nReq"></span></button>
     <button type="button" data-tab="cli">العملاء</button>
     <button type="button" data-tab="txn">المعاملات</button>
+    <button type="button" data-tab="msg">المراسلات <span class="pill num" id="nMsg"></span></button>
     <button type="button" data-tab="log">السجل</button>
+    <button type="button" data-tab="set">الإعدادات</button>
     <button type="button" id="logout" class="ghostbtn">خروج</button>
   </nav>
 </div></header>
@@ -29,13 +31,26 @@
   <div id="modeBar" class="modebar" hidden></div>
 
   <section id="login" class="panel login" hidden>
-    <h2>دخول الموظفين</h2>
+    <h2>دخول الإدارة والموظفين</h2>
     <p class="mute" id="loginHint"></p>
     <form id="loginF" class="stack">
-      <label>كلمة المرور<input id="pw" type="password" autocomplete="current-password" required></label>
-      <label id="pw2Wrap" hidden>أعد كتابة كلمة المرور<input id="pw2" type="password" autocomplete="new-password"></label>
+      <label>اسم المستخدم<input id="un" autocomplete="username" dir="ltr" required></label>
+      <label>كلمة المرور<input id="pw" type="password" autocomplete="current-password" dir="ltr" required></label>
       <span class="err" id="loginErr"></span>
       <button class="btn pri" type="submit" id="loginBtn">دخول</button>
+      <a class="sm" href="portal.html">دخول العملاء</a>
+    </form>
+  </section>
+
+  <section id="chg" class="panel login" hidden>
+    <h2>غيّر بيانات الدخول</h2>
+    <p class="mute" id="chgHint">هذا أول دخول. لحماية بيانات العملاء اختر اسم مستخدم وكلمة مرور جديدين بدلاً من 123.</p>
+    <form id="chgF" class="stack">
+      <label>اسم المستخدم الجديد<input id="cUn" autocomplete="username" dir="ltr" required></label>
+      <label>كلمة المرور الجديدة (8 أحرف على الأقل)<input id="cPw" type="password" autocomplete="new-password" dir="ltr" required></label>
+      <label>أعد كتابة كلمة المرور<input id="cPw2" type="password" autocomplete="new-password" dir="ltr" required></label>
+      <span class="err" id="chgErr"></span>
+      <button class="btn pri" type="submit">حفظ والمتابعة</button>
     </form>
   </section>
 
@@ -46,6 +61,8 @@
       <div class="panel"><h3>معاملات تجاوزت الموعد المتوقع</h3><div id="dLate"></div></div>
       <div class="panel"><h3>مستندات تنتهي خلال 30 يوماً</h3><div id="dRenew"></div></div>
       <div class="panel"><h3>اشتراكات باقات تنتهي خلال 30 يوماً</h3><div id="dPlans"></div></div>
+      <div class="panel"><h3>رسائل العملاء التي تنتظر الرد</h3><div id="dMsg"></div></div>
+      <div class="panel"><h3>حسابات تنتظر التفعيل</h3><div id="dAcc"></div></div>
     </div>
   </section>
 
@@ -67,7 +84,55 @@
       <div class="panel"><h3>المتطلبات والملاحظات</h3><div id="cReq"></div></div>
     </div>
     <div class="panel"><h3>معاملات العميل وأعماله</h3><div class="tbl" id="cTx"></div></div>
+    <div class="grid2">
+      <div class="panel" id="cMsgP"><h3>المراسلات مع العميل</h3><div class="thread" id="cMsgs"></div>
+        <form id="replyF" class="stack"><textarea id="rBody" rows="3" placeholder="اكتب ردك على العميل. يظهر في حسابه ويصله بالبريد إن كان مسجلاً." required></textarea>
+        <div class="contact"><button class="btn sm pri" type="submit">إرسال الرد</button><label class="chk sm"><input type="checkbox" id="rMail" checked> إرسال نسخة بالبريد</label></div></form></div>
+      <div class="panel"><h3>حساب العميل على الموقع</h3><div id="cAcc"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>الملفات والتراخيص المرفوعة للعميل</h3><div id="cFiles"></div>
+        <form id="fileF" class="stack">
+          <label>عنوان الملف كما يراه العميل<input id="fTitle" placeholder="مثال: السجل التجاري بعد التجديد" required></label>
+          <label>المعاملة المرتبطة (اختياري)<select id="fTxn"><option value="">بدون</option></select></label>
+          <label id="fUpL">الملف (حتى 10 ميجابايت)<input id="fUp" type="file"></label>
+          <label>أو رابط (Google Drive أو غيره)<input id="fUrl" type="url" dir="ltr" placeholder="https://"></label>
+          <div class="contact"><button class="btn sm pri" type="submit">رفع للعميل</button><span class="mute sm" id="fHint"></span></div>
+        </form></div>
+      <div class="panel"><h3>بيانات الدخول إلى البوابات الحكومية</h3><p class="mute sm">كلمات المرور مشفرة. كل إظهار يُسجَّل باسمك في سجل العميل.</p><div id="cCreds"></div>
+        <h3>الموافقات القانونية</h3><div id="cCons"></div></div>
+    </div>
     <div class="panel"><h3>سجل التواصل</h3><div id="cLog"></div></div>
+  </section>
+
+  <section id="v-msg" class="view" hidden>
+    <div class="bar"><h2>المراسلات مع العملاء</h2></div>
+    <div class="tbl" id="msgT"></div>
+  </section>
+
+  <section id="v-set" class="view" hidden>
+    <div class="grid2">
+      <div class="panel"><h3>بيانات دخولي</h3><p class="mute sm" id="meLine"></p>
+        <form id="meF" class="stack">
+          <label>اسم المستخدم<input id="meUn" dir="ltr" autocomplete="username"></label>
+          <label>كلمة المرور الحالية<input id="meOld" type="password" dir="ltr" autocomplete="current-password" required></label>
+          <label>كلمة المرور الجديدة (اتركها فارغة إن لم تغيّرها)<input id="mePw" type="password" dir="ltr" autocomplete="new-password"></label>
+          <label>أعد كتابة كلمة المرور الجديدة<input id="mePw2" type="password" dir="ltr" autocomplete="new-password"></label>
+          <span class="err" id="meErr"></span>
+          <button class="btn sm pri" type="submit">حفظ</button>
+        </form></div>
+      <div class="panel" id="staffP"><h3>الموظفون والصلاحيات</h3><p class="mute sm">المدير يدير الموظفين ويحذف العملاء. الموظف يتابع الطلبات والمعاملات والمراسلات والملفات. كل موظف يغيّر كلمة المرور المؤقتة عند أول دخول.</p>
+        <div id="staffL" class="tbl"></div>
+        <form id="staffF" class="stack">
+          <h3>إضافة موظف</h3>
+          <label>الاسم<input id="sfName" required></label>
+          <label>اسم المستخدم<input id="sfUn" dir="ltr" required></label>
+          <label>كلمة مرور مؤقتة (8 أحرف على الأقل)<input id="sfPw" dir="ltr" required></label>
+          <label>الصلاحية<select id="sfRole"><option value="staff">موظف</option><option value="admin">مدير</option></select></label>
+          <span class="err" id="sfErr"></span>
+          <button class="btn sm pri" type="submit">إضافة</button>
+        </form></div>
+    </div>
   </section>
 
   <section id="v-txn" class="view" hidden>
@@ -138,10 +203,18 @@
   <h3 id="qT"></h3><textarea id="qIn" rows="4" hidden></textarea>
   <div class="contact"><button class="btn pri" value="ok" id="qOk">نعم</button><button class="btn ghost" value="cancel" formnovalidate>إلغاء</button></div>
 </form></dialog>
+<dialog id="dlgA" aria-labelledby="dlgAT"><form class="dlg crmform" id="fA" method="dialog">
+  <h3 id="dlgAT">حساب العميل على الموقع</h3>
+  <label>اسم المستخدم<input name="username" dir="ltr" required></label>
+  <label>كلمة مرور جديدة (اتركها فارغة للإبقاء على الحالية)<input name="password" dir="ltr" autocomplete="off"></label>
+  <label>الحالة<select name="status"><option>مفعّل</option><option>بانتظار التفعيل</option><option>موقوف</option></select></label>
+  <p class="mute sm">أرسل للعميل اسم المستخدم وكلمة المرور على واتساب، واطلب منه تغييرها من «حسابي».</p>
+  <div class="contact"><button class="btn pri" value="save">حفظ</button><button class="btn ghost" value="cancel" formnovalidate>إلغاء</button><button class="btn ghost" type="button" id="aGen">كلمة مرور عشوائية</button></div>
+</form></dialog>
 <div class="toast" id="toast" hidden></div>
-<script src="assets/config.js?v=20261015h"></script>
-<script src="assets/data.js?v=20261015h"></script>
-<script src="assets/details.js?v=20261015h"></script>
-<script src="assets/crm.js?v=20261015h"></script>
+<script src="assets/config.js?v=20261015i"></script>
+<script src="assets/data.js?v=20261015i"></script>
+<script src="assets/details.js?v=20261015i"></script>
+<script src="assets/crm.js?v=20261015i"></script>
 </body>
 </html>
