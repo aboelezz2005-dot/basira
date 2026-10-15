@@ -21,7 +21,8 @@ const T=EN?{
   sending:'Sending your request…',sentOk:(id,m)=>`Your request reached us. Request number <b>${esc(id)}</b>.${m?' We have emailed you a confirmation.':''} We will contact you with the document list and price.`,sentFail:'We could not send the request online. Please send it on WhatsApp below.',
   copied:'Copied',copyHand:'Select the text and copy it manually',ind:'Individual',
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
-  reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority'
+  reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
+  sec:{services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service',faq:'Common questions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
   toastAdd:'أضيفت إلى الحاسبة',toastRm:'أزيلت من الحاسبة',empty:'لا توجد خدمة بهذا الاسم. جرّب كلمة أخرى، أو اطلب الخدمة من نموذج الطلب وسنسعّرها لك.',
@@ -36,7 +37,8 @@ const T=EN?{
   sending:'جارٍ إرسال طلبك…',sentOk:(id,m)=>`وصلنا طلبك، ورقمه <b>${esc(id)}</b>.${m?' أرسلنا لك تأكيداً على بريدك.':''} سنتواصل معك بقائمة المستندات والسعر.`,sentFail:'تعذر إرسال الطلب عبر الموقع. أرسله على واتساب من الزر أدناه.',
   copied:'تم النسخ',copyHand:'حدد النص وانسخه يدوياً',ind:'فرد',
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
-  reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة'
+  reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
+  sec:{services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة',faq:'أسئلة شائعة'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
 
@@ -55,6 +57,8 @@ const isOnce=s=>s.kind!=='gov';
 $('fEnt')&&($('fEnt').textContent=DATA.G.length);
 $('fSvc2')&&($('fSvc2').textContent=all.filter(s=>s.kind==='gov').length);
 $('fCon')&&($('fCon').textContent=all.filter(s=>s.kind==='consult').length);
+const NUMS={gov:all.filter(s=>s.kind==='gov').length,ent:DATA.G.length,con:all.filter(s=>s.kind==='consult').length,cat:cats.length,pmin:fmt(Math.min(...DATA.PLANS.map(p=>p.m)))};
+document.querySelectorAll('[data-n]').forEach(el=>el.textContent=NUMS[el.dataset.n]);
 let ent='all';const cart=new Map();
 function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
 const priceHTML=s=>`<span class="price num">${s.from?`<small>${T.from}</small> `:''}${fmt(s.p)} <small>${T.cur}${s.unit?' '+esc(s.unit):''}</small></span>`;
@@ -98,7 +102,11 @@ function match(s,q){return !q||(s.n+' '+s.inc+' '+s.c+' '+s.entName).toLowerCase
 function render(){
   const q=$('q').value.trim();const co=$('coreOnly').checked;
   const cat=$('catalog');cat.innerHTML='';let shown=0;
-  ents.forEach(([k,n])=>{
+  const grid=ent==='all'&&!q;$('entTiles').hidden=!grid;cat.hidden=grid;
+  if(grid){$('entTiles').innerHTML=ents.map(([k,n])=>groupTile('ent',k,n,all.filter(s=>s.ent===k&&(!co||s.core)))).join('');return}
+  if(ent!=='all')cat.insertAdjacentHTML('beforeend',`<a class="btn sm ghost upto" href="#services">${T.allEnts}</a>`);
+  else cat.insertAdjacentHTML('beforeend',`<p class="lead">${esc(T.results(q))}</p>`);
+  (ent==='all'?[...ents,...cats]:ents).forEach(([k,n])=>{
     if(ent!=='all'&&ent!==k)return;
     const items=all.filter(s=>s.ent===k&&(!co||s.core)&&match(s,q));
     if(!items.length)return;shown+=items.length;
@@ -106,10 +114,13 @@ function render(){
     box.innerHTML=`<h3><span class="code">${k}</span>${esc(n)}</h3>`;
     const list=document.createElement('div');list.className='list';items.forEach(s=>list.appendChild(svcRow(s)));
     box.appendChild(list);cat.appendChild(box)});
-  if(!shown)cat.innerHTML=`<div class="empty">${T.empty}</div>`;
+  if(!shown)cat.insertAdjacentHTML('beforeend',`<div class="empty">${T.empty}</div>`);
 }
+// one card per authority or consultancy type: name, number of services, lowest price
+function groupTile(kind,k,n,items){if(!items.length)return '';const lo=Math.min(...items.map(s=>s.p));
+  return `<a class="gtile" href="#${kind}=${k}"><span class="code">${k}</span><b>${esc(n)}</b><span class="mute">${T.svcN(items.length)} · ${T.from} <span class="num">${fmt(lo)}</span> ${T.cur}</span></a>`}
 // a search looks across every authority, so clear any authority filter first
-$('q').addEventListener('input',()=>{if(ent!=='all'&&$('q').value.trim())setEnt('all');else render()});
+$('q').addEventListener('input',()=>{if(ent!=='all'&&$('q').value.trim()){history.replaceState(null,'','#services');crumbs([[T.sec.services,'#services']]);setEnt('all')}else render()});
 $('coreOnly').addEventListener('change',render);
 
 // ---- consultancy catalogue ----
@@ -119,10 +130,13 @@ if(cchips){[['all',EN?'All types':'كل الأنواع'],...cats].forEach(([k,n]
   $('cq').addEventListener('input',renderCon)}
 function setCat(k){cc=k;cchips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===k));renderCon()}
 function renderCon(){const box=$('ccatalog');if(!box)return;box.innerHTML='';const q=$('cq').value.trim();let shown=0;
+  const grid=cc==='all'&&!q;$('catTiles').hidden=!grid;box.hidden=grid;
+  if(grid){$('catTiles').innerHTML=cats.map(([k,n])=>groupTile('cat',k,n,all.filter(s=>s.ent===k))).join('');return}
+  if(cc!=='all')box.insertAdjacentHTML('beforeend',`<a class="btn sm ghost upto" href="#consult">${T.allCats}</a>`);
   cats.forEach(([k,n,about])=>{if(cc!=='all'&&cc!==k)return;const items=all.filter(s=>s.ent===k&&match(s,q));if(!items.length)return;shown+=items.length;
     const e=document.createElement('div');e.className='ent';e.id='c-'+k;e.innerHTML=`<h3><span class="code">${k}</span>${esc(n)}</h3>${about?`<p class="lead sm">${esc(about)}</p>`:''}`;
     const list=document.createElement('div');list.className='list';items.forEach(s=>list.appendChild(svcRow(s)));e.appendChild(list);box.appendChild(e)});
-  if(!shown)box.innerHTML=`<div class="empty">${T.empty}</div>`}
+  if(!shown)box.insertAdjacentHTML('beforeend',`<div class="empty">${T.empty}</div>`)}
 
 // ---- packages ----
 let yearly=false;
@@ -201,16 +215,48 @@ function openSvc(code){const s=byCode[code];if(!s||!dlg)return;const d=s.d||{};
    ${d.note?`<p class="dnote">${esc(d.note)}</p>`:''}
    ${s.kind!=='consult'?`<p class="mute sm">${T.govFee}</p>`:''}`;
   const a=$('dlgAdd');a.textContent=cart.has(code)?T.inCalc:T.addCalc;a.onclick=()=>{if(!cart.has(code))toggleCart(code);a.textContent=T.inCalc};
-  $('dlgReq').onclick=()=>{if(!cart.has(code))cart.set(code,1);renderCart();render();renderCon();$('fSvc').value=cartText();dlg.close();location.hash='request'};
+  $('dlgReq').onclick=()=>{if(!cart.has(code))cart.set(code,1);renderCart();render();renderCon();$('fSvc').value=cartText();dlg.close();if(location.hash==='#request')route();else location.hash='request'};
   if(dlg.showModal){if(!dlg.open)dlg.showModal()}else dlg.setAttribute('open','')}
-if(dlg){$('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
-  dlg.addEventListener('close',()=>{if(/^#svc=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search)})}
-document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#svc="],a[href^="#ent="],a[href^="#cat="]');if(!a)return;e.preventDefault();route(a.getAttribute('href'))});
-function route(h){h=h||location.hash;let m;
-  if((m=h.match(/^#svc=([A-Z]{2}-\d{2})$/))){history.replaceState(null,'',h);openSvc(m[1])}
-  else if((m=h.match(/^#ent=([A-Z]{2})$/))){$('q').value='';setEnt(m[1]);$('services').scrollIntoView()}
-  else if((m=h.match(/^#cat=([A-Z]{2})$/))&&cchips){$('cq').value='';setCat(m[1]);$('consult').scrollIntoView()}}
+if(dlg){$('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}
+
+// ---- one view at a time: home shows the main cards, each card opens its own page; hash keeps the back button working ----
+const VIEWS=['services','consult','packages','estimate','how','request','faq'];
+const secs=Object.fromEntries(VIEWS.map(v=>[v,$(v)]));
+let view=null;
+function crumbs(trail){const c=$('crumbs');c.hidden=!trail.length;if(!trail.length)return;
+  const parts=[[T.home,'#home'],...trail];
+  $('crumbList').innerHTML=parts.map(([t,h],i)=>`<li>${i<parts.length-1?`<a href="${h}">${esc(t)}</a>`:`<span aria-current="page">${esc(t)}</span>`}</li>`).join('');
+  // step back through history when we came from the parent page, so the browser back button stays in step
+  $('back').onclick=()=>{const up=parts[parts.length-2][1];if(cameFrom===up||(up==='#home'&&cameFrom===''))history.back();else location.hash=up}}
+let cameFrom=null,here=location.hash;
+window.addEventListener('hashchange',e=>{cameFrom=here;here=location.hash});
+function show(v,trail){const home=v==='home';here=location.hash;
+  $('home').hidden=!home;$('tiles').hidden=!home;
+  VIEWS.forEach(k=>secs[k].hidden=k!==v);
+  crumbs(home?[]:trail||[[T.sec[v],'#'+v]]);
+  document.title=(home?'':T.sec[v]+' | ')+TITLE;
+  window.scrollTo({top:0,behavior:'instant'});view=v}
+const TITLE=document.title.split(' | ')[0];
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');
+  if(/^#svc=/.test(h)){e.preventDefault();openSvc(h.slice(5));return}
+  if(h===location.hash){e.preventDefault();route(h)}});
+function route(h){h=h||location.hash||'#home';let m;
+  if(dlg&&dlg.open)dlg.close();
+  if((m=h.match(/^#svc=([A-Z]{2}-\d{2})$/))&&byCode[m[1]]){const s=byCode[m[1]];
+    // a shared service link opens its group behind the details
+    history.replaceState(null,'',(s.kind==='consult'?'#cat=':'#ent=')+s.ent);route();openSvc(m[1]);return}
+  if((m=h.match(/^#ent=([A-Z]{2})$/))&&ents.some(x=>x[0]===m[1])){$('q').value='';setEnt(m[1]);
+    show('services',[[T.sec.services,'#services'],[ents.find(x=>x[0]===m[1])[1],h]]);return}
+  if((m=h.match(/^#cat=([A-Z]{2})$/))&&cats.some(x=>x[0]===m[1])){$('cq').value='';setCat(m[1]);
+    show('consult',[[T.sec.consult,'#consult'],[cats.find(x=>x[0]===m[1])[1],h]]);return}
+  const v=h.slice(1);
+  if(v==='services'){if(!$('q').value.trim())setEnt('all')}
+  if(v==='consult'){if(!$('cq').value.trim())setCat('all')}
+  show(VIEWS.includes(v)?v:'home')}
 window.addEventListener('hashchange',()=>route());
+// the home search looks through every service and consultancy
+$('hs')&&$('hs').addEventListener('submit',e=>{e.preventDefault();const q=$('hq').value.trim();$('q').value=q;ent='all';
+  if(location.hash==='#services')route('#services');else location.hash='services';render()});
 
 // ---- request form: sends to the office system when configured, WhatsApp always available ----
 const fType=$('fType'),fPlan=$('fPlan');
@@ -241,4 +287,7 @@ $('waFab')&&($('waFab').href='https://wa.me/'+WA);
 $('copyPh').onclick=()=>copy('+'+WA,$('ph'));
 Object.entries(SAMPLE).forEach(([k,q])=>cart.set(k,q));
 buildMenu();render();renderCon();renderPlans();renderCart();
-if(location.hash)route();
+route();
+// keep the breadcrumb bar just under the sticky header
+const setHH=()=>document.documentElement.style.setProperty('--hh',document.querySelector('header.top').offsetHeight+'px');setHH();addEventListener('resize',setHH);
+addEventListener('load',()=>{if(location.hash&&!/^#svc=/.test(location.hash))window.scrollTo({top:0,behavior:'instant'})});
