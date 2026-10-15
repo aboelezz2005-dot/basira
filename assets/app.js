@@ -38,7 +38,7 @@ const T=EN?{
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة'
 };
-const WA=CFG.WHATSAPP||'97455482829';
+const WA=CFG.WHATSAPP||'97472232609';
 
 // ---- catalogue: government services, setup bundles, consultancy ----
 const entName=(k,ar)=>EN?((D._entities||{})[k]||ar):ar;
