@@ -362,8 +362,9 @@ ul.promises span{color:var(--mute);font-size:14.5px}
 .sister{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .sister p{margin:0}
 @media print{
-  body *{visibility:hidden}
-  #qdoc,#qdoc *{visibility:visible}
-  #qdoc{position:absolute;inset:0 0 auto 0;border:0}
-  .wa-fab,.top,.crumbs{display:none}
+  header,.crumbs,footer,.wa-fab,.toast,dialog,body>section:not(#request){display:none!important}
+  #request{display:block!important;padding:0;background:#fff}
+  #request .wrap>*:not(#outWrap),#outWrap>*:not(#qdoc){display:none!important}
+  #outWrap{border:0;padding:0;box-shadow:none}
+  #qdoc{border:0;box-shadow:none}
 }
