@@ -488,3 +488,21 @@ ul.promises span{color:var(--mute);font-size:14.5px}
 @media (max-width:620px){.top .wrap{gap:10px}.plainnav{order:5;width:100%;margin:0}.top .brand{flex:1 1 0;min-width:0;line-height:1.15;font-size:17px}.top .brand svg{flex:none}}
 /* Google Translate bar off; the page stays where it is */
 body{top:0!important}.skiptranslate iframe,#goog-gt-tt{display:none!important}
+/* about.html: numbers, values, achievements, news, stories */
+.about h1{margin-top:4px}.about h2{margin-top:34px}
+.anums{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.anums>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.anums b{display:block;font-family:var(--display);font-size:34px;color:var(--navy);line-height:1.1}.anums span{color:var(--mute);font-size:14.5px}
+.avals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.avals>div{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--amber);border-radius:12px;padding:14px 16px}
+.avals b{display:block;font-family:var(--display);margin-bottom:4px}.avals span{color:var(--mute)}
+.acols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.anews{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.anews li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}.anews time{display:block;font-size:13px;color:var(--mute);margin-bottom:2px}
+.stories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.story h3{margin:0;font-size:17px}.story p{margin:0;flex:1}.story a{font-weight:700;text-decoration:none}
+.stag{align-self:flex-start;font-size:12px;background:var(--chip);color:var(--mute);border-radius:999px;padding:2px 10px}
+.acta{margin-top:36px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}.acta h2{margin-top:0}.acta .cta{justify-content:center;flex-wrap:wrap}
+.amore{margin:6px 0 16px}
+@media (max-width:860px){.anums{grid-template-columns:repeat(2,1fr)}.avals,.acols,.stories{grid-template-columns:1fr}}
