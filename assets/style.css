@@ -568,3 +568,16 @@ html[dir=ltr] .trksteps li::before{transform:translateX(-50%)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .pstars{color:var(--amber);letter-spacing:1px;white-space:nowrap}
 #trkErr:empty{display:none}.nw{white-space:nowrap}
+/* مساحة الإعلانات في الصفحة الرئيسية */
+.ads-sec{padding-block:4px 10px}
+.adgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.adcard{display:flex;gap:12px;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;color:inherit;text-decoration:none;box-shadow:0 2px 10px rgba(30,50,70,.04)}
+a.adcard:hover{border-color:var(--amber)}
+.adcard img{width:42%;max-width:220px;aspect-ratio:2/1;object-fit:cover;flex:none;background:var(--chip)}
+.adgrid.one .adcard img{max-width:320px}
+.adbody{display:flex;flex-direction:column;gap:3px;padding:10px 12px 10px 4px;padding-inline:12px;min-width:0}
+.adtag{align-self:flex-start;font-size:11px;color:var(--mute);border:1px solid var(--line);border-radius:6px;padding:0 6px}
+.adbody b{font-family:var(--display);line-height:1.35}.adtxt{color:var(--mute);font-size:14px}.admore{color:var(--navy);font-weight:700;font-size:13.5px;margin-top:auto}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .admore{color:var(--amber)}}
+@media (max-width:520px){.adcard{flex-direction:column}.adcard img{width:100%;max-width:none}}
+.ads-in{margin-top:18px}

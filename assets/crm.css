@@ -139,3 +139,5 @@ table.mini .num{text-align:end}.jent table.mini th{color:var(--mute);font-weight
 .ctgroups .lnk{flex:1;font:inherit;background:none;border:0;color:inherit;text-align:start;cursor:pointer;padding:2px 0}.ctgroups input,#ctS input[type=checkbox]{width:18px;height:18px}
 #ctS tr.muted td{opacity:.55}
 @media (max-width:860px){.ctgrid{grid-template-columns:minmax(0,1fr)}}
+.adthumb{width:96px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--line,#ddd)}
+.adprev .adthumb{width:200px;height:100px}
