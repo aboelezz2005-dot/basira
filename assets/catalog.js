@@ -12,7 +12,9 @@ function visible(c){const h=(c.details&&c.details._hidden)||{},S=new Set(h.s||[]
     SETUP:G.has('ST')?[]:d.SETUP.filter(x=>!S.has(x[0])),
     CONSULT:d.CONSULT.filter(k=>!G.has(k.code)).map(k=>Object.assign({},k,{items:k.items.filter(x=>!S.has(x.c))})).filter(k=>k.items.length),
     PLANS:d.PLANS.filter(x=>!P.has(x.key))}}
-function use(c){if(!c||!c.data||!c.details||!DT)return false;const v=window.CATALOG_ALL?c.data:visible(c);
+// a saved catalog is plain text only: drop anything that could become markup on the public pages
+const clean=v=>typeof v==='string'?v.replace(/[<>"`]/g,''):Array.isArray(v)?v.map(clean):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[clean(k),clean(x)])):v;
+function use(c){if(!c||!c.data||!c.details||!DT)return false;c={data:clean(c.data),details:clean(c.details),ver:c.ver};const v=window.CATALOG_ALL?c.data:visible(c);
   Object.keys(DT).forEach(k=>delete DT[k]);Object.assign(DT,v);window.DETAILS=c.details;return true}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
 if(saved)use(saved);
