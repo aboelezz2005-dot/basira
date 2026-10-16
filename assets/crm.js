@@ -78,7 +78,6 @@ const parseDocs=v=>{if(Array.isArray(v))return v;try{return JSON.parse(v||'[]')}
 
 // ---- login / mode ----
 function showMode(){const m=$('modeBar');m.hidden=false;
-  if(window.BASIRA_DEMO&&CFG.API==='demo'){m.innerHTML='<b>نسخة تجريبية:</b> المدير 123 / 123، والموظفة sara / sara1234 (صلاحيات جزئية)، والموظف omar / omar1234. البيانات وهمية ومحفوظة في هذا المتصفح فقط.';m.className='modebar';return}
   m.innerHTML=CFG.API?'متصل بخادم المكتب. البيانات محفوظة في Google Sheets ويصل الرد بالبريد للعملاء تلقائياً.'
   :'<b>وضع محلي:</b> البيانات تُحفظ في هذا المتصفح على هذا الجهاز فقط، والبريد يُفتح في برنامج البريد لديك. لتشغيل الحفظ المركزي والرد التلقائي اتبع ملف «اقرأني - تشغيل نظام العملاء». خذ نسخة احتياطية من قسم السجل بانتظام.';
   m.className='modebar'+(CFG.API?' ok':'')}
