@@ -307,7 +307,7 @@ function buildQuote(c){const d=new Date(),pad=x=>String(x).padStart(2,'0');
   const text=[`${T.q.title} ${no} (${date})`,...rows.map(({s,q})=>`- ${s.n} (${s.c}) × ${q}: ${s.from?T.from+' ':''}${fmt(s.p*q)} ${cur}`),...(custom.length?[T.q.custom+':',...custom.map(x=>'- '+x)]:[]),...(rows.length?[`${T.q.sum}: ${from?T.from+' ':''}${fmt(sum)} ${cur}`]:[]),T.q.gov,T.q.valid].join('\n');
   return {no,html,text}}
 // brand mark and a round company stamp, drawn in SVG so they print sharply on the quote
-const LOGO='<svg width="44" height="44" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#c9a36a" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="#3f5566" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#c9a36a"/></svg>';
+const LOGO='<svg width="44" height="44" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="#c9a24d" stroke-width="5"/><path d="M12 40 Q40 14 68 40 Q40 66 12 40Z" fill="none" stroke="#0e5e4a" stroke-width="5"/><circle cx="40" cy="40" r="10" fill="#c9a24d"/></svg>';
 function stampSVG(){const c='#2f5d8a';
   return `<svg class="stamp" viewBox="0 0 200 200" width="150" height="150" role="img" aria-label="${T.stampName}"><defs><path id="stTop" d="M32 100 A68 68 0 0 1 168 100"/><path id="stBot" d="M20 100 A80 80 0 0 0 180 100"/></defs>
    <g fill="none" stroke="${c}"><circle cx="100" cy="100" r="94" stroke-width="4"/><circle cx="100" cy="100" r="86" stroke-width="1.5"/><circle cx="100" cy="100" r="52" stroke-width="1.5"/></g>
