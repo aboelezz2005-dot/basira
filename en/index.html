@@ -28,9 +28,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../assets/style.css?v=20261016p">
-<script src="../assets/theme.js?v=20261016p"></script>
-<script src="../assets/lang.js?v=20261016p" defer></script>
+<link rel="stylesheet" href="../assets/style.css?v=20261016q">
+<script src="../assets/theme.js?v=20261016q"></script>
+<script src="../assets/lang.js?v=20261016q" defer></script>
 </head>
 <body>
 <div class="basmala" aria-hidden="true"><svg viewBox="0 0 120 120" width="96" height="96"><defs><path id="bsT" d="M20.6 67 A40 40 0 1 1 99.4 67"/><path id="bsB" d="M12.5 74.5 A49.5 49.5 0 0 0 107.5 74.5"/></defs><circle cx="60" cy="60" r="57" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="60" cy="60" r="29" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="8.6" text-anchor="middle"><textPath href="#bsT" startOffset="50%">بسم الله الواحد الأحد الفرد الصمد</textPath></text><text font-size="7.6" text-anchor="middle"><textPath href="#bsB" startOffset="50%">والصلاة والسلام على محمد خير الأنام</textPath></text><text x="60" y="61" font-size="11" text-anchor="middle">بسم الله</text><text x="60" y="74" font-size="6" text-anchor="middle">✦</text><text x="15" y="66" font-size="5" text-anchor="middle">✦</text><text x="105" y="66" font-size="5" text-anchor="middle">✦</text></svg></div>
@@ -41,7 +41,7 @@
     <li class="dd"><button type="button" class="topbtn" aria-expanded="false">Services</button><ul class="drop" id="mGov"></ul></li>
     <li class="dd"><button type="button" class="topbtn" aria-expanded="false">Consulting</button><ul class="drop" id="mCon"></ul></li>
     <li><a href="#packages">Packages</a></li>
-    <li class="dd"><button type="button" class="topbtn" aria-expanded="false">More</button><ul class="drop small"><li><a href="about.html">About Basira</a></li><li><a href="#how">How we work</a></li><li><a href="#faq">FAQ</a></li><li><a href="legal.html">Legal documents</a></li></ul></li>
+    <li class="dd"><button type="button" class="topbtn" aria-expanded="false">More</button><ul class="drop small"><li><a href="about.html">About Basira</a></li><li><a href="#how">How we work</a></li><li><a href="#track">Track your transaction</a></li><li><a href="#auctions">Qatar auctions</a></li><li><a href="#faq">FAQ</a></li><li><a href="legal.html">Legal documents</a></li></ul></li>
     <li><a href="portal.html" class="acct">My account</a></li>
     <li><a href="#request" class="navcta">Request a service</a></li>
     <li hidden id="whoLi"><button type="button" class="topbtn who" id="who" title="Edit my details"></button></li>
@@ -75,17 +75,20 @@
     <a class="tile hot" href="#request"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 3h13l6 6v20H7zM20 3v6h6M11 15h10M11 20h10M11 25h6"/></svg><b>Request a quote</b><span>A written quote you can receive by WhatsApp or email</span></a>
     <a class="tile" href="#how"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="7" cy="16" r="3"/><circle cx="25" cy="7" r="3"/><circle cx="25" cy="25" r="3"/><path d="M10 15l12-7M10 17l12 7"/></svg><b>How we work</b><span>Six clear steps from receipt to delivery</span></a>
     <a class="tile" href="#faq"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="M12 12a4 4 0 1 1 5.5 3.7c-1 .5-1.5 1.2-1.5 2.3v1M16 23v.5"/></svg><b>Common questions</b><span>Fees, timing, payment and more</span></a>
+    <a class="tile" href="#track"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="6" cy="16" r="3"/><circle cx="16" cy="16" r="3"/><circle cx="26" cy="16" r="3"/><path d="M9 16h4M19 16h4"/></svg><b>Track your transaction</b><span>With its number and the last 4 digits of your mobile</span></a>
+    <a class="tile" href="#auctions"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h14M8 23h8M12 6l8 8M9 9l8 8M7 11l6-6 8 8-6 6zM17 15l10 10"/></svg><b>Qatar auctions</b><span>Official platforms, and help taking part</span></a>
     <a class="tile" href="about.html"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="M16 14v9M16 9.5v.5"/></svg><b>Your partner in getting business done</b><span>About Basira and our achievements</span></a>
     <a class="tile wa" href="https://wa.me/97472232609" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3z"/><path d="M11 10c0 6 5 11 11 11l1.5-2.5-3-1.5-1.5 1.5c-2-1-3.5-2.5-4.5-4.5L16 12.5 14.5 9.5z"/></svg><b>WhatsApp us</b><span><span dir="ltr">+974 72232609</span></span></a>
   </div>
+  <div class="revs" id="revs" hidden><h3>What our clients say</h3><div id="revList" class="rev-grid"></div></div>
   <a class="acctbar" href="portal.html#signup"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6"/><path d="M5 28c1.5-6 5.5-9 11-9s9.5 3 11 9"/></svg><span><b>Create your company account</b>Request services, follow your requests and transactions, and download your licences in one place.</span><i>My account</i></a>
 </div></section>
 
 <section class="sec" id="services"><div class="wrap">
   <h2>Which service do you need?</h2>
   <p class="lead">Select any service to see its description, required documents and approximate time. You can add it to the cost calculator with "Add".</p>
-  <div class="costbox"><b>Know the cost before we start</b>
-    <div class="cost3"><div><b>Basira fee</b><span>The price shown next to each service, in QAR.</span></div><div><b>Government fees</b><span>Separate, and paid as set by the authority.</span></div><div><b>Fee receipt</b><span>We hand you the official receipt for every fee we pay on your behalf.</span></div></div>
+  <div class="costbox fees"><b>Our promise on fees</b>
+    <ul class="fee4"><li><b>The price in writing before we start</b><span>We send you a written quote and start only once you agree.</span></li><li><b>Our fee is separate from government fees</b><span>Government fees are paid at their official amount, as set by the authority.</span></li><li><b>No extra cost without your approval</b><span>If the authority asks for a new fee or extra work, we tell you first and continue once you agree.</span></li><li><b>A receipt for every fee</b><span>We hand you the official receipt for every fee we pay on your behalf.</span></li></ul>
     <a class="btn sm ghost" href="#prices">Full price list</a></div>
   <div class="tools">
     <input id="q" class="search" type="search" placeholder="Search a service, e.g. residence, CR, licence" aria-label="Search a service">
@@ -216,10 +219,31 @@
   </ol>
 </div></section>
 
+<section class="sec alt" id="track"><div class="wrap narrow">
+  <h2>Track your transaction</h2>
+  <p class="lead">Enter the transaction or request number we sent you, such as <span class="nw" dir="ltr">T-0012</span> or <span class="nw" dir="ltr">R-0045</span>, and the last 4 digits of the mobile number we have on file. You will see the current stage only, with no personal details.</p>
+  <form class="trk" id="trkF" novalidate><label>Transaction or request number<input id="trkRef" required autocomplete="off" dir="ltr" placeholder="T-0012" maxlength="12"></label><label>Last 4 digits of your mobile<input id="trkPh" required inputmode="numeric" dir="ltr" maxlength="4" placeholder="1234" autocomplete="off"></label><button class="btn pri" type="submit">Show the stage</button></form>
+  <p class="err" id="trkErr" role="alert"></p>
+  <div id="trkOut" aria-live="polite"></div>
+  <p class="trknote">For more, such as files, messages and payments, sign in to <a href="portal.html">My account</a> or <a href="https://wa.me/97472232609" target="_blank" rel="noopener">message us on WhatsApp</a>.</p>
+</div></section>
+
+<section class="sec" id="auctions"><div class="wrap">
+  <h2>Qatar auctions</h2>
+  <p class="lead">A short guide to the official auction platforms in Qatar, what each one offers and how to take part. If you wish, we help you register, prepare the deposit and follow through to the transfer of ownership.</p>
+  <div class="aucta"><a class="btn pri" href="#svc=AU-02">Help me register and bid</a><a class="btn ghost" href="#ent=AU">Auction services and prices</a></div>
+  <div id="aucList" class="auc-grid"></div>
+  <h3 class="auch" id="aucNewsH" hidden>Latest auction news</h3>
+  <ul id="aucNews" class="auc-news" hidden></ul>
+  <p class="aucnote">This information is for guidance only; the official platform is always the reference. We do not copy any platform's data, and links open the original site.</p>
+</div></section>
+
 <section class="sec" id="faq"><div class="wrap">
   <h2>Frequently asked questions</h2>
   <div class="faq">
     <details><summary>Does the price include government fees?</summary><p>The price shown is Basira's fee only. Government fees are paid at their official amount, and we hand you the receipt.</p></details>
+    <details><summary>How do I know where my transaction is?</summary><p>Use "Track your transaction" on the home page with the transaction number and the last 4 digits of your mobile, or sign in to My account for details and files. We also keep you informed at each key stage.</p></details>
+    <details><summary>Can you help me with government auctions?</summary><p>Yes. We help you register on the platform, prepare the deposit, follow the auction and complete the after-award steps. Bidding decisions and amounts are always yours, and nobody can guarantee a win.</p></details>
     <details><summary>Do you guarantee approval or timing?</summary><p>Approval and timing rest with the government authority. What we commit to is checking your documents carefully before submission, following up your request and keeping you informed of every update.</p></details>
     <details><summary>What if I do not use all package services in a month?</summary><p>Unused services roll over to the next month only.</p></details>
     <details><summary>How are studies and consulting priced?</summary><p>The price shown is the starting price. After a short introductory session, we send you a written quotation with scope, deliverables and timing. 50% is paid at the start and 50% on delivery.</p></details>
@@ -252,10 +276,11 @@
 <nav class="mbar" aria-label="Request a service"><a class="btn pri" href="#request">Request a service</a><a class="btn wa" id="mbWa" href="https://wa.me/97472232609" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1a17 17 0 0 1-1.8-.7 14 14 0 0 1-5.3-4.7c-.4-.5-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.3.1.2.1.8-.2 1.5z"/></svg> WhatsApp</a></nav>
 <a class="wa-fab" id="waFab" href="https://wa.me/97472232609" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" title="Chat with us on WhatsApp"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg></a>
 <div class="toast" id="toast" hidden></div>
-<script src="../assets/config.js?v=20261016p"></script>
-<script src="../assets/data.js?v=20261016p"></script>
-<script src="../assets/details.js?v=20261016p"></script>
-<script src="../assets/catalog.js?v=20261016p"></script>
-<script src="../assets/app.js?v=20261016p"></script>
+<script src="../assets/config.js?v=20261016q"></script>
+<script src="../assets/data.js?v=20261016q"></script>
+<script src="../assets/details.js?v=20261016q"></script>
+<script src="../assets/catalog.js?v=20261016q"></script>
+<script src="../assets/app.js?v=20261016q"></script>
+<script src="../assets/extras.js?v=20261016q"></script>
 </body>
 </html>

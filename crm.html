@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261016p">
-<link rel="stylesheet" href="assets/crm.css?v=20261016p">
-<script src="assets/theme.js?v=20261016p"></script>
+<link rel="stylesheet" href="assets/style.css?v=20261016q">
+<link rel="stylesheet" href="assets/crm.css?v=20261016q">
+<script src="assets/theme.js?v=20261016q"></script>
 </head>
 <body class="crm">
 <div class="basmala" aria-hidden="true"><svg viewBox="0 0 120 120" width="96" height="96"><defs><path id="bsT" d="M20.6 67 A40 40 0 1 1 99.4 67"/><path id="bsB" d="M12.5 74.5 A49.5 49.5 0 0 0 107.5 74.5"/></defs><circle cx="60" cy="60" r="57" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="60" cy="60" r="29" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="8.6" text-anchor="middle"><textPath href="#bsT" startOffset="50%">بسم الله الواحد الأحد الفرد الصمد</textPath></text><text font-size="7.6" text-anchor="middle"><textPath href="#bsB" startOffset="50%">والصلاة والسلام على محمد خير الأنام</textPath></text><text x="60" y="61" font-size="11" text-anchor="middle">بسم الله</text><text x="60" y="74" font-size="6" text-anchor="middle">✦</text><text x="15" y="66" font-size="5" text-anchor="middle">✦</text><text x="105" y="66" font-size="5" text-anchor="middle">✦</text></svg></div>
@@ -41,7 +41,7 @@
     <button type="button" data-tab="cli" data-g="work">العملاء</button>
     <button type="button" data-tab="txn" data-g="work">المعاملات</button>
     <button type="button" data-tab="msg" data-g="work">المراسلات <span class="pill num" id="nMsg"></span></button>
-    <button type="button" data-tab="log" data-g="work">السجل</button>
+    <button type="button" data-tab="log" data-g="work">السجل</button><button type="button" data-tab="rev" data-g="work" id="tabRev" hidden>آراء العملاء</button>
     <button type="button" data-tab="fin" data-g="fin" class="pf" hidden>المستحقات والتحصيل</button>
     <button type="button" data-tab="pays" data-g="fin" class="pf" hidden>سندات القبض</button>
     <button type="button" data-tab="exps" data-g="fin" class="pf" hidden>المصروفات</button>
@@ -320,6 +320,10 @@
     <div class="panel"><h3>نسخة احتياطية</h3><p class="mute sm">احفظ نسخة من القائمة كلها في ملف، أو استرجع نسخة سابقة، أو عد إلى القائمة الأصلية للموقع.</p>
       <div class="acts"><button class="btn sm ghost" type="button" id="ctExp">تنزيل نسخة (JSON)</button><label class="btn sm ghost">استرجاع نسخة<input type="file" id="ctImp" accept="application/json,.json" hidden></label><button class="btn sm ghost" type="button" id="ctReset">العودة إلى القائمة الأصلية</button></div></div>
   </section>
+  <section id="v-rev" class="view" hidden>
+    <div class="bar"><h2>آراء العملاء</h2><span class="sp"></span><span class="mute sm">يظهر الرأي في الموقع فقط إذا وافق العميل على عرضه ثم ضغطت «انشر في الموقع».</span></div>
+    <div class="panel"><div id="rvT"></div></div>
+  </section>
   <section id="v-theme" class="view" hidden>
     <div class="bar"><h2>ألوان الموقع</h2><span class="sp"></span><span class="mute sm">تظهر الألوان المحفوظة لكل زوار الموقع وفي «حسابي» ولوحة الإدارة.</span></div>
     <div class="panel"><h3>ألوان جاهزة</h3><div class="swatches" id="thList"></div></div>
@@ -562,12 +566,13 @@
 </form></dialog>
 <div class="toast" id="toast" hidden></div>
 <script>window.CATALOG_ALL=true</script>
-<script src="assets/config.js?v=20261016p"></script>
-<script src="assets/data.js?v=20261016p"></script>
-<script src="assets/details.js?v=20261016p"></script>
-<script src="assets/catalog.js?v=20261016p"></script>
-<script src="assets/crm-i18n.js?v=20261016p"></script>
-<script src="assets/crm.js?v=20261016p"></script>
-<script src="assets/crm-catalog.js?v=20261016p"></script>
+<script src="assets/config.js?v=20261016q"></script>
+<script src="assets/data.js?v=20261016q"></script>
+<script src="assets/details.js?v=20261016q"></script>
+<script src="assets/catalog.js?v=20261016q"></script>
+<script src="assets/crm-i18n.js?v=20261016q"></script>
+<script src="assets/crm.js?v=20261016q"></script>
+<script src="assets/crm-catalog.js?v=20261016q"></script>
+<script src="assets/crm-reviews.js?v=20261016q"></script>
 </body>
 </html>

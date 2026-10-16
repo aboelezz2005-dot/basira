@@ -23,7 +23,7 @@ const T=EN?{
   about:'About the service',inc:'What we do',docs:'Documents you provide',time:'Approximate time',note:'Note',out:'What you receive',fee:'Basira fee',govFee:'Government fees are paid separately with the official receipt.',
   reqThis:'Request this service',addCalc:'Add to calculator',inCalc:'In calculator ✓',close:'Close',consult:'Studies & Consulting',govSvc:'Government services',allSvc:'All services of this authority',home:'Home',allEnts:'← All authorities',allCats:'← All types',svcN:n=>`${n} services`,results:q=>`Results for “${q}”`,
   prices:'Full price list',hi:n=>`Welcome, ${n}`,waAsk:(n,c)=>`Hello, I would like to ask about this service: ${n} (${c}).`,register:'Register',regForQuote:'Please register your details first, so we can prepare the quote in your name.',co:'Company',stampName:'BASIRA FOR TRANSACTIONS',stampCity:'DOHA · QATAR',q:{title:'Preliminary quote',no:'Quote no.',date:'Date',valid:'Valid for 14 days from its date.',client:'Client',svc:'Service',qty:'Qty',fee:'Fee',total:'Total',sum:'Total Basira fees',startNote:'Studies and consulting are starting prices, confirmed in a written quotation.',gov:'Government fees are not included and are paid separately against the official receipt.',prelim:'This is a preliminary quote, confirmed after we review the documents and the transaction type.',custom:'To be priced after review',subj:'Quote request'},eOk:'Please agree to the privacy policy to send the request.',lVia:'Preferred contact',
-  sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service or quote',faq:'Common questions'}
+  sec:{about:'About Basira',services:'Government services',consult:'Studies & consulting',packages:'Company packages',estimate:'Cost calculator',how:'How we work',request:'Request a service or quote',faq:'Common questions',track:'Track your transaction',auctions:'Qatar auctions'}
 }:{
   cur:'ر.ق',all:'كل الجهات',core:'ضمن الباقات',add:'أضف',added:'مضافة ✓',addA:'إضافة ',rmA:'إزالة ',
   toastAdd:'أضيفت إلى الحاسبة',toastRm:'أزيلت من الحاسبة',empty:'لم نجد خدمة بهذا الاسم. يمكنك تجربة كلمة أخرى، أو كتابتها في نموذج الطلب وسنسعّرها لك بكل سرور.',
@@ -40,7 +40,7 @@ const T=EN?{
   about:'عن الخدمة',inc:'ما نقوم به',docs:'المستندات المطلوبة منك',time:'المدة التقريبية',note:'ملاحظة',out:'ما تستلمه',fee:'أتعاب بصيرة',govFee:'الرسوم الحكومية تُدفع منفصلة بإيصالها الرسمي.',
   reqThis:'اطلب هذه الخدمة',addCalc:'أضف إلى الحاسبة',inCalc:'في الحاسبة ✓',close:'إغلاق',consult:'الدراسات والاستشارات',govSvc:'الخدمات الحكومية',allSvc:'كل خدمات هذه الجهة',home:'الرئيسية',allEnts:'كل الجهات →',allCats:'كل الأنواع →',svcN:n=>`${n} ${n<=10?'خدمات':'خدمة'}`,results:q=>`نتائج البحث عن «${q}»`,
   prices:'قائمة الأسعار الكاملة',hi:n=>`أهلاً ${n}`,waAsk:(n,c)=>`السلام عليكم، أريد الاستفسار عن خدمة: ${n} (${c}).`,register:'تسجيل',regForQuote:'يرجى تسجيل بياناتك أولاً لنجهّز عرض السعر باسمك.',co:'الشركة',stampName:'بصيرة للمعاملات ذ.م.م',stampCity:'الدوحة · قطر',q:{title:'عرض سعر مبدئي',no:'رقم العرض',date:'التاريخ',valid:'صالح لمدة 14 يوماً من تاريخه.',client:'العميل',svc:'الخدمة',qty:'العدد',fee:'الأتعاب',total:'المجموع',sum:'إجمالي أتعاب بصيرة',startNote:'أسعار الدراسات والاستشارات تبدأ من المبلغ المذكور وتُعتمد بعرض سعر مكتوب.',gov:'الرسوم الحكومية غير مشمولة، وتُدفع منفصلة بإيصالها الرسمي.',prelim:'هذا عرض مبدئي، ويُعتمد بعد مراجعة المستندات ونوع المعاملة.',custom:'تُسعَّر بعد المراجعة',subj:'طلب عرض سعر'},eOk:'يرجى الموافقة على سياسة الخصوصية لإرسال الطلب.',lVia:'وسيلة التواصل المفضلة',
-  sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة أو عرض سعر',faq:'أسئلة شائعة'}
+  sec:{about:'تعرّف إلى بصيرة',services:'الخدمات الحكومية',consult:'الدراسات والاستشارات',packages:'باقات الشركات',estimate:'احسب التكلفة',how:'كيف ننجز معاملتك',request:'اطلب خدمة أو عرض سعر',faq:'أسئلة شائعة',track:'تابع معاملتك',auctions:'مزادات قطر'}
 };
 const WA=CFG.WHATSAPP||'97472232609';
 
@@ -223,7 +223,7 @@ function openSvc(code){const s=byCode[code];if(!s||!dlg)return;const d=s.d||{};
 if(dlg){$('dlgX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()})}
 
 // ---- one view at a time: home shows the main cards, each card opens its own page; hash keeps the back button working ----
-const VIEWS=['services','consult','packages','estimate','how','request','about','faq'];
+const VIEWS=['services','consult','packages','estimate','how','request','about','faq','track','auctions'];
 const secs=Object.fromEntries(VIEWS.map(v=>[v,$(v)]));
 let view=null;
 function crumbs(trail){const c=$('crumbs');c.hidden=!trail.length;if(!trail.length)return;
