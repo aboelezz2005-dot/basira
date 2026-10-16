@@ -2477,6 +2477,153 @@ DATA.CONSULT = [
      "time": "2 to 4 weeks",
      "out": "Workflow design, electronic forms, user guide"
     }
+   },
+   {
+    "c": "CI-06",
+    "p": 4500,
+    "from": true,
+    "unit_ar": "للمشروع",
+    "unit_en": "per project",
+    "ar": {
+     "n": "موقع شركة ثنائي اللغة بقائمة الخدمات والأسعار",
+     "inc": "موقع عربي وإنجليزي بهوية الشركة، قائمة خدمات وأسعار بمجموعات، تفاصيل كل خدمة، حاسبة تكلفة، نموذج عرض سعر على ترويسة الشركة وختمها يُرسل واتساب أو بريد، سياسة الخصوصية، تهيئة الظهور في Google، استضافة مجانية",
+     "about": "موقع احترافي يعرض خدماتك وأسعارك بوضوح ويحوّل الزائر إلى طلب عرض سعر مباشرة على واتساب أو البريد.",
+     "docs": [
+      "الاسم التجاري وبيانات التواصل",
+      "قائمة الخدمات والأسعار",
+      "الشعار والألوان إن وجدت"
+     ],
+     "time": "من 5 إلى 10 أيام عمل",
+     "out": "موقع منشور على رابط خاص بالشركة، ودليل تحديث الأسعار"
+    },
+    "en": {
+     "n": "Bilingual company website with services and prices",
+     "inc": "Arabic and English site in your brand, grouped service and price list, service details, cost estimator, quote form on your letterhead and stamp sent by WhatsApp or email, privacy policy, Google visibility setup, free hosting",
+     "about": "A professional website that shows your services and prices clearly and turns visitors into quote requests on WhatsApp or email.",
+     "docs": [
+      "Trade name and contact details",
+      "Services and prices list",
+      "Logo and colours if available"
+     ],
+     "time": "5 to 10 working days",
+     "out": "Live website on your company link, and a price-update guide"
+    }
+   },
+   {
+    "c": "CI-07",
+    "p": 9500,
+    "from": true,
+    "unit_ar": "للمشروع",
+    "unit_en": "per project",
+    "ar": {
+     "n": "موقع مع بوابة عملاء ولوحة إدارة",
+     "inc": "كل ما في الموقع، مع حسابات للعملاء يطلبون منها ويتابعون طلباتهم وينزلون ملفاتهم ويراسلونكم، ولوحة إدارة للعملاء والطلبات والمعاملات والمراسلات والملفات، وقاعدة بيانات Google Sheets في حسابكم، وبريد تأكيد وإشعارات وتقرير يومي",
+     "about": "يجمع عملاءك وطلباتهم وملفاتهم في نظام واحد تملكه بالكامل، بلا خادم مدفوع.",
+     "docs": [
+      "بيانات الموقع",
+      "حساب Gmail للشركة",
+      "حالات الطلب المعتمدة عندكم"
+     ],
+     "time": "من 2 إلى 3 أسابيع",
+     "out": "موقع وبوابة عملاء ولوحة إدارة تعمل، ودليل تشغيل بالعربية"
+    },
+    "en": {
+     "n": "Website with client portal and admin panel",
+     "inc": "Everything in the website, plus client accounts to order, track requests, download files and message you, an admin panel for clients, requests, jobs, messages and files, a Google Sheets database in your own account, confirmation emails, alerts and a daily report",
+     "about": "Brings your clients, their requests and files into one system you fully own, with no paid server.",
+     "docs": [
+      "Website details",
+      "Company Gmail account",
+      "Your request statuses"
+     ],
+     "time": "2 to 3 weeks",
+     "out": "Working website, client portal and admin panel, with an Arabic operating guide"
+    }
+   },
+   {
+    "c": "CI-08",
+    "p": 15000,
+    "from": true,
+    "unit_ar": "للمشروع",
+    "unit_en": "per project",
+    "ar": {
+     "n": "نظام إدارة متكامل للشركة",
+     "inc": "كل ما في الموقع والبوابة، مع حسابات الموظفين وصلاحيات مختارة لكل موظف، تسجيل الحضور والتأخير، سجل كل إجراء، تقارير أداء تُرسل بالبريد، حماية من محاولات الاختراق وتنبيهات أمنية فورية، مسودة المستندات القانونية (اتفاقية الخدمة، التفويض، الخصوصية)، ولوحة إدارة بالعربية والإنجليزية",
+     "about": "نظام تشغيل كامل لشركتك: عملاء وموظفون وصلاحيات وتقارير وأمان، بعربي وإنجليزي.",
+     "docs": [
+      "بيانات الموقع",
+      "حساب Gmail للشركة",
+      "قائمة الموظفين وأدوارهم"
+     ],
+     "time": "من 3 إلى 5 أسابيع",
+     "out": "نظام كامل يعمل، وتدريب عن بعد للمدير، ودليل تشغيل"
+    },
+    "en": {
+     "n": "Complete company management system",
+     "inc": "Everything in the portal, plus staff accounts with per-employee permissions, attendance and lateness, a log of every action, emailed performance reports, intrusion protection with instant security alerts, draft legal documents (service agreement, authorization, privacy), and a bilingual admin panel",
+     "about": "A full operating system for your company: clients, staff, permissions, reports and security, in Arabic and English.",
+     "docs": [
+      "Website details",
+      "Company Gmail account",
+      "Staff list and roles"
+     ],
+     "time": "3 to 5 weeks",
+     "out": "Working system, remote training for the manager, and an operating guide"
+    }
+   },
+   {
+    "c": "CI-09",
+    "p": 350,
+    "from": true,
+    "unit_ar": "شهرياً",
+    "unit_en": "per month",
+    "ar": {
+     "n": "الدعم والتحديث الشهري للموقع والنظام",
+     "inc": "تحديث الأسعار والخدمات، إصلاح الأعطال، تحديثات الأمان، نسخة احتياطية شهرية، مراجعة سجل الأمان. السعر حسب الحجم: 350 للموقع، 750 للموقع مع البوابة، 1,200 للنظام المتكامل",
+     "about": "يبقى موقعك ونظامك محدثاً وآمناً دون أن تحتاج فريقاً تقنياً.",
+     "docs": [
+      "رابط الموقع وحساب الإدارة"
+     ],
+     "time": "اشتراك شهري، والحد الأدنى 3 أشهر",
+     "out": "تحديثات شهرية وتقرير مختصر"
+    },
+    "en": {
+     "n": "Monthly support and updates for your website and system",
+     "inc": "Price and service updates, bug fixes, security updates, monthly backup, security log review. Price by size: 350 for the website, 750 with the portal, 1,200 for the full system",
+     "about": "Keeps your website and system current and secure without an in-house tech team.",
+     "docs": [
+      "Website link and admin account"
+     ],
+     "time": "Monthly subscription, minimum 3 months",
+     "out": "Monthly updates and a short report"
+    }
+   },
+   {
+    "c": "CI-10",
+    "p": 750,
+    "from": true,
+    "unit_ar": "للميزة",
+    "unit_en": "per feature",
+    "ar": {
+     "n": "إضافة قسم أو ميزة جديدة لموقع أو نظام قائم",
+     "inc": "دراسة الطلب، التنفيذ، الاختبار، النشر",
+     "about": "نضيف ما تحتاجه شركتك مع نموها، بسعر معروف قبل البدء.",
+     "docs": [
+      "وصف الميزة المطلوبة"
+     ],
+     "time": "من 2 إلى 7 أيام عمل",
+     "out": "الميزة منشورة ومختبرة"
+    },
+    "en": {
+     "n": "Add a section or feature to an existing website or system",
+     "inc": "Request review, build, testing, publishing",
+     "about": "We add what your company needs as it grows, at a price agreed before we start.",
+     "docs": [
+      "Description of the feature"
+     ],
+     "time": "2 to 7 working days",
+     "out": "Feature live and tested"
+    }
    }
   ]
  },

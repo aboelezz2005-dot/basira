@@ -474,6 +474,18 @@ ul.promises span{color:var(--mute);font-size:14.5px}
   body:has(.mbar) .toast{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 }
 @media print{.mbar{display:none!important}}
+/* «حسابي»: two separate entries on the first view */
+.gate{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:6px}
+.gcard{font:inherit;text-align:start;display:flex;flex-direction:column;gap:8px;padding:24px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
+.gcard svg{color:var(--pri)}.gcard b{font-family:var(--display);font-size:21px}.gcard span{color:var(--mute);font-size:15px}
+.gcard em{font-style:normal;font-weight:700;color:var(--pri);margin-top:auto}.gcard em::after{content:' ←'}
+:root[dir=ltr] .gcard em::after,html[dir=ltr] .gcard em::after{content:' →'}
+.gcard:hover,.gcard:focus-visible{border-color:var(--pri);box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.gcard.staff{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}.gcard.staff svg,.gcard.staff em{color:var(--amber)}.gcard.staff span{color:inherit;opacity:.85}
+.gateback{display:flex;gap:12px;align-items:center}
+@media (max-width:640px){.gate{grid-template-columns:minmax(0,1fr)}.gcard{padding:18px}}
+.pprog{display:inline-block;width:64px;height:7px;border-radius:4px;background:var(--chip);overflow:hidden;vertical-align:middle}.pprog i{display:block;height:100%;background:var(--pri)}
+#gate h1{margin-bottom:8px}
 /* language switcher, always visible in the top bar: ع | EN, then a globe menu of other languages */
 .lsw{display:inline-flex;align-items:center;gap:2px;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:2px;font-size:13.5px;white-space:nowrap;order:3;flex:none}
 .lsw .lglobe{opacity:.85;flex:none;margin-inline:4px 2px}
