@@ -162,7 +162,7 @@ function tr(s){if(!EN||s==null)return s;const t=String(s).replace(/\s+/g,' ').tr
   return s}
 // text nodes keep their surrounding spaces; only the words change
 function fixText(n){const v=n.nodeValue;if(!v||!/[؀-ۿ]/.test(v))return;const p=n.parentNode;if(p&&(p.closest&&p.closest('.basmala,textarea,[data-keep]')))return;
-  const t=tr(v);if(t!==v){const lead=v.match(/^\s*/)[0],trail=v.match(/\s*$/)[0];n.nodeValue=lead+String(t).trim()+trail}}
+  const t=tr(v);if(t!==v){if(p&&p.tagName==='OPTION'&&!p.hasAttribute('value'))p.setAttribute('value',v.trim());const lead=v.match(/^\s*/)[0],trail=v.match(/\s*$/)[0];n.nodeValue=lead+String(t).trim()+trail}}
 const ATTR=['placeholder','title','aria-label'];
 function fixEl(el){ATTR.forEach(a=>{const v=el.getAttribute&&el.getAttribute(a);if(v&&/[؀-ۿ]/.test(v)){const t=tr(v);if(t!==v)el.setAttribute(a,t)}})}
 function walk(root){if(root.nodeType===3){fixText(root);return}if(root.nodeType!==1)return;if(root.closest&&root.closest('.basmala'))return;fixEl(root);
