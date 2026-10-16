@@ -49,7 +49,7 @@ const Remote={
 const Local={
   db(){try{return JSON.parse(localStorage.getItem(LKEY))||{}}catch(e){return {}}},
   put(db){localStorage.setItem(LKEY,JSON.stringify(db))},
-  // local mode keeps one admin login on this device: 123 / 123 at first, changed on first sign-in
+  // local mode keeps one admin login on this device, changed on first sign-in
   async creds(){let c=null;try{c=JSON.parse(localStorage.getItem(PKEY))}catch(e){c=localStorage.getItem(PKEY)?{u:'123',h:localStorage.getItem(PKEY),must:1}:null}
     return c&&c.h?c:{u:'123',h:await hash('123'),must:1}},
   async login(u,pw){const c=await this.creds();if(String(u).trim().toLowerCase()!==c.u||await hash(pw)!==c.h)throw new Error(ERR.wrong_password);
@@ -280,7 +280,6 @@ const dstr=d=>{const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-$
 function period(){const v=$('repP').value,t=new Date();let f=new Date(t),to=new Date(t);
   if(v==='yesterday'){f.setDate(t.getDate()-1);to=new Date(f)}else if(v==='week')f.setDate(t.getDate()-6);else if(v==='month')f=new Date(t.getFullYear(),t.getMonth(),1);
   else if(v==='custom')return [$('repF').value||dstr(t),$('repT').value||$('repF').value||dstr(t)];return [dstr(f),dstr(to)]}
-if(window.BASIRA_DEMO&&CFG.API==='demo')$('repP').value='week';   // sample attendance spans the last days
 $('repP').onchange=()=>{const c=$('repP').value==='custom';$('repFL').hidden=$('repTL').hidden=!c;if(!c)loadRep()};
 const hm=m=>`${Math.floor((+m||0)/60)}:${String((+m||0)%60).padStart(2,'0')}`;
 async function loadRep(){const [from,to]=period();try{REP=await S.api('report',{from,to})}catch(e){toast(errText(e.message));return}
@@ -347,18 +346,32 @@ const TPL={
   quote:['عرض سعر','عرض سعر من بصيرة للمعاملات','السلام عليكم {name}،\n\nبناءً على طلبك، نرفق عرض السعر التالي:\n- الخدمة: {service}\n- أتعاب بصيرة: {fee} ر.ق\n- الرسوم الحكومية التقديرية: {govFee} ر.ق (تُدفع بإيصال رسمي)\n\nالعرض ساري 14 يوماً.\n\nمع التحية،\nفريق بصيرة للمعاملات'],
   free:['رسالة حرة','','السلام عليكم {name}،\n\n\n\nمع التحية،\nفريق بصيرة للمعاملات']
 };
+// English versions of the same emails, for clients who signed up in English (or by choice in the dialog)
+const SIGN_EN='\n\nKind regards,\nBasira for Transactions team',CONTACT_EN='WhatsApp +974 72232609 or email baseeratactions@gmail.com';
+const TPL_EN={
+  recv:['Request received | Basira for Transactions','Dear {name},\n\nThank you for contacting Basira for Transactions. We have received your request and will review it and come back to you within two working hours with the documents needed and the price.'+SIGN_EN],
+  docs:['Documents needed for your transaction | Basira for Transactions','Dear {name},\n\nTo complete {service} we need the following documents:\n{docs}\n\nBasira fee: {fee} QAR. Government fees are paid separately against their official receipt.\nYou can reply to this email with the documents, or send them by '+CONTACT_EN+'.'+SIGN_EN],
+  status:['Update on your transaction {txn} | Basira for Transactions','Dear {name},\n\nThe status of your transaction ({service}) is now: {status}.\n{ref}\nWe will let you know of any further update.'+SIGN_EN],
+  done:['Your transaction {txn} is completed | Basira for Transactions','Dear {name},\n\nWe are pleased to tell you that your transaction ({service}) is completed.\n{expiry}\nWe will hand you the document and the official receipts, and remind you before it is due for renewal.\n\nThank you for your trust,\nBasira for Transactions team'],
+  renew:['Reminder: a renewal is coming up | Basira for Transactions','Dear {name},\n\nThis is a reminder that {service} expires on {expiryDate}. We can renew it for you before then to avoid fines.\nReply to this email or contact us by '+CONTACT_EN+' to start.'+SIGN_EN],
+  quote:['Quote from Basira for Transactions','Dear {name},\n\nAs requested, here is our quote:\n- Service: {service}\n- Basira fee: {fee} QAR\n- Estimated government fees: {govFee} QAR (paid against an official receipt)\n\nThe quote is valid for 14 days.'+SIGN_EN],
+  free:['','Dear {name},\n\n'+SIGN_EN]
+};
+const ST_EN={'جديدة':'New','بانتظار المستندات':'Waiting for documents','قيد التقديم':'Being submitted','قيد المتابعة لدى الجهة':'With the authority','بانتظار العميل':'Waiting for you','منجزة':'Completed','ملغاة':'Cancelled'};
 Object.entries(TPL).forEach(([k,[n]])=>$('mTpl').insertAdjacentHTML('beforeend',`<option value="${k}">${n}</option>`));
 let mCtx=null;
-function fill(s){const c=mCtx.c||{},t=mCtx.t||{};const docs=parseDocs(t.docs).filter(d=>!d.ok).map(d=>'- '+d.t).join('\n')||(t.code?docsFor(t.code).map(d=>'- '+d).join('\n'):'- (حدد المستندات)');
-  return s.replace(/\{name\}/g,c.name||'').replace(/\{service\}/g,t.service||'الخدمة المطلوبة').replace(/\{txn\}/g,t.id||'').replace(/\{status\}/g,t.status||'').replace(/\{fee\}/g,fmt(t.fee)).replace(/\{govFee\}/g,fmt(t.govFee))
-    .replace(/\{docs\}/g,docs).replace(/\{ref\}/g,t.govRef?`رقم الطلب لدى الجهة: ${t.govRef}`:'').replace(/\{expiry\}/g,t.expiryDate?`تاريخ انتهاء المستند: ${t.expiryDate}`:'').replace(/\{expiryDate\}/g,t.expiryDate||'')}
-function applyTpl(){const [,sub,body]=TPL[$('mTpl').value];const f=$('fM');f.elements.subject.value=fill(sub);f.elements.body.value=fill(body)}
-$('mTpl').onchange=applyTpl;
+function fill(s,en){const c=mCtx.c||{},t=mCtx.t||{},de=((D[t.code]||{}).en)||{};
+  const docs=en?((de.docs||[]).map(d=>'- '+d).join('\n')||'- (list the documents)'):(parseDocs(t.docs).filter(d=>!d.ok).map(d=>'- '+d.t).join('\n')||(t.code?docsFor(t.code).map(d=>'- '+d).join('\n'):'- (حدد المستندات)'));
+  return s.replace(/\{name\}/g,c.name||'').replace(/\{service\}/g,(en?de.name:t.service)||t.service||(en?'the requested service':'الخدمة المطلوبة')).replace(/\{txn\}/g,t.id||'').replace(/\{status\}/g,(en?ST_EN[t.status]:t.status)||t.status||'').replace(/\{fee\}/g,fmt(t.fee)).replace(/\{govFee\}/g,fmt(t.govFee))
+    .replace(/\{docs\}/g,docs).replace(/\{ref\}/g,t.govRef?(en?`Authority reference: ${t.govRef}`:`رقم الطلب لدى الجهة: ${t.govRef}`):'').replace(/\{expiry\}/g,t.expiryDate?(en?`Document expiry: ${t.expiryDate}`:`تاريخ انتهاء المستند: ${t.expiryDate}`):'').replace(/\{expiryDate\}/g,t.expiryDate||'')}
+function applyTpl(){const en=$('mLang').value==='en',k=$('mTpl').value,[sub,body]=en?TPL_EN[k]:TPL[k].slice(1);const f=$('fM');f.elements.subject.value=fill(sub,en);f.elements.body.value=fill(body,en)}
+$('mTpl').onchange=$('mLang').onchange=applyTpl;
 function openMail(c,t,tpl){if(!t&&c&&c.id){t=DB.Transactions.filter(x=>x.clientId===c.id).sort((a,b)=>a.created<b.created?1:-1)[0]||null}
-  mCtx={c,t};const f=$('fM');f.reset();f.elements.to.value=c.email||'';$('mTpl').value=tpl||(t?'status':'recv');applyTpl();
+  mCtx={c,t};const f=$('fM');f.reset();f.elements.to.value=c.email||'';
+  const k=(DB.Consents||[]).filter(x=>x.clientId===c.id).sort((a,b)=>a.created<b.created?1:-1)[0];$('mLang').value=k&&k.lang?(k.lang==='en'?'en':'ar'):(window.CRM_LANG==='en'?'en':'ar');$('mTpl').value=tpl||(t?'status':'recv');applyTpl();
   $('mHint').textContent=CFG.API?'يُرسل من بريد المكتب مباشرة ويُسجَّل في سجل العميل.':'الوضع المحلي: سيفتح برنامج البريد لديك برسالة جاهزة، وتُسجَّل في سجل العميل.';$('dlgM').showModal()}
 $('fM').addEventListener('submit',async e=>{if(e.submitter&&e.submitter.value!=='send')return;const f=$('fM');
-  try{await S.mail({to:f.elements.to.value.trim(),subject:f.elements.subject.value,body:f.elements.body.value,clientId:(mCtx.c||{}).id||'',txnId:(mCtx.t||{}).id||''});toast(CFG.API?'أُرسل البريد':'فُتح برنامج البريد');await reload()}catch(err){toast('تعذر الإرسال: '+err.message)}});
+  try{await S.mail({to:f.elements.to.value.trim(),subject:f.elements.subject.value,body:f.elements.body.value,lang:$('mLang').value,clientId:(mCtx.c||{}).id||'',txnId:(mCtx.t||{}).id||''});toast(CFG.API?'أُرسل البريد':'فُتح برنامج البريد');await reload()}catch(err){toast('تعذر الإرسال: '+err.message)}});
 
 // ---- log, export, backup ----
 const KIND={email:'بريد',note:'ملاحظة',status:'تحديث',request:'طلب من الموقع',error:'خطأ',account:'حساب',file:'ملف',credential:'بوابة',message:'مراسلة',profile:'بيانات العميل',register:'تسجيل'};
@@ -373,7 +386,7 @@ const COLS={Clients:['id','created','name','type','phone','email','qid','cr','es
   Transactions:['id','created','clientId','code','service','status','fee','govFee','paid','govRef','startDate','dueDate','expiryDate','assignee','docs','notes','closed','updated'],
   Requests:['id','created','name','phone','email','type','plan','services','codes','lang','status','clientId','mailed','notes','updated'],
   Log:['id','created','clientId','txnId','kind','subject','body','by']};
-function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.hidden=true;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+function download(name,text,type){if(window.CRM_I18N&&/csv/.test(type))text=CRM_I18N.csv(text);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.hidden=true;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
 function exportCsv(sheet){const q=v=>{v=v==null?'':String(v);if(sheet==='Transactions'&&v.startsWith('[{'))v=parseDocs(v).map(d=>(d.ok?'✓ ':'✗ ')+d.t).join(' | ');return '"'+v.replace(/"/g,'""')+'"'};
   const rows=[HEAD[sheet].map(q).join(','),...DB[sheet].map(r=>COLS[sheet].map(c=>q(c==='phone'||c==='qid'?(r[c]?'‎'+r[c]:''):r[c])).join(','))];
   download(`basira-${{Clients:'clients',Transactions:'transactions',Requests:'requests',Log:'log'}[sheet]}-${iso()}.csv`,'﻿'+rows.join('\r\n'),'text/csv;charset=utf-8')}

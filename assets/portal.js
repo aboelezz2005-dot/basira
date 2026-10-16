@@ -68,7 +68,7 @@ const REG=(()=>{try{return JSON.parse(localStorage.getItem('basira_reg')||'null'
 function tab(sign){$('forgotF').hidden=true;$('tLogin').parentElement.hidden=false;$('tLogin').setAttribute('aria-selected',!sign);$('tSign').setAttribute('aria-selected',sign);$('loginF').hidden=sign;$('signF').hidden=!sign}
 $('tLogin').onclick=()=>tab(false);$('tSign').onclick=()=>tab(true);
 // account type: client (this page) or management (the dashboard in crm.html)
-const CRM=(EN?'../':'')+'crm.html';
+const CRM=EN?'../crm.html?lang=en':'crm.html?lang=ar';
 function acct(){const admin=document.querySelector('input[name=acct]:checked').value==='admin';$('adminF').hidden=!admin;$('clientAuth').hidden=admin;$('noApi').hidden=admin||!!CFG.API}
 document.querySelectorAll('input[name=acct]').forEach(r=>r.onchange=acct);
 if(location.hash==='#admin'){document.querySelector('input[name=acct][value=admin]').checked=true}

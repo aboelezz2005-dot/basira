@@ -62,3 +62,7 @@
 #dlgS{max-width:min(760px,calc(100vw - 24px))}
 .inl{flex-direction:row;align-items:center;gap:6px}
 @media (max-width:760px){.perms{grid-template-columns:minmax(0,1fr)}}
+.langbtn{font:inherit;font-size:13.5px;color:inherit;background:transparent;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:5px 11px;cursor:pointer;margin-inline-start:8px;flex:none}
+.langbtn:hover{background:rgba(255,255,255,.12)}
+/* names typed in Arabic keep their own direction inside English lines, and the other way round */
+.crm a,.crm small,.crm .num,.crm td>span,.crm .bub{unicode-bidi:isolate}
